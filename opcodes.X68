@@ -17,20 +17,143 @@ DECODER:
     
     
 ************************************
-* Instructions Beginning with 0000 *
+* Instructions Beginning With 0000 *
 * ** ADDI                          *    
 ************************************
 INSTR0000:
     LEA         BUFFER,A1               ; load the buffer to add to it
+    * TODO - some stuff for addi
+    RTS
+    
+    
+************************************
+* Instructions Beginning With 0001 *
+* ** MOVE.B                        *
+************************************
+INSTR0001:
+
+    * TODO - some stuff from MOVE.B
+    RTS
+
+************************************
+* Instructions Beginning With 0010 *
+* ** MOVE.L                        *
+* ** MOVEA.L                       *
+************************************
+INSTR0010:
+    * TODO - stuff for opcodes
+    RTS
+    
+************************************
+* Instructions Beginning With 0011 *
+* ** MOVE.W                        *
+* ** MOVEA.W                       *
+************************************
+INSTR0011:
+    * TODO
+    RTS
+    
+************************************
+* Instructions Beginning With 0100 *
+* ** LEA                           *
+* ** CLR (B, W, L)                 *
+* ** MOVEM                         *
+* ** NOP                           *
+* ** RTS                           *
+* ** JSR                           *
+************************************
+INSTR0100:
+    * TODO
+    RTS
+    
+************************************
+* Instructions Beginning With 0101 *
+* ** ADDQ (B, W, L)                *
+************************************
+INSTR0101:
+    * TODO
+    RTS
+    
+************************************
+* Instructions Beginning With 0110 *
+* ** Bcc                           *
+************************************
+INSTR0110:
+    * TODO
+    RTS
+    
+************************************
+* Instructions Beginning With 0111 *
+* ** MOVEQ                         *
+************************************
+INSTR0111:
+    * TODO
+    RTS
+    
+************************************
+* Instructions Beginning With 1000 *
+* ** DIVU                          *
+* ** OR                            *
+************************************
+INSTR1000:
+    * TODO
+    RTS
+    
+************************************
+* Instructions Beginning With 1001 *
+* ** SUB                           *
+************************************
+INSTR1001:
+    * TODO
+    RTS
+    
+************************************
+* Instructions Beginning With 1011 *
+* ** CMP                           *
+************************************
+INSTR1011:
+    * TODO
+    RTS
+    
+************************************
+* Instructions Beginning With 1100 *
+* ** AND (B, W, L)                 *
+************************************
+INSTR1100:
+    * TODO
+    RTS
+    
+************************************
+* Instructions Beginning With 1101 *
+* ** ADD (B, W, L)                 *
+* ** ADDA (W, L)                   *
+************************************
+INSTR1101:
+    * TODO
+    RTS
+    
+************************************
+* Instructions Beginning With 1110 *
+* ** LSL (B, W, L)                 *
+* ** LSR (B, W, L)                 *
+* ** ASR (B, W, L)                 *
+* ** ASL (B, W, L)                 *
+* ** ROL (B, W, L)                 *
+* ** ROR (B, W, L)                 *
+************************************
+INSTR1110:
+    * TODO
+    RTS
     
     
     
     
-    
+FINISH:   
     MOVEM.L     (SP)+,A0-A5/D0-D7       ; move registers back from stack
     RTS                                 ; exit subroutine
     
     
+
 
 
 *~Font name~Courier New~
