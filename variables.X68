@@ -5,26 +5,49 @@
 * GLOBAL STUFF *
 ****************
 
-CR          EQU     $0D
-LF          EQU     $0A
-NEWLINE     DC.B    CR,LF,0
+* I'm thinking we put what we're going to print out at some address
+BUFFER      EQU     $2200
+
+CR          EQU     $0D         ; carriage return
+LF          EQU     $0A         ; line feed
+NEWLINE     DC.B    CR,LF,0     ; new line
+
+* storage for the start and end address
 START_ADDR  DS.L    1
 END_ADDR    DS.L    1
+
+* punctuation
+SPACE       DC.B    ' ',0
 PERIOD      DC.B    '.',0
 COMMA       DC.B    ',',0
-BUFFER      EQU     $2200
+
+* number types
 POUND       DC.B    '#',0
 DOLLAR      DC.B    '$',0
 MOD         DC.B    '%',0
+
+* for printing indirect addressing stuff
+O_PAREN     DC.B    '(',0
+C_PAREN     DC.B    ')',0
+PLUS        DC.B    '+',0
+MINUS       DC.B    '-',0
+
+* for printing data and address registers
+D           DC.B    'D',0
+A           DC.B    'A',0
+
 
 
 ****************
 * OPCODE STUFF *
 ****************
+
+* SIZE MODIFIERS
 B           DC.B    'B',0
 W           DC.B    'W',0
 L           DC.B    'L',0
 
+* OPCODES
 MOVE_TXT    DC.B    'MOVE',0
 MOVEA_TXT   DC.B    'MOVEA',0
 MOVEQ_TXT   DC.B    'MOVEQ',0
@@ -46,6 +69,10 @@ MULS_TXT    DC.B    'MULS',0
 AND_TXT     DC.B    'AND',0
 LSL_TXT     DC.B    'LSL',0
 LSR_TXT     DC.B    'LSR',0
+ASL_TXT     DC.B    'ASL',0
+ASR_TXT     DC.B    'ASR',0
+ROL_TXT     DC.B    'ROL',0
+ROR_TXT     DC.B    'ROR',0
 
 *~Font name~Courier New~
 *~Font size~10~
