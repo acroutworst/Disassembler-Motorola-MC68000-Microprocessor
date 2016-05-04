@@ -8,6 +8,10 @@
 START:                  ; first instruction of program
 
 * Put program code here
+    
+    MOVEA.L #$6000,A6
+    MOVE.W  #$1639,(A6)
+    JSR DECODER
 
     SIMHALT             ; halt simulator
 
@@ -17,6 +21,7 @@ START:                  ; first instruction of program
     INCLUDE 'opcodes.x68'
 
     END    START        ; last line of source
+
 
 *~Font name~Courier New~
 *~Font size~10~

@@ -14,6 +14,44 @@ DECODER:
     MOVEA.L     A6,A0                   ; move starting address to A0 to manip
     MOVE.L      (A0),D0                 ; move data at A0 to D0 to manip
     AND.L       FIRST4MASK,D0           ; mask all but the first 4 bits
+    ROL.L       #4,D0                   ; rotate the first 4 bits to the end
+    LEA         INST_TABLE,A0
+    JSR         0(A0,D0)
+
+***********************************
+* Jump Table for the First 4 Bits *
+***********************************
+INST_TABLE:
+    JSR     INSTR0000
+    RTS
+    JSR     INSTR0001
+    RTS
+    JSR     INSTR0010
+    RTS
+    JSR     INSTR0011
+    RTS
+    JSR     INSTR0100
+    RTS
+    JSR     INSTR0101
+    RTS
+    JSR     INSTR0110
+    RTS
+    JSR     INSTR0111
+    RTS
+    JSR     INSTR1000
+    RTS
+    JSR     INSTR1001
+    RTS
+    JSR     INSTR1010
+    RTS
+    JSR     INSTR1011
+    RTS
+    JSR     INSTR1100
+    RTS
+    JSR     INSTR1101
+    RTS
+    JSR     INSTR1110
+
     
     
 ************************************
@@ -106,6 +144,13 @@ INSTR1000:
 INSTR1001:
     * TODO
     RTS
+
+************************************
+* Instructions Beginning With 1010 *
+************************************    
+INSTR1010:
+    * TODO
+    RTS
     
 ************************************
 * Instructions Beginning With 1011 *
@@ -146,6 +191,7 @@ INSTR1110:
     RTS
     
     
+        
     
     
 FINISH:   
@@ -153,6 +199,7 @@ FINISH:
     RTS                                 ; exit subroutine
     
     
+
 
 
 
