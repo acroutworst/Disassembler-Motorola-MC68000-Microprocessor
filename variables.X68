@@ -41,6 +41,8 @@ A           DC.B    'A',0
 ****************
 * OPCODE STUFF *
 ****************
+* BIT MASKS
+FIRST4MASK  EQU     $F0000000
 
 * SIZE MODIFIERS
 B           DC.B    'B',0
@@ -73,6 +75,7 @@ ASL_TXT     DC.B    'ASL',0
 ASR_TXT     DC.B    'ASR',0
 ROL_TXT     DC.B    'ROL',0
 ROR_TXT     DC.B    'ROR',0
+
 
 *~Font name~Courier New~
 *~Font size~10~
