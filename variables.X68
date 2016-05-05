@@ -75,6 +75,8 @@ ASL_TXT     DC.B    'ASL',0
 ASR_TXT     DC.B    'ASR',0
 ROL_TXT     DC.B    'ROL',0
 ROR_TXT     DC.B    'ROR',0
+DATA_TXT    DC.B    'DATA',0
+
 
 
 *~Font name~Courier New~
