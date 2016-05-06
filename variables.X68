@@ -42,10 +42,16 @@ A           DC.B    'A',0
 * OPCODE STUFF *
 ****************
 * BIT MASKS
-FIRST4MASK  EQU     $F0000000
-SECON4MASK  EQU     $0F000000
-0TO2MASK    EQU     $00000007
-3TO5MASK    EQU     $00000038
+* 
+* groupings of 4
+FIRST4MASK  EQU     $F000
+SECON4MASK  EQU     $0F00
+THIRD4MASK  EQU     $00F0
+LAST_4MASK  EQU     $000F
+
+* ea masks
+B0TO2MASK   EQU     $0007
+B3TO5MASK   EQU     $0038
 
 
 * SIZE MODIFIERS
@@ -80,6 +86,7 @@ ASR_TXT     DC.B    'ASR',0
 ROL_TXT     DC.B    'ROL',0
 ROR_TXT     DC.B    'ROR',0
 DATA_TXT    DC.B    'DATA',0
+
 
 
 
