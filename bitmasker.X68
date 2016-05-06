@@ -1,21 +1,25 @@
 *-----------------------------------------------------------
-* Title      : Bit masker
-* Written by :
-* Date       :
-* Description:
-*-----------------------------------------------------------
-
+* Title      : BitMasker
+* Written by : Geoff Friesen
+* Date       : 2016/05/06
+* Description: Subroutine that masks for a certain set of bits
+*              based on predefined sets.
+*
 * Assumptions:
 * ** D5 contains data to be masked
 * ** D4 contains desired bit masking routine (detailed below)
+*-----------------------------------------------------------
+
 BITMASKER:
-    MOVEM.L     A0-A6/D0-D3/D6-D7,-(SP)
-    LEA         MASK_TABLE,A0
-    MULU        #8,D4
-    JSR         0(A0,D4)
+    MOVEM.L     A0-A6/D0-D3/D6-D7,-(SP)         ; move all registers to
+                                                ; stack except D4 & D5
+                                                
+    LEA         MASK_TABLE,A0                   ; load the jump table
+    MULU        #8,D4                           ; get the offset of the table
+    JSR         0(A0,D4)                        ; call the jump table
     
-    MOVEM.L     (SP)+,A0-A6/D0-D3/D6-D7
-    RTS
+    MOVEM.L     (SP)+,A0-A6/D0-D3/D6-D7         ; move the registers back from stack
+    RTS                                         ; all done here
     
 
 *******************************
@@ -99,6 +103,8 @@ MASK5TO3:
     AND.W       #B3TO5MASK,D5
     LSR.W       #3,D5
     RTS
+
+
 
 *~Font name~Courier New~
 *~Font size~10~

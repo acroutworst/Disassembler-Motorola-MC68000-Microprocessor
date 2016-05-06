@@ -1,6 +1,6 @@
 *-----------------------------------------------------------
-* Title      :
-* Written by :
+* Title      : Opcode Decoder
+* Written by : Geoff Friesen
 * Date       :
 * Description:
 *-----------------------------------------------------------
@@ -14,9 +14,8 @@ DECODER:
     MOVEA.L     A6,A0                   ; move starting address to A0 to manip
     MOVE.W      (A0),D5                 ; move data at A0 to D5 to manip
     
-    LEA         MASK_TABLE,A1           ; load the masking jump table
-    MOVE.B      #0,D0                   ; choose the subroutine to mask (first 4)
-    JSR         0(A1,D0)                ; call the jump table
+    MOVE.B      #0,D4                   ; choose the subroutine to mask (first 4)
+    JSR         BITMASKER
     MULU        #8,D5                   ; multiply the results by 8 for instruction jump table address
     LEA         INST_TABLE,A0           ; load the instruction jump table
     JSR         0(A0,D5)                ; call the instruction jump table
@@ -77,6 +76,8 @@ INSTR0000:
 INSTR0001:
 
     * TODO - some stuff from MOVE.B
+    LEA         BUFFER,A1
+    MOVE.B      ADDI_TXT,BUFFER
     RTS
 
 ************************************
@@ -107,7 +108,11 @@ INSTR0011:
 * ** JSR                           *
 ************************************
 INSTR0100:
-    * TODO
+    MOVE.B  #1,D4
+    MOVE.W  (A6),D5
+    JSR     BITMASKER
+    
+    
     RTS
     
 ************************************
@@ -205,6 +210,7 @@ FINISH:
     RTS                                 ; exit subroutine
     
     
+
 
 
 
