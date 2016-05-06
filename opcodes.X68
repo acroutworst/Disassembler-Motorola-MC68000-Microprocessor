@@ -12,97 +12,16 @@ DECODER:
                                         
     * get first 4 bits at address in A6
     MOVEA.L     A6,A0                   ; move starting address to A0 to manip
-    MOVE.W      (A0),D5                 ; move data at A0 to D0 to manip
+    MOVE.W      (A0),D5                 ; move data at A0 to D5 to manip
     
-    LEA         MASK_TABLE,A1
-    MOVE.B      #0,D0
-    JSR         0(A1,D0)
-    MULU        #8,D5
-    LEA         INST_TABLE,A0
-    JSR         0(A0,D5)
-    BRA         FINISH
+    LEA         MASK_TABLE,A1           ; load the masking jump table
+    MOVE.B      #0,D0                   ; choose the subroutine to mask (first 4)
+    JSR         0(A1,D0)                ; call the jump table
+    MULU        #8,D5                   ; multiply the results by 8 for instruction jump table address
+    LEA         INST_TABLE,A0           ; load the instruction jump table
+    JSR         0(A0,D5)                ; call the instruction jump table
+    BRA         FINISH                  ; go to the end
     
-*******************************
-* Jump Table for Masking Bits *
-*******************************
-* This jump table can be accessed to jump to the appropriate subroutine
-* to mask a certain set of bits. Also shifts bits all the way to the right.
-*  
-* Usage:
-* 1. Load the table into an address register
-* 2. Move the value to be masked into D5
-* 3. Jump to the appropriate subroutine
-*   ** JSR  0(<An>,<subroutine # * 8>)
-* ** 0 - MASK15TO12 - masks for first 4 bits
-* ** 1 - MASK11TO8 - masks for second 4 bits
-* ** 2 - MASK7TO4 - masks for third 4 bits
-* ** 3 - MASK3TO0 - masks for last 4 bits
-* ** 4 - MASK2TO0 - masks for last 3 bits
-* ** 5 - MASK5TO3 - masks for second to last 3 bits
-MASK_TABLE:
-    JSR     MASK15TO12
-    RTS
-    JSR     MASK11TO8
-    RTS
-    JSR     MASK7TO4
-    RTS
-    JSR     MASK3TO0
-    RTS
-    JSR     MASK2TO0
-    RTS
-    JSR     MASK5TO3
-    RTS
-
-
-*-----------------------------------------------------------------------------*
-* Masking Subroutines                                                         *
-*-----------------------------------------------------------------------------*
-
-**************
-* MASK15TO12 *
-**************
-MASK15TO12:
-    AND.W       #FIRST4MASK,D5
-    ROL.W       #4,D5
-    RTS
-
-*************
-* MASK11TO8 *
-*************
-MASK11TO8:
-    AND.W       #SECON4MASK,D5
-    ROL.W       #8,D5
-    RTS
-    
-************
-* MASK7TO4 *
-************
-MASK7TO4:
-    AND.W       #THIRD4MASK,D5
-    LSR.W       #8,D5
-    RTS
-    
-************
-* MASK3TO0 *
-************
-MASK3TO0:
-    AND.W       #LAST_4MASK,D5
-    RTS
-    
-************
-* MASK2TO0 *
-************
-MASK2TO0:
-    AND.W       #B0TO2MASK,D5
-    RTS
-    
-************
-* MASK5TO3 *
-************
-MASK5TO3:
-    AND.W       #B3TO5MASK,D5
-    LSR.W       #3,D5
-    RTS
     
 ***********************************
 * Jump Table for the First 4 Bits *
@@ -286,6 +205,7 @@ FINISH:
     RTS                                 ; exit subroutine
     
     
+
 
 
 

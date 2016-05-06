@@ -19,8 +19,10 @@ START:                  ; first instruction of program
 
     INCLUDE 'variables.x68'
     INCLUDE 'opcodes.x68'
+    INCLUDE 'bitmasker.x68'
 
     END    START        ; last line of source
+
 
 
 
