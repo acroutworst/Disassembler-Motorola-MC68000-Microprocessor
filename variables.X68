@@ -43,6 +43,10 @@ A           DC.B    'A',0
 ****************
 * BIT MASKS
 FIRST4MASK  EQU     $F0000000
+SECON4MASK  EQU     $0F000000
+0TO2MASK    EQU     $00000007
+3TO5MASK    EQU     $00000038
+
 
 * SIZE MODIFIERS
 B           DC.B    'B',0
@@ -76,6 +80,7 @@ ASR_TXT     DC.B    'ASR',0
 ROL_TXT     DC.B    'ROL',0
 ROR_TXT     DC.B    'ROR',0
 DATA_TXT    DC.B    'DATA',0
+
 
 
 

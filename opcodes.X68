@@ -13,8 +13,8 @@ DECODER:
     * get first 4 bits at address in A6
     MOVEA.L     A6,A0                   ; move starting address to A0 to manip
     MOVE.L      (A0),D0                 ; move data at A0 to D0 to manip
-    MOVE.B      #28,D1
-    LSR.L       D1,D0
+    AND.L       #FIRST4MASK,D0
+    ROL.L       #4,D0
     MULU        #8,D0
     LEA         INST_TABLE,A0
     JSR         0(A0,D0)
@@ -201,6 +201,7 @@ FINISH:
     RTS                                 ; exit subroutine
     
     
+
 
 
 
