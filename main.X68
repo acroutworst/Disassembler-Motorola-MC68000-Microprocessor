@@ -8,9 +8,10 @@
 START:                  ; first instruction of program
 
 * Put program code here
-    
+    * test junk data
     MOVEA.L #$6000,A6
-    MOVE.W  #$1639,(A6)
+    * MOVE.W  #$1639,(A6)+
+    MOVE.W  #$4E71,(A6)+
     JSR DECODER
 
     SIMHALT             ; halt simulator
@@ -22,13 +23,3 @@ START:                  ; first instruction of program
     INCLUDE 'bitmasker.x68'
 
     END    START        ; last line of source
-
-
-
-
-
-
-*~Font name~Courier New~
-*~Font size~10~
-*~Tab type~1~
-*~Tab size~4~
