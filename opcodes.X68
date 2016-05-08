@@ -4,6 +4,8 @@
 * Date       :
 * Description:
 *-----------------------------------------------------------
+START       
+    ORG         $8000
 DECODER:
 
 
@@ -78,3 +80,10 @@ FINISH:
     INCLUDE     'instr/instr1101.x68'
     INCLUDE     'instr/instr1110.x68'
     INCLUDE     'instr/instr1111.x68'
+
+
+
+*~Font name~Courier New~
+*~Font size~10~
+*~Tab type~1~
+*~Tab size~4~
