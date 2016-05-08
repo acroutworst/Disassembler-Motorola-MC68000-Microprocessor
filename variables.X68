@@ -52,6 +52,7 @@ LAST_4MASK  EQU     $000F
 * ea masks
 B0TO2MASK   EQU     $0007
 B3TO5MASK   EQU     $0038
+B6TO8MASK   EQU     $01C0
 
 
 * SIZE MODIFIERS
@@ -60,7 +61,7 @@ W           DC.B    'W',0
 L           DC.B    'L',0
 
 * OPCODES
-*MOVE_TXT    DC.B    'MOVE',0
+MOVE_TXT    DC.B    'MOVE',0
 MOVEA_TXT   DC.B    'MOVEA',0
 MOVEQ_TXT   DC.B    'MOVEQ',0
 MOVEM_TXT   DC.B    'MOVEM',0
@@ -86,11 +87,6 @@ ASR_TXT     DC.B    'ASR',0
 ROL_TXT     DC.B    'ROL',0
 ROR_TXT     DC.B    'ROR',0
 DATA_TXT    DC.B    'DATA',0
-
-
-
-
-
 
 *~Font name~Courier New~
 *~Font size~10~
