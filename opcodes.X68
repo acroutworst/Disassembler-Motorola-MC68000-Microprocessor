@@ -4,6 +4,8 @@
 * Date       :
 * Description:
 *-----------------------------------------------------------
+START       
+    ORG         $8000
 DECODER:
 
 
@@ -57,53 +59,6 @@ INST_TABLE:
     JSR     INSTR1110
     RTS
 
-
-
-
-
-
-************************************
-* Instructions Beginning With 1011 *
-* ** CMP                           *
-************************************
-INSTR1011:
-    * TODO
-    RTS
-
-************************************
-* Instructions Beginning With 1100 *
-* ** AND (B, W, L)                 *
-************************************
-INSTR1100:
-    * TODO
-    RTS
-
-************************************
-* Instructions Beginning With 1101 *
-* ** ADD (B, W, L)                 *
-* ** ADDA (W, L)                   *
-************************************
-INSTR1101:
-    * TODO
-    RTS
-
-************************************
-* Instructions Beginning With 1110 *
-* ** LSL (B, W, L)                 *
-* ** LSR (B, W, L)                 *
-* ** ASR (B, W, L)                 *
-* ** ASL (B, W, L)                 *
-* ** ROL (B, W, L)                 *
-* ** ROR (B, W, L)                 *
-************************************
-INSTR1110:
-    * TODO
-    RTS
-
-
-
-
-
 FINISH:
     MOVEM.L     (SP)+,A0-A5/D0-D7       ; move registers back from stack
     RTS                                 ; exit subroutine
@@ -125,14 +80,6 @@ FINISH:
     INCLUDE     'instr/instr1101.x68'
     INCLUDE     'instr/instr1110.x68'
     INCLUDE     'instr/instr1111.x68'
-
-
-
-
-
-
-
-
 
 
 
