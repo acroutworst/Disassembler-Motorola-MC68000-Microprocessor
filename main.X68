@@ -22,8 +22,10 @@ START:                  ; first instruction of program
     INCLUDE 'variables.x68'
     INCLUDE 'opcodes.x68'
     INCLUDE 'bitmasker.x68'
+    INCLUDE 'utils/push_to_buffer.x68'
 
     END    START        ; last line of source
+
 
 *~Font name~Courier New~
 *~Font size~10~

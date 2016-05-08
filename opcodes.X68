@@ -4,8 +4,6 @@
 * Date       :
 * Description:
 *-----------------------------------------------------------
-START       
-    ORG         $8000
 DECODER:
 
 
@@ -80,6 +78,7 @@ FINISH:
     INCLUDE     'instr/instr1101.x68'
     INCLUDE     'instr/instr1110.x68'
     INCLUDE     'instr/instr1111.x68'
+
 
 
 
