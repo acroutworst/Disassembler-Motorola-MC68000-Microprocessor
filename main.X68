@@ -23,8 +23,10 @@ START:                  ; first instruction of program
     INCLUDE 'opcodes.x68'
     INCLUDE 'bitmasker.x68'
     INCLUDE 'utils/push_to_buffer.x68'
+    INCLUDE 'utils/get_size.x68'
 
     END    START        ; last line of source
+
 
 
 *~Font name~Courier New~
