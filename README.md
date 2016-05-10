@@ -3,7 +3,7 @@ Disassembler for Motorola MC68000 Microprocessor (Easy68k). Final project for CS
 
 Specifications: 
   * Output Buffer: $2200
-  * Acceptable Input Range: <TBD>
+  * Acceptable Input Range: TBD
  
 Register Use:
   * A6: address currently being processed
