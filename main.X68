@@ -13,7 +13,8 @@ START:                  ; first instruction of program
     * MOVE.W  #$1639,(A6)
     * MOVE.W  #$4E71,(A6)         ; throwing machine for NOP into mem address
     MOVE.W  #$1601,(A6)           ; MOVE.B D0,D3
-    JSR DECODER
+    JSR     DISPLAY
+    JSR     DECODER
 
     SIMHALT             ; halt simulator
 
@@ -23,8 +24,10 @@ START:                  ; first instruction of program
     INCLUDE 'opcodes.x68'
     INCLUDE 'bitmasker.x68'
     INCLUDE 'utils/push_to_buffer.x68'
+    INCLUDE 'input_validation.x68'
 
     END    START        ; last line of source
+
 
 
 *~Font name~Courier New~
