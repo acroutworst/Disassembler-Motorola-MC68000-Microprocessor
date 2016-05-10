@@ -1,8 +1,9 @@
 # CSS-422-Final
 Disassembler for Motorola MC68000 Microprocessor (Easy68k). Final project for CSS 422 
 
-Specifications: * Output Buffer: $2200
-  * Acceptable Input Range: <TBD>
+Specifications: 
+  * Output Buffer: $2200
+  * Acceptable Input Range: TBD
  
 Register Use:
   * A6: address currently being processed
