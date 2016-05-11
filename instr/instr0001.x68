@@ -6,8 +6,6 @@ INSTR0001:
         MOVEM.L     A0-A5/D0-D7,-(SP)
 
     * TODO - some stuff from MOVE.B
-        LEA         BUFFER,A1
-
         LEA         MOVE_TXT,A0
         JSR         PUSHBUFFER
         
@@ -22,6 +20,7 @@ INSTR0001:
         
         MOVEM.L     (SP)+,A0-A5/D0-D7
         RTS
+
 
 
 
