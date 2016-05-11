@@ -13,6 +13,19 @@ BUFFER_POS  DS.B    1
 CR          EQU     $0D         ; carriage return
 LF          EQU     $0A         ; line feed
 NEWLINE     DC.B    CR,LF,0     ; new line
+************
+* IO STUFF *
+ADDYLENGTH EQU 8   *need 32 bit address length
+
+HELLO DC.B 'Welcome to Teamy McTeamFaces Disassembler!',NEWLINE
+REQSTART DC.B 'Please enter in the starting location:',NEWLINE
+REQEND DC.B 'Please enter in the ending location:',NEWLINE
+ODDERR DC.B 'Starting address cant be odd, please reenter:',NEWLINE
+*COMPLETE_REGISTER EQU D0-D7/A1-A7       
+ERRADD EQU #00000000
+PRINT DC.B 'Address DATA $'
+COMPARESPOT DS 16
+STRING2HEX DS 32
 
 * storage for the start and end address
 START_ADDR  DS.L    1

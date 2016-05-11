@@ -13,18 +13,20 @@ DISPLAY:
           
 *ask for starting address
 STARTA 
-    LEA REQSTART, A1 *load start message
-    MOVE.B #2,D0 
-    TRAP #15         *Read inputinto D1.L
-    MOVE.L D0,D2     *transfer start from d1 to d2
+    LEA REQSTART,A1 *load start message *A1 has the current starting
+    MOVE.B #2,D0     * read string at (A1) and length is returned at D1
+    TRAP #15         *Read input length into D1.L
+    *MOVE.L D1,D2     *transfer start from d1 to d2
        
-*Check size 
-       CMP.W #6,D2     * Is a string length no greater than 6 or 8? 
-       BGT STARTA
+* don't need to check size? Check size 
+       *CMP.W #6,D2     * Is a string length no greater than 6 or 8? 
+       *BGT STARTA
        
 *Must sent to subroutine to be converted to HEX* 
        JSR CONVERT2HEX 
-       
+       CMP ERRADD, A6
+       BEQ PRINTERR
+         
 *ask for ending address       
 ENDA   
     LEA REQEND,A1 *Load end message
@@ -65,9 +67,13 @@ EVEN
 
 **conversion to hex**
   
-
-  
-  
+PRINTERR
+    LEA PRINT,A1
+    MOVE.B #14, D0
+    TRAP #15
+    MOVE.L A6,A1
+    MOVE.B #13,D0
+    TRAP #15
   
    *goes back to user to reenter
 
@@ -75,15 +81,8 @@ EVEN
 
 * Put variables and constants here
     INCLUDE 'CONVERT2HEX.x68'
-CR EQU $0D     *ASCII code for carriage return
-LF EQU $0A     *ASCII code for line feed
-ADDYLENGTH EQU 6   *need 32 bit address length
+    INCLUDE 'variables.x68'
 
-HELLO DC.B 'Welcome to Teamy McTeamFaces Disassembler!',CR,LF,0
-REQSTART DC.B 'Please enter in the starting location:',CR,LF, 0
-REQEND DC.B 'Please enter in the ending location:',CR,LF,0
-ODDERR DC.B 'Starting address cant be odd, please reenter:', CR, LF, 0
-COMPLETE_REGISTER EQU D0-D7/A1-A7       
     END    START        ; last line of source
 
 
