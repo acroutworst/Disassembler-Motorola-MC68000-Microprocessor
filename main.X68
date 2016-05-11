@@ -13,6 +13,9 @@ START:                  ; first instruction of program
     * MOVE.W  #$1639,(A6)
     * MOVE.W  #$4E71,(A6)         ; throwing machine for NOP into mem address
     MOVE.W  #$1601,(A6)           ; MOVE.B D0,D3
+    LEA     ERROR,A0
+    MOVE.L  #0,(A0)
+
     JSR     DISPLAY
     JSR     DECODER
 
@@ -20,13 +23,16 @@ START:                  ; first instruction of program
 
 * Put variables and constants here
 
-    INCLUDE 'variables.x68'
+    
     INCLUDE 'opcodes.x68'
     INCLUDE 'bitmasker.x68'
     INCLUDE 'utils/push_to_buffer.x68'
     INCLUDE 'input_validation.x68'
+    INCLUDE 'utils/get_size.x68'
+    INCLUDE 'variables.x68'
 
     END    START        ; last line of source
+
 
 
 

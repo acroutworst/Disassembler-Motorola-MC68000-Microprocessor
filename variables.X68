@@ -6,8 +6,9 @@
 ****************
 
 * I'm thinking we put what we're going to print out at some address
-BUFFER      EQU     $2200
-ERROR       DS.B    1           ; 0 for good, 1 for not
+BUFFER      DS.B    10
+ERROR       DS.W    1
+BUFFER_POS  DS.B    1
 
 CR          EQU     $0D         ; carriage return
 LF          EQU     $0A         ; line feed
@@ -55,11 +56,14 @@ B0TO2MASK   EQU     $0007
 B3TO5MASK   EQU     $0038
 B6TO8MASK   EQU     $01C0
 
+* size mask
+B6TO7MASK   EQU     $00C0
+
 
 * SIZE MODIFIERS
-B           DC.B    'B',0
-W           DC.B    'W',0
-L           DC.B    'L',0
+B           DC.B    '.B',0
+W           DC.B    '.W',0
+L           DC.B    '.L',0
 
 * OPCODES
 MOVE_TXT    DC.B    'MOVE',0
@@ -88,7 +92,6 @@ ASR_TXT     DC.B    'ASR',0
 ROL_TXT     DC.B    'ROL',0
 ROR_TXT     DC.B    'ROR',0
 DATA_TXT    DC.B    'DATA',0
-
 
 *~Font name~Courier New~
 *~Font size~10~
