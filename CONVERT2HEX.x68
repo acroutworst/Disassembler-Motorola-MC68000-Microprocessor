@@ -37,8 +37,7 @@ NUM2HEX
     CMP.B #$39,D2 *0-9 IN HEX IS 30-39
     BGT UPCAP   *greater than 39 then it's a letter
     CMP.B #30,D2 
-    BLT
- ERR       *if it's less than 30 then it's not valid
+    BLT ERR       *if it's less than 30 then it's not valid
     BRA NUM2HEX   *Else it's within the number range
 
 *CHECK LETTER A-F IS 41-46
@@ -93,8 +92,6 @@ LOOPDONE
     RTS
 
 ERR
-
-
     MOVEA.L #00000000,A6                          *
     MOVEM.L (SP)+, A0-A5/D0-D7 *Move registers back from stack
     RTS
@@ -107,6 +104,7 @@ ERR
 
 
     END    START        ; last line of source
+
 
 *~Font name~Courier New~
 *~Font size~10~

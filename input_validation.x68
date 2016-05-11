@@ -24,48 +24,49 @@ STARTA
        
 *Must sent to subroutine to be converted to HEX* 
        JSR CONVERT2HEX 
-       CMP ERRADD, A6
+       CMP #ERRADD,A6
        BEQ PRINTERR
+       MOVE.L A6,START_ADDR
          
 *ask for ending address       
 ENDA   
     LEA REQEND,A1 *Load end message
     MOVE.B #2,D0
     TRAP #15  *Read input into D1.L
-            CMP.W #6,D1
+    CMP.W #6,D1
     BGT ENDA
 
 *send ending address to convert to HEX*
     JSR CONVERT2HEX
+    CMP #ERRADD,A6
+    BEQ PRINTERR
+    MOVE.L A6,END_ADDR
        
 *check address validity
-
-ADDY   
-    CMP.L D1,D2   *Compares The starting address to the ending address
+CHECKADDY   
+    CMP.L END_ADDR,START_ADDR   *Compares The starting address to the ending address
 * Put program code here
     BGE STARTA     *If D1 (starting) is greater than D2 (end) go back for new addresses
        
-
-    CMP.L D1,#1000    *Compares D1 to initial address
-    BLE STARTA    *if D1 is less than or equal than $1000 starting addy of the program then must ask for new start
-    MOVE.B D1,D3 *move over to keep D1 unchanged
+    MOVE.B START_ADDR,D3 *move over to keep D1 unchanged
     LSR.L #1,D3
- *Left shift 1 bit, if carry bit is 1 it's odd and if carry is 0 then  even
+ *Left shift 1 bit, if carry bit is 1 it's odd and if carry is 0 then even
     BCS ODD    
     BRA EVEN
        
 ODD
-    LEA ODDERR,A1    *prints out odd error message
-    MOVE.B #2,D0       *takes in new number
+    LEA ODDERR,A1       *prints out odd error message
+    MOVE.B #14,D0       
     TRAP #15
-    BRA ADDY          *uses new address and recheck for errors
+    BRA STARTA          *send back to ask for new starting address
+
 * If even check for length*
 EVEN 
 
 
 
 
-**conversion to hex**
+*Print out the err with address DATA $ADDR
   
 PRINTERR
     LEA PRINT,A1
@@ -84,6 +85,7 @@ PRINTERR
     INCLUDE 'variables.x68'
 
     END    START        ; last line of source
+
 
 
 *~Font name~Courier New~
