@@ -9,9 +9,9 @@ DECODER:
 
     MOVEM.L     A0-A5/D0-D7,-(SP)       ; move registers to stack to be moved
                                         ; back upon returning from subroutine
-    LEA         ERROR,A1
-    CMP.B       #0,(A1)
-    BNE         FINISH
+    LEA         ERROR,A1                ; load the error status
+    CMP.B       #0,(A1)                 ; check for ok
+    BNE         FINISH                  ; exit on not okay
 
     * get first 4 bits at address in A6
     MOVEA.L     A6,A0                   ; move starting address to A0 to manip
@@ -81,6 +81,7 @@ FINISH:
     INCLUDE     'instr/instr1101.x68'
     INCLUDE     'instr/instr1110.x68'
     INCLUDE     'instr/instr1111.x68'
+
 
 
 
