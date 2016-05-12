@@ -105,22 +105,30 @@ COMMON_SIZE:
     
     BRA         SIZE_ERROR
     
-PUSH_SIZE:    
+PUSH_SIZE:        
     JSR         PUSHBUFFER
+    JSR         UPDATE_SIZE
     RTS
     
+PUSH_PERIOD
+    LEA         PERIOD,A0
+    JSR         PUSHBUFFER
+    RTS
 
 BYTE_SIZE:
+    JSR         PUSH_PERIOD
     LEA         B,A0
     JSR         PUSH_SIZE
     RTS
     
 WORD_SIZE:
+    JSR         PUSH_PERIOD
     LEA         W,A0
     JSR         PUSH_SIZE
     RTS
     
 LONG_SIZE:
+    JSR         PUSH_PERIOD
     LEA         L,A0
     JSR         PUSH_SIZE
     RTS
@@ -135,6 +143,7 @@ SIZE_ERROR:
 GET_SIZEDONE:
     MOVEM.L     (SP)+,A0-A5/D0-D6
     RTS
+
 
 
 

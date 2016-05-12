@@ -16,7 +16,7 @@ START:                  ; first instruction of program
     LEA     ERROR,A0
     MOVE.L  #0,(A0)
 
-    JSR     DISPLAY
+    * JSR     DISPLAY
     JSR     DECODER
 
     SIMHALT             ; halt simulator
@@ -33,6 +33,7 @@ START:                  ; first instruction of program
     INCLUDE 'variables.x68'
 
     END    START        ; last line of source
+
 
 
 

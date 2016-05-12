@@ -8,6 +8,7 @@ INSTR0001:
     * TODO - some stuff from MOVE.B
         LEA         MOVE_TXT,A0
         JSR         PUSHBUFFER
+        JSR         UPDATE_OPCODE
         
         ADDQ        #2,D7
         ROR.W       #2,D7
@@ -20,6 +21,7 @@ INSTR0001:
         
         MOVEM.L     (SP)+,A0-A5/D0-D7
         RTS
+
 
 
 

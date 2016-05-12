@@ -13,6 +13,8 @@ DECODER:
     CMP.B       #0,(A1)                 ; check for ok
     BNE         FINISH                  ; exit on not okay
 
+    LEA         BUFFER_POS,A1
+    MOVE.W      #0,(A1)
     * get first 4 bits at address in A6
     MOVEA.L     A6,A0                   ; move starting address to A0 to manip
     MOVE.W      (A0),D5                 ; move data at A0 to D5 to manip
@@ -59,6 +61,29 @@ INST_TABLE:
     RTS
     JSR     INSTR1110
     RTS
+    
+* pushes the opcode text (null terminated)
+* located at A0 to the opcode var
+UPDATE_OPCODE:
+    LEA     OPCODE,A1
+    LEA     BUFFER_POS,A2
+    SUBA    (A2),A0
+
+UPD_OPCODE_LOOP:
+    MOVE.B  (A0)+,(A1)+
+    CMP.B   #0,(A0)
+    BEQ     UPD_OPCODE_DONE
+    BRA     UPD_OPCODE_LOOP
+
+UPD_OPCODE_DONE:
+    RTS
+
+* pushes the size text (B, W, L) located
+* at A0 to the size var
+UPDATE_SIZE:
+    LEA     SIZE,A1
+    MOVE.B  -(A0),(A1)
+    RTS
 
 FINISH:
     MOVEM.L     (SP)+,A0-A5/D0-D7       ; move registers back from stack
@@ -81,6 +106,7 @@ FINISH:
     INCLUDE     'instr/instr1101.x68'
     INCLUDE     'instr/instr1110.x68'
     INCLUDE     'instr/instr1111.x68'
+
 
 
 

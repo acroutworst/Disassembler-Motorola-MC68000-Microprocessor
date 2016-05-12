@@ -5,10 +5,12 @@
 * GLOBAL STUFF *
 ****************
 
-* I'm thinking we put what we're going to print out at some address
-BUFFER      DS.B    10
-ERROR       DS.W    1
+* Buffer, storage, and error status
+BUFFER      DS.B    40
 BUFFER_POS  DS.B    1
+ERROR       DS.W    1
+OPCODE      DS.B    5
+SIZE        DS.B    1
 
 CR          EQU     $0D         ; carriage return
 LF          EQU     $0A         ; line feed
@@ -74,9 +76,9 @@ B6TO7MASK   EQU     $00C0
 
 
 * SIZE MODIFIERS
-B           DC.B    '.B',0
-W           DC.B    '.W',0
-L           DC.B    '.L',0
+B           DC.B    'B',0
+W           DC.B    'W',0
+L           DC.B    'L',0
 
 * OPCODES
 MOVE_TXT    DC.B    'MOVE',0
@@ -105,6 +107,8 @@ ASR_TXT     DC.B    'ASR',0
 ROL_TXT     DC.B    'ROL',0
 ROR_TXT     DC.B    'ROR',0
 DATA_TXT    DC.B    'DATA',0
+
+
 
 
 

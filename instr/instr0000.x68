@@ -7,8 +7,11 @@ INSTR0000:
     LEA         BUFFER,A1               ; load the buffer to add to it
     LEA         ADDI_TXT,A0             ; load the addi text
     JSR         PUSHBUFFER              ; push the text to the buffer
+    JSR         UPDATE_OPCODE
+    
     MOVEM.L     (SP)+,A0-A5/D0-D7
     RTS
+
 
 *~Font name~Courier New~
 *~Font size~10~
