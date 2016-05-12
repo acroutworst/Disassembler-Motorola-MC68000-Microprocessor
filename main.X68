@@ -25,7 +25,7 @@ START:                  ; first instruction of program
 
     
     INCLUDE 'opcodes.x68'
-    INCLUDE 'bitmasker.x68'
+    INCLUDE 'utils/bitmasker.x68'
     INCLUDE 'utils/push_to_buffer.x68'
     INCLUDE 'input_validation.x68'
     INCLUDE 'CONVERT2HEX.x68'
@@ -33,6 +33,7 @@ START:                  ; first instruction of program
     INCLUDE 'variables.x68'
 
     END    START        ; last line of source
+
 
 
 
