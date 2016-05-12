@@ -43,8 +43,9 @@ ENDA
     MOVE.L A6,END_ADDR
        
 *check address validity
-CHECKADDY   
-    CMP.L END_ADDR,START_ADDR   *Compares The starting address to the ending address
+CHECKADDY
+    MOVEA.L START_ADDR,A5   
+    CMP.L   END_ADDR,A5   *Compares The starting address to the ending address --> CMP will only compare the source to a data register
 * Put program code here
     BGE STARTA     *If D1 (starting) is greater than D2 (end) go back for new addresses
        
@@ -75,18 +76,6 @@ PRINTERR
     MOVE.L A6,A1
     MOVE.B #13,D0
     TRAP #15
-  
-   *goes back to user to reenter
-
-    SIMHALT             ; halt simulator
-
-* Put variables and constants here
-    INCLUDE 'CONVERT2HEX.x68'
-    INCLUDE 'variables.x68'
-
-    END    START        ; last line of source
-
-
 
 *~Font name~Courier New~
 *~Font size~10~

@@ -28,10 +28,12 @@ START:                  ; first instruction of program
     INCLUDE 'bitmasker.x68'
     INCLUDE 'utils/push_to_buffer.x68'
     INCLUDE 'input_validation.x68'
+    INCLUDE 'CONVERT2HEX.x68'
     INCLUDE 'utils/get_size.x68'
     INCLUDE 'variables.x68'
 
     END    START        ; last line of source
+
 
 
 

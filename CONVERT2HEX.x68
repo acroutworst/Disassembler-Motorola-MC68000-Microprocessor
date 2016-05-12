@@ -8,7 +8,7 @@
 *START:                  ; first instruction of program
 CONVERT2HEX 
     MOVEM.L A0-A5/D0-D7,-(SP) * Move registers to stack to be moved 
-    *why only throguh A5 for Geoff
+    *why only throguh A5 for Geoff --> because A6 holds the current address being processed
     *(A2) indirect pointer to string length
     *A2 stores the current address passed in
     *D3 hold the length loop  
@@ -81,7 +81,7 @@ CONVERTUP
 ADD2STRING
 *loop through to add
     ADD.B D3,STRING2HEX
-    LSL.L #4,STRING2HEX
+    LSL.L #4,STRING2HEX * LSL will only do LSL.W if you aren't dealing with a data register
     BRA LOOP
  
 LOOPDONE
@@ -95,16 +95,6 @@ ERR
     MOVEA.L #00000000,A6                          *
     MOVEM.L (SP)+, A0-A5/D0-D7 *Move registers back from stack
     RTS
-
-
-   SIMHALT             ; halt simulator
-
-* Put variables and constants here
-    INCLUDE 'variables.x68'
-
-
-    END    START        ; last line of source
-
 
 *~Font name~Courier New~
 *~Font size~10~

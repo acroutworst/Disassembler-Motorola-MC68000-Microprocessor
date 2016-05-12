@@ -15,17 +15,17 @@ LF          EQU     $0A         ; line feed
 NEWLINE     DC.B    CR,LF,0     ; new line
 ************
 * IO STUFF *
-ADDYLENGTH EQU 8   *need 32 bit address length
+ADDYLENGTH  EQU     8   *need 32 bit address length
 
-HELLO DC.B 'Welcome to Teamy McTeamFaces Disassembler!',NEWLINE
-REQSTART DC.B 'Please enter in the starting location:',NEWLINE
-REQEND DC.B 'Please enter in the ending location:',NEWLINE
-ODDERR DC.B 'Starting address cant be odd, please reenter:',NEWLINE
+HELLO       DC.B    'Welcome to Teamy McTeamFaces Disassembler!',CR,LF,0
+REQSTART    DC.B    'Please enter in the starting location:',CR,LF,0
+REQEND      DC.B    'Please enter in the ending location:',CR,LF,0
+ODDERR      DC.B    'Starting address cant be odd, please reenter:',CR,LF,0
 *COMPLETE_REGISTER EQU D0-D7/A1-A7       
-ERRADD EQU #00000000
-PRINT DC.B 'Address DATA $'
-COMPARESPOT DS 16
-STRING2HEX DS 32
+ERRADD      EQU     00000000
+PRINT       DC.B    'Address DATA $'
+COMPARESPOT DS.B    16
+STRING2HEX  DS.B    32
 
 * storage for the start and end address
 START_ADDR  DS.L    1
@@ -105,6 +105,8 @@ ASR_TXT     DC.B    'ASR',0
 ROL_TXT     DC.B    'ROL',0
 ROR_TXT     DC.B    'ROR',0
 DATA_TXT    DC.B    'DATA',0
+
+
 
 *~Font name~Courier New~
 *~Font size~10~
