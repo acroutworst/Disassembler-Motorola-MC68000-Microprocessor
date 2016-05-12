@@ -81,7 +81,9 @@ CONVERTUP
 ADD2STRING
 *loop through to add
     ADD.B D3,STRING2HEX
-    LSL.L #4,STRING2HEX * LSL will only do LSL.W if you aren't dealing with a data register
+    MOVE.L  #STRING2HEX,D4
+    LSL.L #4,D4 * LSL will only do LSL.W if you aren't dealing with a data register
+    MOVE.L  D4,STRING2HEX
     BRA LOOP
  
 LOOPDONE
@@ -95,6 +97,7 @@ ERR
     MOVEA.L #00000000,A6                          *
     MOVEM.L (SP)+, A0-A5/D0-D7 *Move registers back from stack
     RTS
+
 
 *~Font name~Courier New~
 *~Font size~10~

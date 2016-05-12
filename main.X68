@@ -11,12 +11,13 @@ START:                  ; first instruction of program
     * test junk data
     MOVEA.L #$6000,A6
     * MOVE.W  #$1639,(A6)
-    * MOVE.W  #$4E71,(A6)         ; throwing machine for NOP into mem address
-    MOVE.W  #$1601,(A6)           ; MOVE.B D0,D3
+    MOVE.W  #$4E71,(A6)         ; throwing machine for NOP into mem address
+    * MOVE.W  #$1601,(A6)           ; MOVE.B D0,D3
+    
     LEA     ERROR,A0
     MOVE.L  #0,(A0)
 
-    JSR     DISPLAY
+    * JSR     DISPLAY
     JSR     DECODER
 
     SIMHALT             ; halt simulator
@@ -33,6 +34,7 @@ START:                  ; first instruction of program
     INCLUDE 'variables.x68'
 
     END    START        ; last line of source
+
 
 
 
