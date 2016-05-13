@@ -8,6 +8,15 @@
 * ** JSR                           *
 ************************************
 INSTR0100:
+    * check for LEA
+    MOVE.W  (A6),D5
+    MOVE.B  #6,D4
+    JSR     BITMASKER
+    
+    CMP.B   #7,D5
+    BNE     FOUR_SETUP
+
+FOUR_SETUP:
     MOVE.B  #1,D4
     MOVE.W  (A6),D5
     JSR     BITMASKER         ; mask the second set of 4 bits
@@ -137,8 +146,15 @@ FOUR1101:
 
 **************************************************
 * Instructions With 1110 as Second Set of 4 Bits *
-* ** NOP
-* ** TODO - finish this list
+* ** NOP                                         *
+* ** RTS                                         *
+* ** JSR                                         *
+**************************************************
+* Optional                                       *
+* ** TRAPV                                       *
+* ** STOP                                        *
+* ** RESET                                       *
+* ** JMP                                         *
 **************************************************
 FOUR1110:
    * mask for last 8 bits to compare
@@ -152,6 +168,16 @@ FOUR1110:
    * check for RTS
    CMP.B       #$75,D5
    BEQ         HNDL_RTS
+   
+   * check for JSR
+   MOVE.W      (A6),D5
+   AND.W       #$00C0,D5
+   LSR.W       #6,D5
+   CMP.B       #$2,D5
+   BEQ         HNDL_JSR
+   
+   JSR         NO_OPCODE
+   BRA         FINISH_FOUR1110
 
 HNDL_NOP:
     LEA        NOP_TXT,A0
@@ -159,6 +185,10 @@ HNDL_NOP:
 
 HNDL_RTS:
     LEA        RTS_TXT,A0
+    BRA        FINISH_FOUR1110
+    
+HNDL_JSR:
+    LEA        JSR_TXT,a0
     BRA        FINISH_FOUR1110
     
 FINISH_FOUR1110:
@@ -170,6 +200,8 @@ FINISH_FOUR1110:
 **************************************************
 FOUR1111:
     RTS
+
+
 
 *~Font name~Courier New~
 *~Font size~10~
