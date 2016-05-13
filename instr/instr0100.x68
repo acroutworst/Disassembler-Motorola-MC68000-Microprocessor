@@ -8,25 +8,32 @@
 * ** JSR                           *
 ************************************
 INSTR0100:
+    MOVEM.L A0-A5/D0-D7,-(SP)       ; move registers to the stack
     * check for LEA
-    MOVE.W  (A6),D5
-    MOVE.B  #6,D4
-    JSR     BITMASKER
+    MOVE.W  (A6),D5                 ; move the current instruction to d5
+    MOVE.B  #6,D4                   ; choose bitmask routine
+    JSR     BITMASKER               ; jump to the bitmasker
     
-    CMP.B   #7,D5
-    BNE     FOUR_SETUP
+    CMP.B   #7,D5                   ; compare the bits to %111
+    BNE     FOUR_SETUP              ; not LEA, go to jump table
+    
+    LEA     LEA_TXT,A0              ; is LEA, load the text
+    JSR     PUSHBUFFER              ; push lea text to buffer
+    JSR     UPDATE_OPCODE           ; update the opcode variable
+    BRA     FOUR_DONE               ; all done
 
 FOUR_SETUP:
-    MOVE.B  #1,D4
-    MOVE.W  (A6),D5
-    JSR     BITMASKER         ; mask the second set of 4 bits
+    MOVE.B  #1,D4                   ; choose the bitmask routine (second 4)
+    MOVE.W  (A6),D5                 ; move the instruction into d5
+    JSR     BITMASKER               ; mask the second set of 4 bits
     
-    LEA     FOUR_TABLE,A0
-    MULU    #8,D5
-    JSR     0(A0,D5)
-    RTS
+    LEA     FOUR_TABLE,A0           ; load the jump table
+    MULU    #8,D5                   ; get the offset
+    JSR     0(A0,D5)                ; jump into the table
+    BRA     FOUR_DONE               ; all done here
 
-* need a jump table here
+*********************************
+* Jump Table for the second set of 4 bits *
 FOUR_TABLE:
    JSR      FOUR0000
    RTS
@@ -74,8 +81,24 @@ FOUR0001:
     
 **************************************************
 * Instructions With 0010 as Second Set of 4 Bits *
+* ** CLR - done                                  *
 **************************************************
 FOUR0010:
+    LEA         CLR_TXT,A0          ; load the CLR text
+    JSR         PUSHBUFFER          ; push to buffer
+    JSR         UPDATE_OPCODE       ; update the opcode
+    
+    * prep for getting size
+    * size lives at [7] and is 2 bits
+    MOVE.B      #1,D7               ; move in size bit
+    ROR.W       #1,D7               ; rotate to the top
+    MOVE.B      #7,D7               ; move in starting index
+    ROR.W       #4,D7               ; rotate to the top
+    
+    SWAP        D7                  ; swap size word to the higher order
+    MOVE.W      (A6),D7             ; move the instruction word in
+            
+    JSR         GET_OP_SIZE         ; get the size
     RTS
 
 **************************************************
@@ -110,6 +133,10 @@ FOUR0111:
 
 **************************************************
 * Instructions With 1000 as Second Set of 4 Bits *
+**************************************************
+* Optional                                       *
+* ** SWAP                                        *
+* ** EXT                                         *
 **************************************************
 FOUR1000:
     RTS
@@ -146,53 +173,61 @@ FOUR1101:
 
 **************************************************
 * Instructions With 1110 as Second Set of 4 Bits *
-* ** NOP                                         *
-* ** RTS                                         *
-* ** JSR                                         *
+* ** NOP - done                                  *
+* ** RTS - done                                  *
+* ** JSR - done                                  *
 **************************************************
 * Optional                                       *
 * ** TRAPV                                       *
 * ** STOP                                        *
 * ** RESET                                       *
-* ** JMP                                         *
+* ** JMP - done                                  *
 **************************************************
 FOUR1110:
    * mask for last 8 bits to compare
-   MOVE.W      (A6),D5
-   AND.W       #$00FF,D5
+   MOVE.W      (A6),D5              ; move the instruction in
+   AND.W       #$00FF,D5            ; mask for last 8
    
    * check for NOP
-   CMP.B       #$71,D5
-   BEQ         HNDL_NOP
+   CMP.B       #$71,D5              ; cmp to NOP
+   BEQ         HNDL_NOP             ; handle NOP
    
    * check for RTS
-   CMP.B       #$75,D5
-   BEQ         HNDL_RTS
+   CMP.B       #$75,D5              ; cmp to RTS
+   BEQ         HNDL_RTS             ; handle RTS
    
    * check for JSR
-   MOVE.W      (A6),D5
-   AND.W       #$00C0,D5
-   LSR.W       #6,D5
-   CMP.B       #$2,D5
-   BEQ         HNDL_JSR
+   MOVE.W      (A6),D5              ; move the instruction in
+   AND.W       #$00C0,D5            ; mask for bits 6 and 7
+   LSR.W       #6,D5                ; shift them to the right end
+   CMP.B       #$2,D5               ; cmp to JSR
+   BEQ         HNDL_JSR             ; handle JSR
    
-   JSR         NO_OPCODE
-   BRA         FINISH_FOUR1110
+   CMP.B       #$3,D5               ; cmp to JMP
+   BEQ         HNDL_JMP             ; handle JMP
+   
+   JSR         NO_OPCODE            ; no opcode found
+   BRA         FINISH_FOUR1110      ; done here
 
 HNDL_NOP:
-    LEA        NOP_TXT,A0
-    BRA        FINISH_FOUR1110
+    LEA        NOP_TXT,A0           ; load NOP text
+    BRA        FINISH_FOUR1110      ; finish up
 
 HNDL_RTS:
-    LEA        RTS_TXT,A0
-    BRA        FINISH_FOUR1110
+    LEA        RTS_TXT,A0           ; load RTS text
+    BRA        FINISH_FOUR1110      ; finish up
     
 HNDL_JSR:
-    LEA        JSR_TXT,a0
-    BRA        FINISH_FOUR1110
+    LEA        JSR_TXT,A0           ; load JSR text
+    BRA        FINISH_FOUR1110      ; finish up
+    
+HNDL_JMP:
+    LEA        JMP_TXT,A0           ; load JMP text
+    BRA        FINISH_FOUR1110      ; finish up
     
 FINISH_FOUR1110:
-    JSR        PUSHBUFFER
+    JSR        PUSHBUFFER           ; push selected text to buffer
+    JSR        UPDATE_OPCODE        ; update the opcode
     RTS
 
 **************************************************
@@ -201,6 +236,9 @@ FINISH_FOUR1110:
 FOUR1111:
     RTS
 
+FOUR_DONE:
+    MOVEM.L    (SP)+,A0-A5/D0-D7
+    RTS    
 
 
 *~Font name~Courier New~
