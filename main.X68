@@ -6,7 +6,7 @@
 *-----------------------------------------------------------
     ORG    $1000
 START:                  
-    JSR     DISPLAY
+    * JSR     DISPLAY
     
     
 ***************************
@@ -24,6 +24,7 @@ START:
 * ** in order to decode each instruction, line by line.        *
 ****************************************************************
 MAIN_LOOP:
+    MOVE.W  #0,ERROR
     JSR     CLEAR_VARS
     JSR     DECODER
     * ; JSR <main ea subroutine>

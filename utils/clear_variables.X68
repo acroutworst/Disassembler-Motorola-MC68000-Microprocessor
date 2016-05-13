@@ -21,6 +21,7 @@ CLEAR_VARS:
     MOVE.B      #40,D1
     BSR         VARS_LOOP
     
+    MOVEM.L     (SP)+,A0-A6/D0-D7
     RTS
     
 VARS_LOOP:
@@ -32,6 +33,7 @@ VARS_LOOP:
     
 
     
+
 
 *~Font name~Courier New~
 *~Font size~10~
