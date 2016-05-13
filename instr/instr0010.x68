@@ -28,7 +28,7 @@ DONE0010:
     
     ADDQ.W      #1,D7
     ROR.W       #1,D7
-    ADDQ.W      #13,D7
+    ADD.W      #13,D7
     ROR.W       #4,D7
     SWAP        D7
     MOVE.W      (A6),D7
@@ -37,6 +37,7 @@ DONE0010:
     
     MOVEM.L     (SP)+,A0-A5/D0-D7
     RTS
+
 
 *~Font name~Courier New~
 *~Font size~10~

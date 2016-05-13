@@ -5,21 +5,34 @@
 * Description:
 *-----------------------------------------------------------
     ORG    $1000
-START:                  ; first instruction of program
-
-* Put program code here
+START:                  
+    JSR     DISPLAY
+    
+    
+***************************
+* TEST DATA
+***************************
     * test junk data
     MOVEA.L #$6000,A6
     * MOVE.W  #$1639,(A6)
     MOVE.W  #$4E71,(A6)         ; throwing machine for NOP into mem address
     * MOVE.W  #$1601,(A6)           ; MOVE.B D0,D3
     
-    LEA     ERROR,A0
-    MOVE.L  #0,(A0)
-
-    * JSR     DISPLAY
+****************************************************************
+* Main Program Loop                                            *
+* ** This loops through the address space collected by DISPLAY *
+* ** in order to decode each instruction, line by line.        *
+****************************************************************
+MAIN_LOOP:
+    JSR     CLEAR_VARS
     JSR     DECODER
-
+    * ; JSR <main ea subroutine>
+    
+    * ; JSR <print subroutine>
+    LEA     END_ADDR,A0
+    MOVE.L  (A0),D0
+    CMP.L   A6,D0
+    BLT     MAIN_LOOP
     SIMHALT             ; halt simulator
 
 * Put variables and constants here
@@ -31,9 +44,12 @@ START:                  ; first instruction of program
     INCLUDE 'input_validation.x68'
     INCLUDE 'CONVERT2HEX.x68'
     INCLUDE 'utils/get_size.x68'
+    INCLUDE 'utils/clear_variables.x68'
+    INCLUDE 'no_opcode.x68'
     INCLUDE 'variables.x68'
 
     END    START        ; last line of source
+
 
 
 

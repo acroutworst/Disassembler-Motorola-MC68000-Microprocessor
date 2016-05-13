@@ -11,17 +11,17 @@ CLEAR_VARS:
     LEA         BUFFER_POS,A0
     LEA         OPCODE,A1
     LEA         SIZE,A2
-    LEA         ERROR,A3
     MOVE.B      #0,(A0)
     MOVE.B      #0,(A2)
-    MOVE.B      #0,(A3)
-    
+        
     MOVE.B      #5,D1
     BSR         VARS_LOOP
     
     LEA         BUFFER,A1
     MOVE.B      #40,D1
     BSR         VARS_LOOP
+    
+    RTS
     
 VARS_LOOP:
     MOVE.B      #0,(A1)+
