@@ -91,12 +91,15 @@ LOOPDONE
 
     MOVEA.L #STRING2HEX,A6
     MOVE.L D5,(A6)
+    MOVEM.L (SP)+, A0-A5/D0-D7 *Move registers back from stack
+
     RTS
 
 ERR
     MOVEA.L #00000000,A6                          *
     MOVEM.L (SP)+, A0-A5/D0-D7 *Move registers back from stack
     RTS
+
 *~Font name~Courier New~
 *~Font size~10~
 *~Tab type~1~
