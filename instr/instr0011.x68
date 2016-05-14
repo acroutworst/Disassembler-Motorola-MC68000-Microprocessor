@@ -1,11 +1,14 @@
 ************************************
 * Instructions Beginning With 0011 *
-* ** MOVE.W                        *
-* ** MOVEA.W                       *
+* ** MOVE.W - done                 *
+* ** MOVEA.W - done                *
+*                                  *
+* This subroutine is done!         *
 ************************************
 INSTR0011:
-    JSR     INSTR0010       ; call INSTR0010 as identical
+    JSR     INSTR0010       ; call INSTR0010 as identical to this one
     RTS
+
 
 *~Font name~Courier New~
 *~Font size~10~

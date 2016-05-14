@@ -1,7 +1,9 @@
 ************************************
 * Instructions Beginning With 0010 *
-* ** MOVE.L                        *
-* ** MOVEA.L                       *
+* ** MOVE.L - done                 *
+* ** MOVEA.L - done                *
+*                                  *
+* This subroutine is done!         *
 ************************************
 INSTR0010:
     MOVEM.L     A0-A5/D0-D7,-(SP)       ; registers to stack
@@ -12,33 +14,32 @@ INSTR0010:
     MOVE.B      #6,D4                   ; 8 to 6
     JSR         BITMASKER
     
-    CMP.B       #1,D5
-    BNE         MOVE0010
-    LEA         MOVEA_TXT,A0
+    CMP.B       #1,D5                   ; compare masked bits to 1 (MOVEA)
+    BNE         MOVE0010                ; not MOVEA
+    LEA         MOVEA_TXT,A0            ; is MOVEA
     BRA         DONE0010
     
 MOVE0010:
-    LEA         MOVE_TXT,A0
+    LEA         MOVE_TXT,A0             ; load MOVE text
     BRA         DONE0010
     
 DONE0010:
     
-    JSR         PUSHBUFFER
-    JSR         UPDATE_OPCODE
+    JSR         PUSHBUFFER              ; push the text to the buffer
+    JSR         UPDATE_OPCODE           ; update the opcode
     
-    ADDQ.W      #1,D7
-    ROR.W       #1,D7
-    ADD.W      #13,D7
-    ROR.W       #4,D7
-    SWAP        D7
-    MOVE.W      (A6),D7
+    * prepare the size information for getting operation size
+    ADDQ.W      #1,D7                   ; 2 bit size field
+    ROR.W       #1,D7                   ; rotate to top
+    ADD.W       #13,D7                  ; 13 starting index
+    ROR.W       #4,D7                   ; rotate to top
+    SWAP        D7                      ; swap size to higher order word
+    MOVE.W      (A6),D7                 ; move instruction into lower order word
     
-    JSR         GET_OP_SIZE
+    JSR         GET_OP_SIZE             ; get the size
     
     MOVEM.L     (SP)+,A0-A5/D0-D7
     RTS
-
-
 *~Font name~Courier New~
 *~Font size~10~
 *~Tab type~1~
