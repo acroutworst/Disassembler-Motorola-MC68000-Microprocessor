@@ -34,11 +34,15 @@ MAIN_LOOP:
     MOVE.L  (A0),D0
     CMP.L   A6,D0
     BLT     MAIN_LOOP
+    
     SIMHALT             ; halt simulator
 
-* Put variables and constants here
 
-    
+************************************
+* Includes                         *
+* ** List of all subroutine files  *
+* ** to be included in the program *
+************************************    
     INCLUDE 'opcodes.x68'
     INCLUDE 'utils/bitmasker.x68'
     INCLUDE 'utils/push_to_buffer.x68'
@@ -49,7 +53,10 @@ MAIN_LOOP:
     INCLUDE 'no_opcode.x68'
     INCLUDE 'variables.x68'
 
+
+* fin
     END    START        ; last line of source
+
 
 
 
