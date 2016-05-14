@@ -8,6 +8,8 @@
 * ** JSR                           *
 ************************************
 INSTR0100:
+    MOVEM.L A0-A5/D0-D7,-(SP)
+    
     * check for LEA
     MOVE.W  (A6),D5         ; move the instruction in
     MOVE.B  #6,D4           ; choose bitmask routine
@@ -16,8 +18,18 @@ INSTR0100:
     CMP.B   #7,D5           ; compare to LEA
     BNE     FOUR_SETUP      ; not LEA
     
-    * TODO - complete the LEA handling
-
+    * handling LEA
+    LEA     LEA_TXT,A0      ; load LEA text
+    JSR     PUSHBUFFER      ; push lea text to buffer
+    JSR     UPDATE_OPCODE   ; update the opcode with lea
+    
+    MOVEM.L (SP)+,A0-A5/D0-D7
+    RTS
+    
+****************************************
+* Setup for masking off the second set *
+* of 4 bits.                           *
+****************************************
 FOUR_SETUP:
     MOVE.B  #1,D4             ; choose the bitmasking routine
     MOVE.W  (A6),D5           ; move the instruction in
@@ -237,6 +249,7 @@ FINISH_FOUR1110:
 **************************************************
 FOUR1111:
     RTS
+
 
 
 
