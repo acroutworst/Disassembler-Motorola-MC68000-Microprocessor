@@ -109,6 +109,25 @@ ROR_TXT     DC.B    'ROR',0
 DATA_TXT    DC.B    'DATA',0
 ERR_TXT     DC.B    'ERROR',0
 
+* Bcc SPECIFIC TEXT
+BRA_TXT      DC.B    'BRA',0
+BSR_TXT      DC.B    'BSR',0
+BHI_TXT      DC.B    'BHI',0
+BLS_TXT      DC.B    'BLS',0
+BCC_TXT      DC.B    'BCC',0
+BCS_TXT      DC.B    'BCS',0
+BNE_TXT      DC.B    'BNE',0
+BEQ_TXT      DC.B    'BEQ',0
+BVC_TXT      DC.B    'BVC',0
+BVS_TXT      DC.B    'BVS',0
+BPL_TXT      DC.B    'BPL',0
+BMI_TXT      DC.B    'BMI',0
+BGE_TXT      DC.B    'BGE',0
+BLT_TXT      DC.B    'BLT',0
+BGT_TXT      DC.B    'BGT',0
+BLE_TXT      DC.B    'BLE',0
+
+
 
 
 
