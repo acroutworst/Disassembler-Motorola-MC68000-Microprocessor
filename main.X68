@@ -1,6 +1,6 @@
 *-----------------------------------------------------------
 * Title      : Disassembler
-* Written by :
+* Written by : Geoff Friesen, Adam Croutworst, Nguyen Nguyen
 * Date       :
 * Description:
 *-----------------------------------------------------------
@@ -27,6 +27,7 @@ MAIN_LOOP:
     MOVE.W  #0,ERROR
     JSR     CLEAR_VARS
     JSR     DECODER
+    JSR     EADECODER
     * ; JSR <main ea subroutine>
     
     * ; JSR <print subroutine>
@@ -44,6 +45,7 @@ MAIN_LOOP:
 * ** to be included in the program *
 ************************************    
     INCLUDE 'opcodes.x68'
+    INCLUDE 'effective_address.x86'
     INCLUDE 'utils/bitmasker.x68'
     INCLUDE 'utils/push_to_buffer.x68'
     INCLUDE 'input_validation.x68'
@@ -56,6 +58,8 @@ MAIN_LOOP:
 
 * fin
     END    START        ; last line of source
+
+
 
 
 
