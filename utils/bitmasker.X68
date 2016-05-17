@@ -41,6 +41,8 @@ BITMASKER:
 * ** 5 - MASK5TO3 - masks for second to last 3 bits
 * ** 6 - MASK8TO6 - masks for bits 8 to 6
 * ** 7 - MASK7TO6 - masks for bits 7 and 6
+* ** 8 - MASK10TO9 - masks for bits 10 and 9
+* ** 9 - MASK4TO3 - masks for bits 4 and 3
 MASK_TABLE:
     JSR     MASK15TO12
     RTS
@@ -57,6 +59,10 @@ MASK_TABLE:
     JSR     MASK8TO6
     RTS
     JSR     MASK7TO6
+    RTS
+    JSR     MASK10TO9
+    RTS
+    JSR     MASK4TO3
     RTS
 
 
@@ -125,6 +131,18 @@ MASK7TO6:
     AND.W       #B6TO7MASK,D5
     LSR.W       #6,D5
     RTS
+*************
+* MASK10TO9 *
+*************
+MASK10TO9:
+    RTS
+
+************
+* MASK4TO3 *
+************
+MASK4TO3:
+    RTS
+
 
 
 
