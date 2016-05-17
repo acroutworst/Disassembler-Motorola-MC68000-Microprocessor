@@ -73,6 +73,8 @@ B6TO8MASK   EQU     $01C0
 
 * size mask
 B6TO7MASK   EQU     $00C0
+B9TO10MASK  EQU     $0600
+B3TO4MASK   EQU     $0018
 
 
 * SIZE MODIFIERS
@@ -106,6 +108,8 @@ ASL_TXT     DC.B    'ASL',0
 ASR_TXT     DC.B    'ASR',0
 ROL_TXT     DC.B    'ROL',0
 ROR_TXT     DC.B    'ROR',0
+ROXL_TXT    DC.B    'ROXL',0
+ROXR_TXT    DC.B    'ROXR',0
 DATA_TXT    DC.B    'DATA',0
 ERR_TXT     DC.B    'ERROR',0
 
@@ -126,6 +130,7 @@ BGE_TXT      DC.B    'BGE',0
 BLT_TXT      DC.B    'BLT',0
 BGT_TXT      DC.B    'BGT',0
 BLE_TXT      DC.B    'BLE',0
+
 
 
 
