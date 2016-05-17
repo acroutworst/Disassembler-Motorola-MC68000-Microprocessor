@@ -10,68 +10,98 @@
 *              ** while the actual instruction word is in
 *              ** the lower order word of D7.
 *              ** size location
-*                 ** Bit 15-12: start index
-*                 ** Bit 11: number of bits
+*                 ** Bit 15: size needed indicator (1 for needed)
+*                 ** Bit 14-11: start index of size
+*                 ** Bit 10: number of bits (0 for 1, 1 for 2)
+*                 ** Bit 9-8: size type (0 for common, 1 for 1 bit, 2 for MOVE)
 *-----------------------------------------------------------
 GET_OP_SIZE:
     MOVEM.L     A0-A5/D0-D6,-(SP)       ; move the registers to stack
 
     SWAP        D7                      ; swap the high and low words
-    ROL.W       #4,D7                   ; rotate the first 4 bits to the bottom
-    MOVE.B      D7,D0                   ; store start index in D0
+    
+    ROL.W       #1,D7                   ; rotate needed bit to bottom
+    MOVE.B      D7,D0                   ; store needed in D0
+    LSR.B       #1,D7                   ; consume needed bit
+    
+    CMP.B       #0,D0                   ; check if size is needed
+    BEQ         GET_SIZEDONE            ; don't need size, exit
+    
+    * continue getting size info
+    ROL.W       #4,D7                   ; rotate start index to the bottom
+    MOVE.B      D7,D1                   ; store start index in D1
     LSR.B       #4,D7                   ; consume the start index
-    ROL.W       #2,D7                   ; rotate the number of bits in the size
+    
+    ROL.W       #1,D7                   ; rotate the number of bits in the size
                                         ; to the bottom
-    MOVE.B      D7,D1                   ; store the number of bits in D1
-    MULU        #8,D1                   ; offset for SIZE_TABLE
+    MOVE.B      D7,D2                   ; store the number of bits in D2
+    LSR.B       #1,D7                   ; consume the size
+    
+    ROL.W       #2,D7                   ; rotate the type info to the bottom
+    MOVE.B      D7,D3                   ; store type info in D3
+    
+
+    MULU        #8,D3                   ; offset for SIZE_TABLE
     SWAP        D7                      ; swap the instruction back to lower word
     
     LEA         SIZE_TABLE,A3           ; load the size table
     
-    JSR         0(A3,D1)                ; jump into SIZE_TABLE
+    JSR         0(A3,D3)                ; jump into SIZE_TABLE
     BRA         GET_SIZEDONE
 
-    
-    
 SIZE_TABLE
-    JSR         SIZE0
+    JSR         TYPE0
     RTS
-    JSR         SIZE1
+    JSR         TYPE1
     RTS
-    JSR         SIZE2
-    RTS
-
-**************************************
-* SIZE0                              *
-* ** called when number of size bits *
-* ** is 0                            *
-**************************************
-SIZE0:
-    * TODO
+    JSR         TYPE2
     RTS
 
 **************************************
-* SIZE1                              *
-* ** called when number of size bits *
-* ** is 1                            *
+* TYPE0                              *
+* ** called for size type 0          *
+* ** B: 00                           *
+* ** W: 01                           *
+* ** L: 10                           *
 **************************************
-SIZE1:
-    ADDQ        #1,D2           ; 1 bit in size field
-    JSR         SHIFT_AND_MASK  ; shift and mask the instruction
-    CMP.B       #0,D7           ; check for zero
-    BEQ         WORD_SIZE       ; zero - word size
-    BRA         LONG_SIZE       ; one - long size
-
-**************************************
-* SIZE2                              *
-* ** called when number of size bits *
-* ** is 2                            *
-**************************************
-SIZE2:
-    ADDQ        #3,D2           ; 2 bits in size field
+TYPE0:
+    ADDQ        #2,D5
     JSR         SHIFT_AND_MASK
-    CMP.B       #7,D0
-    BEQ         COMMON_SIZE
+    
+    CMP.B       #0,D7
+    BEQ         BYTE_SIZE
+    CMP.B       #2,D7
+    BEQ         LONG_SIZE
+    CMP.B       #1,D7
+    BEQ         WORD_SIZE
+    
+    BRA         SIZE_ERROR
+
+**************************************
+* TYPE1                              *
+* ** called for size type 1          *
+* ** W: 0                            *
+* ** L: 1                            *
+**************************************
+TYPE1:
+    ADDQ        #1,D5
+    JSR         SHIFT_AND_MASK
+    
+    CMP.B       #0,D7
+    BEQ         WORD_SIZE
+    BNE         LONG_SIZE
+    
+**************************************
+* TYPE2                              *
+* ** called for size type 2          *
+* ** B: 01                           *
+* ** W: 11                           *
+* ** L: 10                           *
+**************************************
+TYPE2:
+    ADDQ        #2,D5
+    JSR         SHIFT_AND_MASK
+    
     CMP.B       #1,D7
     BEQ         BYTE_SIZE
     CMP.B       #3,D7
@@ -90,21 +120,11 @@ SIZE2:
 * ** and number of bits                   *
 *******************************************
 SHIFT_AND_MASK:
-    LSL.W       D0,D2           ; shift the mask bit left start index bits
-    AND.W       D2,D7           ; mask the instruction
-    LSR.W       D0,D7           ; shift the size field to the right
+    LSL.W       D1,D5           ; shift the mask bit left start index bits
+    AND.W       D5,D7           ; mask the instruction
+    LSR.W       D1,D7           ; shift the size field to the right
     RTS
 
-COMMON_SIZE:
-    CMP.B       #0,D7
-    BEQ         BYTE_SIZE
-    CMP.B       #2,D7
-    BEQ         LONG_SIZE
-    CMP.B       #3,D7
-    BEQ         WORD_SIZE
-    
-    BRA         SIZE_ERROR
-    
 PUSH_SIZE:        
     JSR         PUSHBUFFER
     JSR         UPDATE_SIZE
@@ -143,11 +163,6 @@ SIZE_ERROR:
 GET_SIZEDONE:
     MOVEM.L     (SP)+,A0-A5/D0-D6
     RTS
-
-
-
-
-
 *~Font name~Courier New~
 *~Font size~10~
 *~Tab type~1~
