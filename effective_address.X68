@@ -11,7 +11,7 @@ EADECODER:
     CMP.B       #0,(A1)             ; compare error to 0 to check for ok status
     BNE         FINISH
     
-    LEA         BUFFER_POS,A1
+    LEA         OP_BUFFER_POS,A1    ; <GEOFF> not sure what you're doing here...
     MOVE.W      #6,(A1)             ; load the ea bits passed from Opcode (find out opcode ending)
     MOVEA.L     A6,A0
     MOVE.W      (A0),D5
@@ -22,15 +22,19 @@ EADECODER:
     
     LEA         EA_TABLE,A0         ; load the effective address jump table
     JSR         0(A0,D5)            ; call jump table
-    BRA         FINISH              ; branch to finish when done
+    BRA         FINISH_EADECODER    ; branch to finish when done
     
 
 * push ascii format ea to display
     
     
-FINISH:
+FINISH_EADECODER:
     MOVEM.L     (SP)+,A0-A5/D0-D7   ; move registers back from stack
     RTS                             ; exit subroutine
+
+    INCLUDE 'eamodes/ea_table.x68'
+
+
 *~Font name~Courier New~
 *~Font size~10~
 *~Tab type~1~

@@ -118,10 +118,14 @@ RTS_TXT     DC.B    'RTS',0
 LEA_TXT     DC.B    'LEA',0
 CLR_TXT     DC.B    'CLR',0
 DIVU_TXT    DC.B    'DIVU',0
-OR_TEXT     DC.B    'OR',0
+DIVS_TXT    DC.B    'DIVS',0
+OR_TXT      DC.B    'OR',0
 SUB_TEXT    DC.B    'SUB',0
+SUBQ_TXT    DC.B    'SUBQ',0
 CMP_TXT     DC.B    'CMP',0
+CMPA_TXT    DC.B    'CMPA',0
 MULS_TXT    DC.B    'MULS',0
+MULU_TXT    DC.B    'MULU',0
 AND_TXT     DC.B    'AND',0
 LSL_TXT     DC.B    'LSL',0
 LSR_TXT     DC.B    'LSR',0
@@ -151,6 +155,9 @@ BGE_TXT      DC.B    'BGE',0
 BLT_TXT      DC.B    'BLT',0
 BGT_TXT      DC.B    'BGT',0
 BLE_TXT      DC.B    'BLE',0
+
+
+
 
 
 
