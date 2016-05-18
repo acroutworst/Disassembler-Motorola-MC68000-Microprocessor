@@ -59,6 +59,21 @@ MINUS       DC.B    '-',0
 D           DC.B    'D',0
 A           DC.B    'A',0
 
+* for printing hex addresses
+TXT_0       DC.B    '0',0
+TXT_1       DC.B    '1',0
+TXT_2       DC.B    '2',0
+TXT_3       DC.B    '3',0
+TXT_4       DC.B    '4',0
+TXT_5       DC.B    '5',0
+TXT_6       DC.B    '6',0
+TXT_7       DC.B    '7',0
+TXT_8       DC.B    '8',0
+TXT_9       DC.B    '9',0
+TXT_C       DC.B    'C',0
+TXT_E       DC.B    'E',0
+TXT_F       DC.B    'F',0
+
 
 
 ****************
@@ -136,6 +151,7 @@ BGE_TXT      DC.B    'BGE',0
 BLT_TXT      DC.B    'BLT',0
 BGT_TXT      DC.B    'BGT',0
 BLE_TXT      DC.B    'BLE',0
+
 
 
 
