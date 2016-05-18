@@ -4,7 +4,7 @@
 ************************************
 INSTR0110:
     MOVEM.L     A0-A5/D0-D7,-(SP)       ; move registers to stack
-    
+    CLR         D7
     * setup bitmasker
     MOVE.B      #1,D4
     MOVE.W      (A6),D5
@@ -15,6 +15,8 @@ INSTR0110:
     
     JSR         PUSHBUFFER
     JSR         UPDATE_OPCODE
+    
+    
     
     MOVEM.L     (SP)+,A0-A5,D0-D7
     RTS
@@ -181,6 +183,7 @@ BCC1110:
 BCC1111:
     LEA     BLE_TXT,A0
     RTS
+
 
 
 

@@ -27,29 +27,39 @@ INSTR1011:
 
 HNDL_CMP:
     * setup size for CMP
-    MOVE.B      #1,D7
-    ROR.W       #1,D7
-    MOVE.B      #7,D7
-    ROR.W       #4,D7
-    SWAP        D7
-    MOVE.W      (A6),D7
-    LEA         CMP_TXT,A0
-    BRA         PUSH_1011
+    ROR.W       #2,D7           ; type 0 size field
+    ADDQ.B      #1,D7           ; 2 bit size field
+    ROR.W       #1,D7           ; rotate to top
+    ADDQ.B      #7,D7           ; start index = 7
+    ROR.W       #4,D7           ; rotate to top
+    ADDQ.B      #1,D7           ; indicate size needed
+    ROR.W       #1,D7           ; rotate to top
+    
+    SWAP        D7              ; swap size info to high order word
+    MOVE.W      (A6),D7         ; move instruction in
+    LEA         CMP_TXT,A0      ; load cmp text
+    BRA         PUSH_1011       ; push to buffer
 
 HNDL_CMPA:
     * setup size for CMPA
-    ROR.W       #1,D7
-    MOVE.B      #8,D7
-    ROR.W       #4,D7
-    SWAP        D7
-    MOVE.W      (A6),D7
-    LEA         CMPA_TXT,A0
-    BRA         PUSH_1011
+    ADDQ.B      #1,D7           ; type 1 size field
+    ROR.W       #2,D7           ; rotate to top
+    ROR.W       #1,D7           ; 1 bit size field
+    ADDQ.B      #8,D7           ; start index = 8
+    ROR.W       #4,D7           ; rotate to top
+    ADDQ.B      #1,D7           ; indicate size needed
+    ROR.W       #1,D7           ; rotate to top
+    
+    SWAP        D7              ; swap size info to higher order word
+    MOVE.W      (A6),D7         ; move instruction in to lower order word
+    
+    LEA         CMPA_TXT,A0     ; load cmpa text
+    BRA         PUSH_1011       ; push to buffer
 
 PUSH_1011:
     JSR         PUSHBUFFER
     JSR         UPDATE_OPCODE
-    CMP.B       #0,D7
+    CMP.B       #0,D7           ; check if need to get size
     BEQ         FINISH_1011
     JSR         GET_OP_SIZE
     BRA         FINISH_1011
@@ -57,6 +67,7 @@ PUSH_1011:
 FINISH_1011:
     MOVEM.L     (SP)+,A0-A5/D0-D7    
     RTS
+
 
 *~Font name~Courier New~
 *~Font size~10~

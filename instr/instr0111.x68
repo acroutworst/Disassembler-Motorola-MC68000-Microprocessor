@@ -5,10 +5,16 @@
 * This subroutine is done!         *
 ************************************
 INSTR0111:
-    LEA         MOVEQ,A0
+    MOVEM.L     A0-A5/D0-D7,-(SP)
+    
+    LEA         MOVEQ_TXT,A0
     JSR         PUSHBUFFER
     JSR         UPDATE_OPCODE
+    CLR         D7
+    
+    MOVEM.L     (SP)+,A0-A5/D0-D7
     RTS
+
 
 *~Font name~Courier New~
 *~Font size~10~

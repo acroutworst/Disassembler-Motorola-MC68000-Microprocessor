@@ -32,11 +32,12 @@ REG_SHIFTS:
     MOVE.B          #0,D7           ; size type 0
     ROR.W           #2,D7           ; rotate to the top
     MOVE.B          #1,D7           ; 2 bit size field
-    ROR.W           #1,D7
+    ROR.W           #1,D7           ; rotate to top
     MOVE.B          #7,D7           ; start index = 7
     ROR.W           #4,D7           ; rotate to the top
     MOVE.B          #1,D7           ; indicate size needed
-    ROR.W           #1,D7
+    ROR.W           #1,D7           ; rotate to top
+    
     SWAP            D7              ; swap size info to higher order word
     MOVE.W          (A6),D7         ; move instruction in
     
@@ -51,6 +52,8 @@ TABLE_1110_PREP:
     MULU            #8,D5
     LEA             TABLE_1110,A0
     JSR             0(A0,D5)
+    
+    BRA             BUFFER_1110    
     
 *************************************
 * Jump table for rotation and shift *
@@ -156,6 +159,7 @@ BUFFER_1110:
 FINISH_1110:
     MOVEM.L         (SP)+,A0-A5/D0-D7
     RTS
+
 
 
 

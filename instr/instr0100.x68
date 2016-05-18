@@ -1,11 +1,11 @@
 ************************************
 * Instructions Beginning With 0100 *
-* ** LEA                           *
+* ** LEA - done                    *
 * ** CLR (B, W, L)                 *
 * ** MOVEM                         *
-* ** NOP                           *
-* ** RTS                           *
-* ** JSR                           *
+* ** NOP - done                    *
+* ** RTS - done                    *
+* ** JSR - done                    *
 ************************************
 INSTR0100:
     MOVEM.L A0-A5/D0-D7,-(SP)
@@ -249,6 +249,7 @@ FINISH_FOUR1110:
 **************************************************
 FOUR1111:
     RTS
+
 
 
 

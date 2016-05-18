@@ -6,28 +6,34 @@
 ************************************
 INSTR0001:
     MOVEM.L     A0-A5/D0-D7,-(SP)
-        
+    CLR.L       D7
     
-    LEA         MOVE_TXT,A0
-    BRA         BUFFER0001
+    LEA         MOVE_TXT,A0         ; load move text
+    BRA         BUFFER0001          
             
 BUFFER0001:
-    JSR         PUSHBUFFER
-    JSR         UPDATE_OPCODE
-    BRA         PREP_SIZE_0001
+    JSR         PUSHBUFFER          ; push to buffer
+    JSR         UPDATE_OPCODE       ; update opcode
+    BRA         PREP_SIZE_0001      ; get the size info ready
 
 PREP_SIZE_0001:        
-    ADDQ        #2,D7
-    ROR.W       #2,D7
-    ADDQ        #7,D7
-    ROR.W       #4,D7
-    SWAP        D7
-    MOVE.W      (A6),D7
-    JSR         GET_OP_SIZE
+    ADDQ.B      #2,D7               ; type 2 size field
+    ROR.W       #2,D7               ; rotate to top
+    ADDQ.B      #1,D7               ; 2 bit size field
+    ROR.W       #1,D7               ; rotate to top
+    ADD.B       #13,D7              ; start index = 13
+    ROR.W       #4,D7               ; rotate to top
+    ADDQ.B      #1,D7               ; indicate size needed
+    ROR.W       #1,D7               ; rotate to top
+    
+    SWAP        D7                  ; swap size info to higher order word
+    MOVE.W      (A6),D7             ; move instruction in
+    JSR         GET_OP_SIZE         ; get op size
         
 INSTR0001DONE:
     MOVEM.L     (SP)+,A0-A5/D0-D7
     RTS
+
 
 
 
