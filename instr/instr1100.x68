@@ -37,10 +37,14 @@ HNDL_AND:
     LEA             AND_TXT,A0              ; load AND text
     
     * setup size for AND
-    MOVE.B          #1,D7                   ; 2 bit size field
+    ROR.W           #2,D7                   ; type 0 size field
+    ADDQ.B          #1,D7                   ; 2 bit size field
     ROR.W           #1,D7                   ; rotate to top
-    MOVE.B          #7,D7                   ; start index = 7
+    ADDQ.B          #7,D7                   ; start index = 7
     ROR.W           #4,D7                   ; rotate to top
+    ADDQ.B          #1,D7                   ; indicate size needed
+    ROR.W           #1,D7                   ; rotate to top
+    
     SWAP            D7                      ; swap size info to higher order word
     MOVE.W          (A6),D5                 ; move instruction in
     
@@ -56,6 +60,7 @@ BUFFER_1100:
 FINISH_1100:
     MOVEM.L         (SP)+,A0-A5/D0-D7       ; move registers back from stack
     RTS
+
 
 *~Font name~Courier New~
 *~Font size~10~

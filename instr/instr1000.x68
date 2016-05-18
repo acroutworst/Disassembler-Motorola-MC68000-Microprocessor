@@ -22,16 +22,19 @@ INSTR1000:
     
     * must be or - prep for get size
     LEA         OR_TXT,A0
-    MOVE.B      #1,D7               ; 2 bits for size
+    ROR.W       #2,D7               ; type 0 size field
+    MOVE.B      #1,D7               ; 2 bits for size field
     ROR.W       #1,D7               ; rotate to top
     MOVE.B      #7,D7               ; 7 start index
     ROR.W       #4,D7               ; rotate to top
-    SWAP        D7
+    ADDQ.B      #1,D7               ; indicate size needed
+    ROR.W       #1,D7               ; rotate to top
+    
+    SWAP        D7                  ; swap size info to higher order word
     MOVE.W      (A6),D7             ; move instruction in
     
-    
-    BRA         NO_OP_1000          * if none found
-    
+    BRA         PUSH_1000
+        
 HNDL_DIVU:
     LEA         DIVU_TXT,A0
     BRA         PUSH_1000
@@ -55,6 +58,7 @@ PUSH_1000:
 FINISH_1000:    
     MOVEM.L     (SP)+,A0-A5/D0-D7
     RTS
+
 
 *~Font name~Courier New~
 *~Font size~10~

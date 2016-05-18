@@ -34,6 +34,21 @@ HNDL_SUBQ:
     LEA         SUBQ_TXT,A0
     BRA         FINISH_0101
     
+PREP_SIZE_0101:
+    CLR.L       D7                  ; clear d7 for manip
+    ROR.W       #2,D7               ; type 0 size field
+    ADDQ.B      #1,D7               ; 2 bit size field
+    ROR.W       #1,D7               ; rotate to top
+    ADDQ.B      #7,D7               ; start index = 7
+    ROR.W       #4,D7               ; rotate to top
+    ADDQ.B      #1,D7               ; indicate size needed
+    ROR.W       #1,D7               ; rotate to top
+    
+    SWAP        D7                  ; swap size info to higher order word
+    MOVE.W      (A6),D7             ; move instruction in
+    
+    RTS
+    
 NO_OP0101:
     LEA         ERROR,A0            ; load error flag
     MOVE.B      #1,(A0)             ; switch error flag
@@ -43,10 +58,15 @@ NO_OP0101:
     
 FINISH_0101:
     JSR         PUSHBUFFER
-    JSR         UPDATE_OPCODE 
+    JSR         UPDATE_OPCODE
+
+    BSR         PREP_SIZE_0101
+    JSR         GET_OP_SIZE
+ 
     MOVEM.L     (SP)+,A0-A5/D0-D7
 
     RTS
+
 
 *~Font name~Courier New~
 *~Font size~10~
