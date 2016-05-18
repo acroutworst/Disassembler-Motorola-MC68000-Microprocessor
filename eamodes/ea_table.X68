@@ -11,35 +11,37 @@
 EA_TABLE:
     MOVEM.L     A0-A5/D0-D7,-(SP)
     
-    JMP         EAMODE000           ; direct data register
-    JSR
-    JMP         EAMODE001           ; direct address register
-    JSR
-    JMP         EAMODE010           ; indirect address register   
-    JSR
-    JMP         EAMODE011           ; indirect address register w/ post increment
-    JSR
-    JMP         EAMODE100           ; indirect address register w/ pre decrement
-    JSR
-    JMP         EAMODE101           ; indirect address register w/ displacement
-    JSR
-    JMP         EAMODE110           ; indirect address register w/ index
-    JSR
-    JMP         EAMODE111           ; absolute / immediate 
-    JSR
+    JSR         EAMODE000           ; direct data register
+    RTS
+    JSR         EAMODE001           ; direct address register
+    RTS
+    JSR         EAMODE010           ; indirect address register   
+    RTS
+    JSR         EAMODE011           ; indirect address register w/ post increment
+    RTS
+    JSR         EAMODE100           ; indirect address register w/ pre decrement
+    RTS
+    JSR         EAMODE101           ; indirect address register w/ displacement
+    RTS
+    JSR         EAMODE110           ; indirect address register w/ index
+    RTS
+    JSR         EAMODE111           ; absolute / immediate 
+    RTS
         
     MOVEM.L     (SP)+,A0-A5/D0-D7
     RTS
 
 
-    INCLUDE     'eamodes/eamode000'       ; include all jump labels
-    INCLUDE     'eamodes/eamode001'
-    INCLUDE     'eamodes/eamode010'
-    INCLUDE     'eamodes/eamode011'
-    INCLUDE     'eamodes/eamode100'
-    INCLUDE     'eamodes/eamode101'
-    INCLUDE     'eamodes/eamode110'
-    INCLUDE     'eamodes/eamode111'
+    INCLUDE     'eamodes/eamode000.x68'       ; include all jump labels
+    INCLUDE     'eamodes/eamode001.x68'
+    INCLUDE     'eamodes/eamode010.x68'
+    INCLUDE     'eamodes/eamode011.x68'
+    INCLUDE     'eamodes/eamode100.x68'
+    INCLUDE     'eamodes/eamode101.x68'
+    INCLUDE     'eamodes/eamode110.x68'
+    INCLUDE     'eamodes/eamode111.x68'
+
+
 
 *~Font name~Courier New~
 *~Font size~10~

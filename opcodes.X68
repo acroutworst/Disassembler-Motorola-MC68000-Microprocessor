@@ -13,8 +13,10 @@ DECODER:
     CMP.B       #0,(A1)                 ; check for ok
     BNE         FINISH                  ; exit on not okay
 
-    LEA         BUFFER_POS,A1
-    MOVE.W      #0,(A1)
+    * store the memory location of the opcode
+    MOVE.B      #0,D0
+    MOVE.L      A6,D1
+    
     * get first 4 bits at address in A6
     MOVEA.L     A6,A0                   ; move starting address to A0 to manip
     MOVE.W      (A0),D5                 ; move data at A0 to D5 to manip
@@ -66,7 +68,7 @@ INST_TABLE:
 * located at A0 to the opcode var
 UPDATE_OPCODE:
     LEA     OPCODE,A1
-    LEA     BUFFER_POS,A2
+    LEA     OP_BUFFER_POS,A2
     SUBA    (A2),A0
 
 UPD_OPCODE_LOOP:
@@ -106,6 +108,8 @@ FINISH:
     INCLUDE     'instr/instr1101.x68'
     INCLUDE     'instr/instr1110.x68'
     INCLUDE     'instr/instr1111.x68'
+
+
 
 
 

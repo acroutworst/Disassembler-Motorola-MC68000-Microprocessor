@@ -28,7 +28,6 @@ HNDL_ADDA:
     * setup size information
     ADDQ.B          #1,D7                   ; type 1 size field
     ROR.W           #2,D7                   ; rotate to top
-    ADDQ.B          #0,D7                   ; 1 bit size field
     ROR.W           #1,D7                   ; rotate to top
     ADDQ.B          #8,D7                   ; start index = 8
     ROR.W           #4,D7                   ; rotate to top
@@ -52,6 +51,7 @@ BUFFER_1101:
 FINISH_1101:
     MOVEM.L         (SP)+,A0-A5/D0-D7       ; move registers back from stack
     RTS
+
 
 
 
