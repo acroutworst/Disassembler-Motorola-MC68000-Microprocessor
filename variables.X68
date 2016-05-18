@@ -6,15 +6,20 @@
 ****************
 
 * Buffer, storage, and error status
-BUFFER      DS.B    40
-BUFFER_POS  DS.B    1
-ERROR       DS.W    1
-OPCODE      DS.B    5
-SIZE        DS.B    1
+MEM_BUFFER          DS.B    9
+OPCODE_BUFFER       DS.B    8
+EA_BUFFER           DS.B    25
+MEM_BUFFER_POS      DS.B    1
+OP_BUFFER_POS       DS.B    1
+EA_BUFFER_POS       DS.B    1
+ERROR               DS.W    1
+OPCODE              DS.B    5
+SIZE                DS.B    1
 
 CR          EQU     $0D         ; carriage return
 LF          EQU     $0A         ; line feed
 NEWLINE     DC.B    CR,LF,0     ; new line
+
 ************
 * IO STUFF *
 ADDYLENGTH  EQU     8   *need 32 bit address length
@@ -23,6 +28,7 @@ HELLO       DC.B    'Welcome to Teamy McTeamFaces Disassembler!',CR,LF,0
 REQSTART    DC.B    'Please enter in the starting location:',CR,LF,0
 REQEND      DC.B    'Please enter in the ending location:',CR,LF,0
 ODDERR      DC.B    'Starting address cant be odd, please reenter:',CR,LF,0
+
 *COMPLETE_REGISTER EQU D0-D7/A1-A7       
 ERRADD      EQU     00000000
 PRINT       DC.B    'Address DATA $'
@@ -130,6 +136,7 @@ BGE_TXT      DC.B    'BGE',0
 BLT_TXT      DC.B    'BLT',0
 BGT_TXT      DC.B    'BGT',0
 BLE_TXT      DC.B    'BLE',0
+
 
 
 

@@ -150,6 +150,7 @@ GET_DIR_1110:
     RTS
     
 BUFFER_1110:
+    MOVE.B          #1,D0
     JSR             PUSHBUFFER
     JSR             UPDATE_OPCODE
     JSR             GET_OP_SIZE
@@ -159,6 +160,7 @@ BUFFER_1110:
 FINISH_1110:
     MOVEM.L         (SP)+,A0-A5/D0-D7
     RTS
+
 
 
 

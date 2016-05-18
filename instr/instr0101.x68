@@ -57,6 +57,7 @@ NO_OP0101:
     BRA         FINISH_0101
     
 FINISH_0101:
+    MOVE.B      #1,D0
     JSR         PUSHBUFFER
     JSR         UPDATE_OPCODE
 
@@ -66,6 +67,7 @@ FINISH_0101:
     MOVEM.L     (SP)+,A0-A5/D0-D7
 
     RTS
+
 
 
 *~Font name~Courier New~

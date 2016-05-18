@@ -20,6 +20,7 @@ INSTR0100:
     
     * handling LEA
     LEA     LEA_TXT,A0      ; load LEA text
+    MOVE.B  #1,D0           ; choose the buffer to push to
     JSR     PUSHBUFFER      ; push lea text to buffer
     JSR     UPDATE_OPCODE   ; update the opcode with lea
     
@@ -240,6 +241,7 @@ HNDL_JSR:
     BRA        FINISH_FOUR1110
     
 FINISH_FOUR1110:
+    MOVE.B     #1,D0
     JSR        PUSHBUFFER
     JSR        UPDATE_OPCODE
     RTS
@@ -249,6 +251,7 @@ FINISH_FOUR1110:
 **************************************************
 FOUR1111:
     RTS
+
 
 
 
