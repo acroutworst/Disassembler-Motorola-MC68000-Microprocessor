@@ -52,12 +52,14 @@ MAIN_LOOP:
     INCLUDE 'CONVERT2HEX.x68'
     INCLUDE 'utils/get_size.x68'
     INCLUDE 'utils/clear_variables.x68'
+    INCLUDE 'utils/hex2ascii.x68'
     INCLUDE 'no_opcode.x68'
     INCLUDE 'variables.x68'
 
 
 * fin
     END    START        ; last line of source
+
 
 
 
