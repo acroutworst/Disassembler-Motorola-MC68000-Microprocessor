@@ -7,18 +7,43 @@
 *-----------------------------------------------------------
 CLEAR_VARS:
     MOVEM.L     A0-A6/D0-D7,-(SP)
+    CLR.L       D0
+    CLR.L       D1
     
-    LEA         BUFFER_POS,A0
-    LEA         OPCODE,A1
-    LEA         SIZE,A2
+    * clear mem buffer position
+    LEA         MEM_BUFFER_POS,A0
     MOVE.B      #0,(A0)
+
+    * clear opcode buffer position
+    LEA         OP_BUFFER_POS,A1
+    MOVE.B      #0,(A1)
+
+    * clear ea buffer position
+    LEA         EA_BUFFER_POS,A2
     MOVE.B      #0,(A2)
-        
+    
+    * clear size
+    LEA         SIZE,A0
+    MOVE.B      #0,(A0)
+    
+    * clear mem buffer
+    LEA         MEM_BUFFER,A1
+    MOVE.B      #9,D1
+    BSR         VARS_LOOP
+    
+    * clear opcode
+    LEA         OPCODE,A1
     MOVE.B      #5,D1
     BSR         VARS_LOOP
     
-    LEA         BUFFER,A1
-    MOVE.B      #40,D1
+    * clear opcode buffer
+    LEA         OPCODE_BUFFER,A1
+    MOVE.B      #8,D1
+    BSR         VARS_LOOP
+    
+    * clear ea buffer
+    LEA         EA_BUFFER,A1
+    MOVE.B      #25,D1
     BSR         VARS_LOOP
     
     MOVEM.L     (SP)+,A0-A6/D0-D7
@@ -33,6 +58,7 @@ VARS_LOOP:
     
 
     
+
 
 
 *~Font name~Courier New~

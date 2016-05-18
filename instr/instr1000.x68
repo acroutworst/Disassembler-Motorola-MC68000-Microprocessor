@@ -48,6 +48,7 @@ NO_OP_1000:
     BRA         PUSH_1000
         
 PUSH_1000:
+    MOVE.B      #1,D0
     JSR         PUSHBUFFER
     JSR         UPDATE_OPCODE
     CMP.L       #0,D7
@@ -58,6 +59,7 @@ PUSH_1000:
 FINISH_1000:    
     MOVEM.L     (SP)+,A0-A5/D0-D7
     RTS
+
 
 
 *~Font name~Courier New~

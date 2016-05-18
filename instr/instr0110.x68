@@ -13,6 +13,7 @@ INSTR0110:
     LEA         BCC_TABLE,A0            ; load the jump table
     JSR         0(A0,D5)                ; jump in
     
+    MOVE.B      #1,D0
     JSR         PUSHBUFFER
     JSR         UPDATE_OPCODE
     
@@ -183,6 +184,7 @@ BCC1110:
 BCC1111:
     LEA     BLE_TXT,A0
     RTS
+
 
 
 

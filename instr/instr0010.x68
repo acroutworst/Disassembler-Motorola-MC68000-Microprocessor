@@ -9,7 +9,6 @@ INSTR0010:
     MOVEM.L     A0-A5/D0-D7,-(SP)       ; registers to stack
     CLR.L       D7
     
-    LEA         BUFFER,A1               ; load the buffer
     * check for MOVEA    
     MOVE.W      (A6),D5                 ; setup the bitmasker for bits
     MOVE.B      #6,D4                   ; 8 to 6
@@ -25,7 +24,7 @@ MOVE0010:
     BRA         DONE0010
     
 DONE0010:
-    
+    MOVE.B      #1,D0                   ; choose the buffer
     JSR         PUSHBUFFER              ; push the text to the buffer
     JSR         UPDATE_OPCODE           ; update the opcode
     
@@ -42,6 +41,7 @@ DONE0010:
     
     MOVEM.L     (SP)+,A0-A5/D0-D7
     RTS
+
 
 *~Font name~Courier New~
 *~Font size~10~

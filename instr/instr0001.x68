@@ -12,6 +12,7 @@ INSTR0001:
     BRA         BUFFER0001          
             
 BUFFER0001:
+    MOVE.B      #1,D0               ; choose buffer to push to
     JSR         PUSHBUFFER          ; push to buffer
     JSR         UPDATE_OPCODE       ; update opcode
     BRA         PREP_SIZE_0001      ; get the size info ready
@@ -33,6 +34,7 @@ PREP_SIZE_0001:
 INSTR0001DONE:
     MOVEM.L     (SP)+,A0-A5/D0-D7
     RTS
+
 
 
 

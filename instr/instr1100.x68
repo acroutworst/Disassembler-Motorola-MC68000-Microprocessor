@@ -49,6 +49,7 @@ HNDL_AND:
     MOVE.W          (A6),D5                 ; move instruction in
     
 BUFFER_1100:
+    MOVE.B          #1,D0                   ; choose the buffer to push to
     JSR             PUSHBUFFER              ; push loaded text to buffer
     JSR             UPDATE_OPCODE           ; update the opcode
     
@@ -60,6 +61,7 @@ BUFFER_1100:
 FINISH_1100:
     MOVEM.L         (SP)+,A0-A5/D0-D7       ; move registers back from stack
     RTS
+
 
 
 *~Font name~Courier New~

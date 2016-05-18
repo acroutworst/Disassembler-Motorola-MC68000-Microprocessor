@@ -41,6 +41,7 @@ HNDL_ADDA:
     BRA             BUFFER_1101
     
 BUFFER_1101:
+    MOVE.B          #1,D0                   ; choose the buffer to push to
     JSR             PUSHBUFFER              ; push loaded text to buffer
     JSR             UPDATE_OPCODE           ; update opcode
     JSR             GET_OP_SIZE             ; get operation size
@@ -51,6 +52,7 @@ BUFFER_1101:
 FINISH_1101:
     MOVEM.L         (SP)+,A0-A5/D0-D7       ; move registers back from stack
     RTS
+
 
 
 *~Font name~Courier New~
