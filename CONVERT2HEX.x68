@@ -1,19 +1,18 @@
 *-----------------------------------------------------------
 * Title      :CONVERT2HEX
 * Written by :NGUYEN NGUYEN
-* Date       :5/8/16
+* Date       :5/18/16
 * Description:CONVERT THE ASCII TO HEX
 *-----------------------------------------------------------
-  *  ORG    $1000
-*START:                  ; first instruction of program
+  
 CONVERT2HEX 
     MOVEM.L A0-A5/D0-D7,-(SP) * Move registers to stack to be moved 
-    *why only throguh A5 for Geoff --> because A6 holds the current address being processed
     *(A2) indirect pointer to string length
     *A2 stores the current address passed in
     *D3 hold the length loop  
+
 *initialize
-    MOVEA.L #COMPARESPOT,A2   *set string length for address...do I need this?
+    MOVEA.L #SETLENGTH,A2   *set string length for address
     MOVE.L D1,(A2)       *moves the length input into the indirect address
     MOVE.B #0,D3          *Clears D3 and set to 0
 
@@ -60,7 +59,6 @@ CONVERTNUM
 *CONVERT BY SUBTRACTING '0'
     SUB.B #'0',D2
     MOVE.L D2,D3
-
     BRA ADD2STRING
     
 
@@ -87,16 +85,12 @@ ADD2STRING
     BRA LOOP
  
 LOOPDONE
-
-
     MOVEA.L #STRING2HEX,A6
     MOVE.L D5,(A6)
-    MOVEM.L (SP)+, A0-A5/D0-D7 *Move registers back from stack
-
     RTS
 
 ERR
-    MOVEA.L #00000000,A6                          *
+    MOVEA.L #00000000,A6       *Inaccurate code
     MOVEM.L (SP)+, A0-A5/D0-D7 *Move registers back from stack
     RTS
 
