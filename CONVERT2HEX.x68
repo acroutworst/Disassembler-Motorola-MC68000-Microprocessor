@@ -87,6 +87,7 @@ ADD2STRING
 LOOPDONE
     MOVEA.L #STRING2HEX,A6
     MOVE.L D5,(A6)
+    MOVEM.L (SP)+,A0-A5/D0-D7   *move registers back from stack
     RTS
 
 ERR

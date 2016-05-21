@@ -25,7 +25,7 @@ NEWLINE     DC.B    CR,LF,0     ; new line
 ************
 ADDYLENGTH  EQU     8   *need 32 bit address length
 CKLENGTH    EQU     6   *24 bit address 00007000-00FFFFFF
-LINECK      EQU     20
+LINECOUNTER EQU     20
 
 HELLO       DC.B    'Welcome to Teamy McTeamFaces Disassembler!',CR,LF,0
 REQSTART    DC.B    'Please enter in the starting location:',CR,LF,0
@@ -33,7 +33,7 @@ REQEND      DC.B    'Please enter in the ending location:',CR,LF,0
 LENGTHERR   DC.B    'ERROR: The address is too long',CR,LF,0
 ODDERR      DC.B    'ERROR: Starting address cant be odd, please reenter:',CR,LF,0
 BIGEND      DC.B    'ERROR: The ending address is greater than the starting address',CR,LF,0
-HEADER      DC.B    'MEMORY LOCATION    OP_CODE       OPERAND'
+HEADER      DC.B    'MEM LOCATION    OP_CODE    OPERAND   ',CR,LF,0
        
 ERRADD      EQU     00000000
 PRINTDATA   DC.B    'Address DATA $'

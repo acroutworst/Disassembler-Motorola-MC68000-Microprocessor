@@ -22,9 +22,16 @@ STARTA
        
 *Must sent to subroutine to be converted to HEX* 
     JSR CONVERT2HEX 
+
+*Error checks    
     CMP #ERRADD,A6         *if address is incorrect then convert2hex will make A6,00000000 invalid address
-    BEQ PRINTERR 
+    BEQ PRINTERR
+    MOVEA.L A6,D3   *saves original addy to A6
+    LSR.L #1,D3  *Left shift 1 bit, if carry bit's 1= odd, if it's 0=even
+    BCS ODD      If odd then error
     MOVE.L A6,START_ADDR
+    CMP.L #8,START_ADDR
+    BGT PRINTERR
          
 *ask for ending address       
 ENDA   
@@ -39,22 +46,24 @@ ENDA
 
 *send ending address to convert to HEX*
     JSR CONVERT2HEX
+
+*Error checks    
     CMP #ERRADD,A6
     BEQ PRINTERR
-    MOVE.L A6,END_ADDR
+    MOVE.B A6,D3     *move over to keep D1 unchanged
+    LSR.L #1,D3      *Left shift 1 bit, if carry bit's 1= odd, if it's 0=even
+    BCS ODDEND
+    MOVE.L A6,END_ADDR   *Move A6 to end_address for storage
+    CMP.L #8,END_ADDR    *compare the hex to 8 characters
+    BGT PRINTERR         *branch to error
        
 *check address validity
 CHECKADDY
-    MOVEA.L START_ADDR,A5   
+    MOVEA.L START_ADDR,A5  *Move start address to A5 
     CMPA.L   END_ADDR,A5   *Compares starting addy to the ending addy
-
-    BGE END_GT_START    *If D1 (starting) is > D2 (end) go back for new addresses
+    BGE END_GT_START    *If D1 (start) > D2 (end) go back for new addresses
        
-    MOVE.B START_ADDR,D3 *move over to keep D1 unchanged
-    LSR.L #1,D3
- *Left shift 1 bit, if carry bit is 1 it's odd and if carry is 0 then even
-    BCS ODD    
-    BRA EVEN
+    BRA PASS2OP         *The checks are done and the ascii to hex convert done
        
 ODD
     LEA ODDERR,A1       *prints out odd error message
@@ -62,27 +71,34 @@ ODD
     TRAP #15
     BRA STARTA          *send back to ask for new starting address
 
-* If even then good
-EVEN 
-     CMP.L #8, STARTA
-     BGT PRINTERR
-
-     JSR PUSHBUFFER
+ODDEND
+    LEA ODDERR,A1       *prints out odd error message
+    MOVE.B #14,D0       
+    TRAP #15
+    BRA ENDA            *send back to ask for new starting address
                 
 BADLENGTH
-    LEA LENGTHERR,A1
+    LEA LENGTHERR,A1    *Prints out length error
     MOVE.B #14,D0
     TRAP #15
 
-END_GT_START
+END_GT_START            *End length occurs before start must restart
     LEA LENGTHERR,A1
     MOVE.B #14,D0
     TRAP #15
-    
+    BRA STARTA
+
+PASS2OP                Jump to the OPcode
+    JSR PUSHBUFFER
+
 AGAIN
     LEA ASKREPEAT,A1
     MOVE.B #5,D0
-    CMP.
+    TRAP #15
+    CMP.B 'y',D0
+    JMP STARTA
+    CMP.B 'n',DO
+    JMP GOODBYE
 
     
 *~Font name~Courier New~
