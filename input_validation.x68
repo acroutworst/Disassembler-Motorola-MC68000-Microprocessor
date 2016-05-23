@@ -89,15 +89,16 @@ END_GT_START            *End length occurs before start must restart
     BRA STARTA
 
 PASS2OP                Jump to the OPcode
-    JSR PUSHBUFFER
+    JSR OPCODE_BUFFER
+    JSR PRINTSTART
 
 AGAIN
     LEA ASKREPEAT,A1
-    MOVE.B #5,D0
+    MOVE.B #2,D0
     TRAP #15
-    CMP.B 'y',D0
+    CMP.B 'yes',(A1)
     JMP STARTA
-    CMP.B 'n',DO
+    CMP.B 'no',(A1)
     JMP GOODBYE
 
     
