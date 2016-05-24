@@ -9,10 +9,11 @@ EAMODE000:
     
     MOVE        D5,D0
     ANDI        #7,D0
-    BSR         DATA_BUFFER         ; send data to buffer
+    BSR         EA_BUFFER         ; send data to buffer
     
     MOVEM.L     (SP)+,A0-A5/D0-D7
     RTS
+
 
 *~Font name~Courier New~
 *~Font size~10~

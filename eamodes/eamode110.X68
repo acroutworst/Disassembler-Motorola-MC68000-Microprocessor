@@ -36,17 +36,18 @@ EAMODE110:
     MOVE.B      #1,D4                  ; 1 for flag - error
     
 LONG:
-    MOVE.W      BUFFER,(A6)+
+    MOVE.W      EA_BUFFER,(A6)+
     MOVE.W      C_PAREN,(A6)+
     BRA         EXIT
     
 WORD:
-    MOVE.W      BUFFER,(A6)+
+    MOVE.W      EA_BUFFER,(A6)+
     MOVE.W      C_PAREN,(A6)+
     
 EXIT:
     MOVEM.L     (SP)+,A0-A5/D0-D7
     RTS
+
 *~Font name~Courier New~
 *~Font size~10~
 *~Tab type~1~
