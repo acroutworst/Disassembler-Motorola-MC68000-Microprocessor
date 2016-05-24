@@ -92,7 +92,6 @@ END_GT_START            *End length occurs before start must restart
     BRA STARTA
 
 
-
 AGAIN
     LEA ASKREPEAT,A1
     MOVE.B #5,D0
