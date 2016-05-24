@@ -26,7 +26,7 @@ STARTA
 *Error checks    
     CMP #ERRADD,A6         *if address is incorrect then convert2hex will make A6,00000000 invalid address
     BEQ PRINTERR
-    MOVE.L A6,D3   *saves original addy to A6
+    MOVE.W A6,D3   *saves original addy to A6
     LSR.L #1,D3  *Left shift 1 bit, if carry bit's 1= odd, if it's 0=even
     BCS ODD      If odd then error
     MOVE.L A6,START_ADDR
@@ -102,8 +102,6 @@ AGAIN
     CMP.B 'no',(A1)
     JMP GOODBYE
 
-INCLUDE 'print.x68'
-INCLUDE 'CONVERT2HEX.x68'
 
 *~Font name~Courier New~
 *~Font size~10~

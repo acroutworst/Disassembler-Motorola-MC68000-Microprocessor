@@ -55,6 +55,7 @@ MAIN_LOOP:
     INCLUDE 'utils/hex2ascii.x68'
     INCLUDE 'no_opcode.x68'
     INCLUDE 'variables.x68'
+    INCLUDE 'print.x68'
 
 
 * fin
