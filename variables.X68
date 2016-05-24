@@ -34,7 +34,7 @@ LENGTHERR   DC.B    'ERROR: The address is too long',CR,LF,0
 ODDERR      DC.B    'ERROR: Starting address cant be odd, please reenter:',CR,LF,0
 BIGEND      DC.B    'ERROR: The ending address is greater than the starting address',CR,LF,0
 HEADER      DC.B    'MEM LOCATION    OP_CODE    OPERAND   ',CR,LF,0
-ASKREPEAT 	DC.B    'Would you like to repeat the program? Enter 'yes' and 'no' for no',CR,LR,0
+ASKREPEAT 	DC.B    'Would you like to repeat the program? Enter y for yes and press enter to exit',CR,LR,0
 GOODBYE 	DC.B 	'Thank you for trying out Teamy McTeamFace Disassembler!',CR,LR,0       
 ERRADD      EQU     00000000
 PRINTDATA   DC.B    'Address DATA $'

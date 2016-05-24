@@ -26,7 +26,7 @@ STARTA
 *Error checks    
     CMP #ERRADD,A6         *if address is incorrect then convert2hex will make A6,00000000 invalid address
     BEQ PRINTERR
-    MOVEA.L A6,D3   *saves original addy to A6
+    MOVE.L A6,D3   *saves original addy to A6
     LSR.L #1,D3  *Left shift 1 bit, if carry bit's 1= odd, if it's 0=even
     BCS ODD      If odd then error
     MOVE.L A6,START_ADDR
@@ -63,8 +63,11 @@ CHECKADDY
     CMPA.L   END_ADDR,A5   *Compares starting addy to the ending addy
     BGE END_GT_START    *If D1 (start) > D2 (end) go back for new addresses
        
-    BRA PASS2OP         *The checks are done and the ascii to hex convert done
-       
+    RTS       *The checks are done and the ascii to hex convert done
+   
+  *if all else good jump tp print*
+    JSR PRINTSTART     
+
 ODD
     LEA ODDERR,A1       *prints out odd error message
     MOVE.B #14,D0       
@@ -88,9 +91,7 @@ END_GT_START            *End length occurs before start must restart
     TRAP #15
     BRA STARTA
 
-PASS2OP                Jump to the OPcode
-    JSR OPCODE_BUFFER
-    JSR PRINTSTART
+
 
 AGAIN
     LEA ASKREPEAT,A1
@@ -101,7 +102,9 @@ AGAIN
     CMP.B 'no',(A1)
     JMP GOODBYE
 
-    
+INCLUDE 'print.x68'
+INCLUDE 'CONVERT2HEX.x68'
+
 *~Font name~Courier New~
 *~Font size~10~
 *~Tab type~1~

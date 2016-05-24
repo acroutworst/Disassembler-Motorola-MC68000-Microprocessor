@@ -35,6 +35,9 @@ SETPRINT            *Set D1 with trap 11, high num is col 0-79 low num is 0-31
 ****	
 	BRA SETPRINT       *repeat until done
 
+DONE	
+	MOVEM.L (SP)+,A0-A5/D0-D7
+	RTS
 
 *Print out the err with address DATA $ADDR  
 PRINTERR
@@ -66,6 +69,7 @@ GOODBYE
 	LEA GOODBYE,A1
 	MOVE.B #14,D0
 	TRAP #15
+
 
 
 *~Font name~Courier New~

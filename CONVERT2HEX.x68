@@ -95,6 +95,8 @@ ERR
     MOVEM.L (SP)+, A0-A5/D0-D7 *Move registers back from stack
     RTS
 
+INCLUDE 'input_validation.x68'
+
 *~Font name~Courier New~
 *~Font size~10~
 *~Tab type~1~
