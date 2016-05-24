@@ -13,6 +13,8 @@ DISPLAY
 *ask for starting address
 STARTA 
     LEA REQSTART,A1   *load start message *A1 has the current starting
+    MOVE.B #14,D0
+    TRAP #15
     MOVE.B #2,D0      *read string at (A1) and length is returned at D1
     TRAP #15          *Read input length into D1.L
 *check length
@@ -36,6 +38,8 @@ STARTA
 *ask for ending address       
 ENDA   
     LEA REQEND,A1  *Load end message
+    MOVE.B #14,D0
+    TRAP #15
     MOVE.B #2,D0   *read string at (A1) and length is returned at D1
     TRAP #15       *Read input into D1.L
 
