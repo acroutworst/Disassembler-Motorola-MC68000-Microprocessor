@@ -14,8 +14,27 @@ PRINTLOOP
 	TRAP #15
 	BSR COUNTER      *branch to counter to increment by 1 and then back 
 
-SETPRINT             	*Set D1 with trap 11, high num is col 0-79 low num is 0-31
-	MOVE.W 0101,D1.W           *header takes 1 row and 1 colum
+SETPRINT            *Set D1 with trap 11, high num is col 0-79 low num is 0-31
+	LEA MEM_BUFFER,A1    *Load memory location
+	MOVE.L #14,D0
+	TRAP #15              *Print
+	ADD.B #13,D1.W        *Memory location 13 spaces
+	LEA OPCODE_BUFFER,A1  *loads opcode location
+	MOVE.L #14,D0
+	TRAP #15
+	ADD.B #8,D1.W         *Move over 8 spaces in the row
+	LEA EA_BUFFER,A1	*Loads EA location
+	MOVE.L #14,D0
+	TRAP #15
+	ADD.W #100,D1.W    *Moves down to next column
+	MOVE.B #00,D1.W    *resets the row
+	BSR COUNTER
+	
+****
+*How to check if all the opcodes has been printed and is done?*
+****	
+	BRA SETPRINT       *repeat until done
+
 
 *Print out the err with address DATA $ADDR  
 PRINTERR
@@ -34,6 +53,7 @@ CLEARSCREEN
     MOVE.B #11,DO
     TRAP #15
     MOVE.B #0,LINECOUNTER       *reset linecounter to 0
+    MOVE.W #0100,D1.W         *header takes 1 column, start below that
     JMP PRINTLOOP               *go back to print loop
 
 COUNTER
