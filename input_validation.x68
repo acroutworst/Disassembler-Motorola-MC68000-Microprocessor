@@ -50,7 +50,7 @@ ENDA
 *Error checks    
     CMP #ERRADD,A6
     BEQ PRINTERR
-    MOVE.B A6,D3     *move over to keep D1 unchanged
+    MOVE.W A6,D3     *move over to keep D1 unchanged
     LSR.L #1,D3      *Left shift 1 bit, if carry bit's 1= odd, if it's 0=even
     BCS ODDEND
     MOVE.L A6,END_ADDR   *Move A6 to end_address for storage
@@ -92,14 +92,14 @@ END_GT_START            *End length occurs before start must restart
     BRA STARTA
 
 
-
 AGAIN
     LEA ASKREPEAT,A1
-    MOVE.B #2,D0
+    MOVE.B #5,D0
     TRAP #15
-    CMP.B 'yes',(A1)
+    CMP.B $59,D1   //compare 59 to 79
     JMP STARTA
-    CMP.B 'no',(A1)
+    CMP.B $79,D1
+    JMP STARTA
     JMP GOODBYE
 
 
