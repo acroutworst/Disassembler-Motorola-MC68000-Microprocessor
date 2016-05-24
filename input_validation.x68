@@ -20,7 +20,7 @@ STARTA
 *check length
     CMP.W #6,D1       *Check the length is no more than 24 bits, valid address 00007000-00FFFFFF
     BGT BADLENGTH     *if bad length goes to print error message
-    BRA STARTA        *back to ask for new starting address
+    
        
 *Must sent to subroutine to be converted to HEX* 
     JSR CONVERT2HEX 
@@ -88,6 +88,7 @@ BADLENGTH
     LEA LENGTHERR,A1    *Prints out length error
     MOVE.B #14,D0
     TRAP #15
+    BRA STARTA        *back to ask for new starting address
 
 END_GT_START            *End length occurs before start must restart
     LEA LENGTHERR,A1
@@ -98,6 +99,8 @@ END_GT_START            *End length occurs before start must restart
 
 AGAIN
     LEA ASKREPEAT,A1
+    MOVE.B #14,D0
+    TRAP #15
     MOVE.B #5,D0
     TRAP #15
     CMP.B $59,D1   //compare 59 to 79
