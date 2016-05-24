@@ -7,13 +7,13 @@
 EAMODE110:
     MOVEM.L     A0-A5/D0-D7,-(SP)
     
-    MOVE.W      SIGN,(A6)+
+    *MOVE.W      SIGN,(A6)+ ; JUMP TO SUBROUTINE AND DO SIGN STUFF
     
     MOVE.W      (A5)+,A0
     MOVE.L      D0,D3
     CLR.L       D4
     MOVE.B      #4,D4
-    BSR         ASCII
+    JSR         HEX2ASCII
     
     MOVEA.L     A3,A1
     MOVE.W      A1,(A6)+
@@ -23,7 +23,10 @@ EAMODE110:
     CLR.L       D0
     MOVE        D5,D0
     ANDI        #7,D0
-    BSR         ADDRESS_BUFFER         ; send data to buffer
+    MOVE.W      D0,D1
+    MOVE.B      #2,D0
+    *BSR         ADDRESS_BUFFER         ; send data to buffer
+    JSR         PUSHBUFFER
     
     MOVE.W      COMMA,(A6)+
     MOVE.L      D5,D0
@@ -47,6 +50,7 @@ WORD:
 EXIT:
     MOVEM.L     (SP)+,A0-A5/D0-D7
     RTS
+
 
 *~Font name~Courier New~
 *~Font size~10~
