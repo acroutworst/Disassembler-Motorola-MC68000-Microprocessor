@@ -4,18 +4,27 @@
 * Date       :
 * Description:
 *-----------------------------------------------------------
-    ORG    $1000
-START:                  
-    JSR     DISPLAY
-    
-    
 ***************************
 * TEST DATA
 ***************************
+
+    ORG    $7000
+START:                  ; first instruction of program
+
+    MOVE.B      #1,D0
+    MOVE.W      #1,D1
+    MOVE.L      #1,D2
+    JSR         DISASSEMBLER
+    
+    ORG    $1000
+DISASSEMBLER:                 
+    JSR     DISPLAY
+    
+    
     * test junk data
-    MOVEA.L #$6000,A6
+    *MOVEA.L #$6000,A6
     * MOVE.W  #$1639,(A6)
-    MOVE.W  #$4E71,(A6)         ; throwing machine for NOP into mem address
+    *MOVE.W  #$4E71,(A6)         ; throwing machine for NOP into mem address
     * MOVE.W  #$1601,(A6)           ; MOVE.B D0,D3
     
 ****************************************************************
@@ -34,7 +43,7 @@ MAIN_LOOP:
     LEA     END_ADDR,A0
     MOVE.L  (A0),D0
     CMP.L   A6,D0
-    BLT     MAIN_LOOP
+    BGT     MAIN_LOOP
     
     SIMHALT             ; halt simulator
 
@@ -54,12 +63,15 @@ MAIN_LOOP:
     INCLUDE 'utils/clear_variables.x68'
     INCLUDE 'utils/hex2ascii.x68'
     INCLUDE 'no_opcode.x68'
-    INCLUDE 'variables.x68'
     INCLUDE 'print.x68'
+    INCLUDE 'variables.x68'
+    
 
 
 * fin
     END    START        ; last line of source
+
+
 
 
 

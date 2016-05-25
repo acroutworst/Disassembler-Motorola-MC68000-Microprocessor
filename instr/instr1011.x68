@@ -1,7 +1,9 @@
 ************************************
 * Instructions Beginning With 1011 *
-* ** CMP                           *
-* ** CMPA                          *
+* ** CMP - done                    *
+* ** CMPA - done                   *
+*                                  *
+* This subroutine is done!         *
 ************************************
 INSTR1011:
     
@@ -68,6 +70,7 @@ PUSH_1011:
 FINISH_1011:
     MOVEM.L     (SP)+,A0-A5/D0-D7    
     RTS
+
 
 
 
