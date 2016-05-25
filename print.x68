@@ -60,7 +60,7 @@ CLEARSCREEN
     JMP PRINTLOOP               *go back to print loop
 
 COUNTER
-	ADDI.B #1, LINECOUNTER      *add 1 to counter to keep track of print screen
+	ADDI.B #1,LINECOUNTER      *add 1 to counter to keep track of print screen
 	CMP.B #20,LINECOUNTER       *if it's greater or equal than 20 then clear 
 	BGT CLEARSCREEN              
 	RTS                         *return to the printloop

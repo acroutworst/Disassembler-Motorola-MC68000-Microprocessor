@@ -64,7 +64,7 @@ CONVERTNUM
 
 CONVERTLOW
 *convert by adding A and subtracting a
-    ADD.B #$A, D2
+    ADD.B #$A,D2
     SUB.B #'a',D2
     MOVE.L D2,D3
     BRA ADD2STRING
@@ -73,15 +73,15 @@ CONVERTUP
 *convert by adding A, subtracting A
     ADD.B #$A,D2
     SUB.B #'A',D2
-    MOVE.L D2, D3
+    MOVE.L D2,D3
     BRA ADD2STRING
 
 ADD2STRING
 *loop through to add
     ADD.B D3,STRING2HEX
-    MOVE.L  #STRING2HEX,D4
+    MOVE.L #STRING2HEX,D4
     LSL.L #4,D4 * LSL will only do LSL.W if you aren't dealing with a data register
-    MOVE.L  D4,STRING2HEX
+    MOVE.L D4,STRING2HEX
     BRA LOOP
  
 LOOPDONE
@@ -92,7 +92,7 @@ LOOPDONE
 
 ERR
     MOVEA.L #00000000,A6       *Inaccurate code
-    MOVEM.L (SP)+, A0-A5/D0-D7 *Move registers back from stack
+    MOVEM.L (SP)+,A0-A5/D0-D7 *Move registers back from stack
     RTS
 
 
