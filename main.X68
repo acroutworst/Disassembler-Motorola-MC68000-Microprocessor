@@ -4,14 +4,23 @@
 * Date       :
 * Description:
 *-----------------------------------------------------------
+***************************
+* TEST DATA
+***************************
+
+    ORG    $7000
+START:                  ; first instruction of program
+
+    MOVE.B      #1,D0
+    MOVE.W      #1,D1
+    MOVE.L      #1,D2
+    JSR         DISASSEMBLER
+    
     ORG    $1000
 DISASSEMBLER:                 
     JSR     DISPLAY
     
     
-***************************
-* TEST DATA
-***************************
     * test junk data
     *MOVEA.L #$6000,A6
     * MOVE.W  #$1639,(A6)
@@ -61,6 +70,7 @@ MAIN_LOOP:
 
 * fin
     END    START        ; last line of source
+
 
 
 
