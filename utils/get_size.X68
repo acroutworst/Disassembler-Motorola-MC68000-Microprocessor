@@ -22,6 +22,7 @@ GET_OP_SIZE:
     SWAP        D7                      ; swap the high and low words
     
     ROL.W       #1,D7                   ; rotate needed bit to bottom
+    CLR.L       D1
     MOVE.B      D7,D1                   ; store needed in D1
     LSR.B       #1,D7                   ; consume needed bit
     
@@ -30,20 +31,25 @@ GET_OP_SIZE:
     
     * continue getting size info
     ROL.W       #4,D7                   ; rotate start index to the bottom
+    CLR.L       D2
     MOVE.B      D7,D2                   ; store start index in D2
     LSR.B       #4,D7                   ; consume the start index
     
     ROL.W       #1,D7                   ; rotate the number of bits in the size
                                         ; to the bottom
+    CLR.L       D3
     MOVE.B      D7,D3                   ; store the number of bits in D3
     LSR.B       #1,D7                   ; consume the size
     
     ROL.W       #2,D7                   ; rotate the type info to the bottom
+    CLR.L       D4
     MOVE.B      D7,D4                   ; store type info in D4
     
 
     MULU        #8,D4                   ; offset for SIZE_TABLE
     SWAP        D7                      ; swap the instruction back to lower word
+    
+    CLR.L       D5
     
     LEA         SIZE_TABLE,A3           ; load the size table
     
@@ -66,7 +72,7 @@ SIZE_TABLE
 * ** L: 10                           *
 **************************************
 TYPE0:
-    ADDQ        #2,D5
+    ADDQ        #3,D5
     JSR         SHIFT_AND_MASK
     
     CMP.B       #0,D7
@@ -100,7 +106,7 @@ TYPE1:
 * ** L: 10                           *
 **************************************
 TYPE2:
-    ADDQ        #2,D5
+    ADDQ        #3,D5
     JSR         SHIFT_AND_MASK
     
     CMP.B       #1,D7
@@ -121,6 +127,8 @@ TYPE2:
 * ** and number of bits                   *
 *******************************************
 SHIFT_AND_MASK:
+    SUB.W       D3,D2           ; if 2 bit size, only need to shift index - 1
+    
     LSL.W       D2,D5           ; shift the mask bit left start index bits
     AND.W       D5,D7           ; mask the instruction
     LSR.W       D2,D7           ; shift the size field to the right
@@ -164,6 +172,8 @@ SIZE_ERROR:
 GET_SIZEDONE:
     MOVEM.L     (SP)+,A0-A5/D0-D6
     RTS
+
+
 
 *~Font name~Courier New~
 *~Font size~10~

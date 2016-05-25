@@ -5,7 +5,7 @@
 * Description:
 *-----------------------------------------------------------
     ORG    $1000
-START:                  
+DISASSEMBLER:                 
     JSR     DISPLAY
     
     
@@ -34,7 +34,7 @@ MAIN_LOOP:
     LEA     END_ADDR,A0
     MOVE.L  (A0),D0
     CMP.L   A6,D0
-    BLT     MAIN_LOOP
+    BGT     MAIN_LOOP
     
     SIMHALT             ; halt simulator
 
@@ -54,8 +54,9 @@ MAIN_LOOP:
     INCLUDE 'utils/clear_variables.x68'
     INCLUDE 'utils/hex2ascii.x68'
     INCLUDE 'no_opcode.x68'
-    INCLUDE 'variables.x68'
     INCLUDE 'print.x68'
+    INCLUDE 'variables.x68'
+    
 
 
 * fin
