@@ -1,11 +1,13 @@
 ************************************
 * Instructions Beginning With 0100 *
 * ** LEA - done                    *
-* ** CLR (B, W, L)                 *
-* ** MOVEM                         *
+* ** CLR (B, W, L) - done          *
+* ** MOVEM - done                  *
 * ** NOP - done                    *
 * ** RTS - done                    *
 * ** JSR - done                    *
+*                                  *
+* This subroutine is done!         *
 ************************************
 INSTR0100:
     MOVEM.L A0-A5/D0-D7,-(SP)
@@ -24,6 +26,7 @@ INSTR0100:
     JSR     PUSHBUFFER      ; push lea text to buffer
     JSR     UPDATE_OPCODE   ; update the opcode with lea
     
+FINISH_0100:
     MOVEM.L (SP)+,A0-A5/D0-D7
     RTS
     
@@ -39,7 +42,7 @@ FOUR_SETUP:
     LEA     FOUR_TABLE,A0     ; load the table
     MULU    #8,D5             ; get the offset
     JSR     0(A0,D5)          ; jump into the table
-    RTS
+    BRA     FINISH_0100
 
 *******************************************
 * Jump table for the second set of 4 bits *
@@ -99,8 +102,27 @@ FOUR0001:
 * ** CLR                                         *
 **************************************************
 FOUR0010:
+    LEA         CLR_TXT,A0      ; load clr text
+    MOVE.B      #1,D0           ; choose buffer
+    JSR         PUSHBUFFER      ; push to buffer
+    
+    * prep size info
+    CLR.L       D7              ; clear for size info
+    ROR.W       #2,D7           ; type 2 size field
+    ADDQ.B      #1,D7           ; 2 bits in size field
+    ROR.W       #1,D7           ; rotate to top
+    ADDQ.B      #7,D7           ; start index = 7
+    ROR.W       #4,D7           ; rotate to top
+    ADDQ.B      #1,D7           ; indicate size needed
+    ROR.W       #1,D7           ; rotate to top
+    
+    SWAP        D7              ; swap size info to higher order word
+    
+    MOVE.W      (A6),D7         ; move instruction in
+    
+    JSR         GET_OP_SIZE     ; get size
     RTS
-
+    
 **************************************************
 * Instructions With 0011 as Second Set of 4 Bits *
 **************************************************
@@ -142,6 +164,9 @@ FOUR0111:
 **************************************************
 * Instructions With 1000 as Second Set of 4 Bits *
 * ** MOVEM (register to memory)(W, L)            *
+*                                                *
+* NOTE: Ignoring optional opcodes and assuming   *
+*       we won't encounter them                  *
 **************************************************
 * Optional                                       *
 * ** EXT                                         *
@@ -150,6 +175,25 @@ FOUR0111:
 * ** PEA                                         *
 **************************************************
 FOUR1000:
+    LEA         MOVEM_TXT,A0        ; load movem text
+    MOVE.B      #1,D0               ; choose buffer
+    JSR         PUSHBUFFER          ; push text to buffer
+    
+    * setup size info
+    CLR.L       D7                  ; clear size register
+    ADDQ.B      #1,D7               ; type 1 size field
+    ROR.W       #2,D7               ; rotate to top
+    ROR.W       #1,D7               ; 1 bit size field
+    ADDQ.B      #6,D7               ; start index = 6
+    ROR.W       #4,D7               ; rotate to top
+    ADDQ.B      #1,D7               ; indicate size needed
+    ROR.W       #1,D7               ; rotate to top
+    
+    SWAP        D7                  ; swap size info to higher order word
+    
+    MOVE.W      (A6),D7             ; move instruction in
+    
+    JSR         GET_OP_SIZE         ; get size
     RTS
 
 **************************************************
@@ -180,7 +224,8 @@ FOUR1011:
 * ** MOVEM (memory to register)(W, L)            *
 **************************************************
 FOUR1100:
-    RTS
+    BSR         FOUR1000        ; functionally identical
+                                ; for opcode decoding
 
 **************************************************
 * Instructions With 1101 as Second Set of 4 Bits *
@@ -251,6 +296,7 @@ FINISH_FOUR1110:
 **************************************************
 FOUR1111:
     RTS
+
 
 
 
