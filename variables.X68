@@ -6,15 +6,15 @@
 ****************
 
 * Buffer, storage, and error status
-MEM_BUFFER          DS.B    9
+MEM_BUFFER          DS.B    10
 OPCODE_BUFFER       DS.B    8
-EA_BUFFER           DS.B    25
-MEM_BUFFER_POS      DS.B    1
-OP_BUFFER_POS       DS.B    1
-EA_BUFFER_POS       DS.B    1
+EA_BUFFER           DS.B    26
+MEM_BUFFER_POS      DS.B    2
+OP_BUFFER_POS       DS.B    2
+EA_BUFFER_POS       DS.B    2
 ERROR               DS.W    1
-OPCODE              DS.B    5
-SIZE                DS.B    1
+OPCODE              DS.B    6
+SIZE                DS.B    2
 
 CR          EQU     $0D         ; carriage return
 LF          EQU     $0A         ; line feed
@@ -162,6 +162,7 @@ BGE_TXT      DC.B    'BGE',0
 BLT_TXT      DC.B    'BLT',0
 BGT_TXT      DC.B    'BGT',0
 BLE_TXT      DC.B    'BLE',0
+
 
 
 

@@ -62,6 +62,7 @@ CHECKADDY
     MOVEA.L START_ADDR,A5  *Move start address to A5 
     CMPA.L   END_ADDR,A5   *Compares starting addy to the ending addy
     BGE END_GT_START    *If D1 (start) > D2 (end) go back for new addresses
+    MOVEA.L     START_ADDR,A6
        
     RTS       *The checks are done and the ascii to hex convert done
    

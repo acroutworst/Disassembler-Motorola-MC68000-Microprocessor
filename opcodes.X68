@@ -15,7 +15,12 @@ DECODER:
 
     * store the memory location of the opcode
     MOVE.B      #0,D0
+    LEA         DOLLAR,A0
+    JSR         PUSHBUFFER
+    
+    MOVE.B      #0,D0
     MOVE.L      A6,D1
+    JSR         HEX2ASCII
     
     * get first 4 bits at address in A6
     MOVEA.L     A6,A0                   ; move starting address to A0 to manip
@@ -63,13 +68,15 @@ INST_TABLE:
     RTS
     JSR     INSTR1110
     RTS
+    JSR     INSTR1111
+    RTS
     
 * pushes the opcode text (null terminated)
 * located at A0 to the opcode var
 UPDATE_OPCODE:
     LEA     OPCODE,A1
     LEA     OP_BUFFER_POS,A2
-    SUBA    (A2),A0
+*    SUBA    (A2),A0
 
 UPD_OPCODE_LOOP:
     MOVE.B  (A0)+,(A1)+
@@ -84,7 +91,7 @@ UPD_OPCODE_DONE:
 * at A0 to the size var
 UPDATE_SIZE:
     LEA     SIZE,A1
-    MOVE.B  -(A0),(A1)
+    MOVE.B  (A0),(A1)
     RTS
 
 FINISH:
@@ -108,6 +115,9 @@ FINISH:
     INCLUDE     'instr/instr1101.x68'
     INCLUDE     'instr/instr1110.x68'
     INCLUDE     'instr/instr1111.x68'
+
+
+
 
 
 
