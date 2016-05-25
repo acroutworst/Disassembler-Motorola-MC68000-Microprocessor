@@ -7,7 +7,7 @@
 EAMODE111:
     MOVEM.L     A0-A5/D0-D7,-(SP)
     
-    LEA         SUBTABLE,A1
+    * LEA         SUBTABLE,A1
     
     MOVE        D5,D0
     MULU        #6,D0
@@ -15,6 +15,7 @@ EAMODE111:
     
     MOVEM.L     (SP)+,A0-A5/D0-D7
     RTS
+
 
 
 *~Font name~Courier New~

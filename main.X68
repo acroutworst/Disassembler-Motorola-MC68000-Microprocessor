@@ -13,9 +13,9 @@ START:
 * TEST DATA
 ***************************
     * test junk data
-    MOVEA.L #$6000,A6
+    *MOVEA.L #$6000,A6
     * MOVE.W  #$1639,(A6)
-    MOVE.W  #$4E71,(A6)         ; throwing machine for NOP into mem address
+    *MOVE.W  #$4E71,(A6)         ; throwing machine for NOP into mem address
     * MOVE.W  #$1601,(A6)           ; MOVE.B D0,D3
     
 ****************************************************************
@@ -60,6 +60,7 @@ MAIN_LOOP:
 
 * fin
     END    START        ; last line of source
+
 
 
 

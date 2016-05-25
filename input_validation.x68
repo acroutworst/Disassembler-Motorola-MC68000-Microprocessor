@@ -32,21 +32,19 @@ STARTA
     LSR.L #1,D3  *Left shift 1 bit, if carry bit's 1= odd, if it's 0=even
     BCS ODD      If odd then error
     MOVE.L A6,START_ADDR
-    CMP.L #8,START_ADDR
-    BGT PRINTERR
          
 *ask for ending address       
 ENDA   
-    LEA REQEND,A1  *Load end message
-    MOVE.B #14,D0
-    TRAP #15
-    MOVE.B #2,D0   *read string at (A1) and length is returned at D1
-    TRAP #15       *Read input into D1.L
+    LEA         REQEND,A1  *Load end message
+    MOVE.B      #14,D0
+    TRAP        #15
+    MOVE.B      #2,D0   *read string at (A1) and length is returned at D1
+    TRAP        #15       *Read input into D1.L
 
 *check length
-    CMP.W #6,D1    *Check the length is no more than 24 bits, valid address 00007000-00FFFFFF
-    BGT BADLENGTH     *if bad length goes to print error message
-    BRA ENDA          *back to ask for new ending address
+    CMP.W       #6,D1    *Check the length is no more than 24 bits, valid address 00007000-00FFFFFF
+    BGT         BADLENGTH     *if bad length goes to print error message
+    * BRA         ENDA          *back to ask for new ending address
 
 *send ending address to convert to HEX*
     JSR CONVERT2HEX
@@ -58,8 +56,6 @@ ENDA
     LSR.L #1,D3      *Left shift 1 bit, if carry bit's 1= odd, if it's 0=even
     BCS ODDEND
     MOVE.L A6,END_ADDR   *Move A6 to end_address for storage
-    CMP.L #8,END_ADDR    *compare the hex to 8 characters
-    BGT PRINTERR         *branch to error
        
 *check address validity
 CHECKADDY
@@ -108,6 +104,7 @@ AGAIN
     CMP.B $79,D1
     JMP STARTA
     JMP GOODBYE
+
 
 
 *~Font name~Courier New~
