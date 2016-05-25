@@ -1,9 +1,9 @@
 ************************************
 * Instructions Beginning With 1101 *
-* ** ADD (B, W, L) -               *
+* ** ADD (B, W, L) - done          *
 * ** ADDA (W, L) - done            *
 *                                  *
-*         *
+* This subroutine is done!         *
 ************************************
 INSTR1101:
     MOVEM.L         A0-A5/D0-D7,-(SP)       ; move registers to stack
@@ -20,8 +20,24 @@ INSTR1101:
     BNE             HNDL_ADD
 
 HNDL_ADD:
-
-    BRA             BUFFER_1101
+    LEA             ADD_TXT,A0              ; load add text
+    CLR.L           D7                      ; clear size register
+    
+    * setup size info
+    ROR.W           #2,D7                   ; type 0 size field
+    ADDQ.B          #1,D7                   ; 2 bit size field
+    ROR.W           #1,D7                   ; rotate to top
+    ADDQ.B          #7,D7                   ; start index = 7
+    ROR.W           #4,D7                   ; rotate to top
+    ADDQ.B          #1,D7                   ; indicate size needed
+    ROR.W           #1,D7                   ; rotate to top
+    
+    SWAP            D7                      ; swap size info to higher order word
+    
+    MOVE.W          (A6),D7                 ; move instruction in
+      
+    BRA             BUFFER_1101             ; branch to buffer handling
+    
 HNDL_ADDA:        
     LEA             ADDA_TXT,A0
     
@@ -51,6 +67,7 @@ BUFFER_1101:
 FINISH_1101:
     MOVEM.L         (SP)+,A0-A5/D0-D7       ; move registers back from stack
     RTS
+
 
 
 
