@@ -19,16 +19,26 @@ SETPRINT            *Set D1 with trap 11, high num is col 0-79 low num is 0-31
 	MOVE.L #14,D0
 	TRAP #15              *Print
 	ADD.B #13,D1        *Memory location 13 spaces
+	MOVE.B #11,D0
+	TRAP #15
 	LEA OPCODE_BUFFER,A1  *loads opcode location
 	MOVE.L #14,D0
 	TRAP #15
+	BSR COUNTER
 	ADD.B #8,D1        *Move over 8 spaces in the row
+	MOVE.B #11,D0
+	TRAP #15
 	LEA EA_BUFFER,A1	*Loads EA location
 	MOVE.L #14,D0
 	TRAP #15
 	ADD.W #100,D1    *Moves down to next column
+	MOVE.B #11,D0
+	TRAP #15
 	MOVE.B #00,D1    *resets the row
-	BSR COUNTER
+	MOVE.B #11,D0
+	TRAP #15
+	RTS
+	
 	
 ****
 *How to check if all the opcodes has been printed and is done?*
@@ -52,7 +62,7 @@ PRINTERR
     RTS                         *return 
 
 CLEARSCREEN
-    MOVE.W $FF00,D1          *this is the clearscreen code with trap 11
+    MOVE.W #$FF00,D1          *this is the clearscreen code with trap 11
     MOVE.B #11,D0
     TRAP #15
     MOVE.B #0,LINECOUNTER       *reset linecounter to 0
