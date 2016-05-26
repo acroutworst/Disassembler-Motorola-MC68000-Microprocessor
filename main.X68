@@ -39,7 +39,7 @@ MAIN_LOOP:
     MOVE.W  #0,ERROR
     JSR     CLEAR_VARS
     JSR     DECODER
-    JSR     EADECODER
+    * JSR     EADECODER
     * ; JSR <main ea subroutine>
     
     * ; JSR <print subroutine>
@@ -73,6 +73,7 @@ MAIN_LOOP:
 
 * fin
     END    START        ; last line of source
+
 
 
 
