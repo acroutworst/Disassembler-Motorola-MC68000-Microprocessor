@@ -71,20 +71,6 @@ CONVERTNUM:
     
 
 CONVERTLOW:
-*convert by adding A and subtracting a
-<<<<<<< HEAD
-    ADD.B #$A,D2
-    SUB.B #'a',D2
-    MOVE.L D2,D3
-    BRA ADD2STRING
-
-CONVERTUP
-*convert by adding A, subtracting A
-    ADD.B #$A,D2
-    SUB.B #'A',D2
-    MOVE.L D2,D3
-    BRA ADD2STRING
-=======
     SUB.B       #$57,D2
     BRA         ADD2STRING
 
@@ -92,40 +78,26 @@ CONVERTUP:
 * convert by subtracting 0x37
     SUB.B       #$37,D2
     BRA         ADD2STRING
->>>>>>> cf28bd9642c1dc2d0b754a4edaddedacd2ffd429
 
 ADD2STRING:
 *loop through to add
-<<<<<<< HEAD
-    ADD.B D3,STRING2HEX
-    MOVE.L #STRING2HEX,D4
-    LSL.L #4,D4 * LSL will only do LSL.W if you aren't dealing with a data register
-    MOVE.L D4,STRING2HEX
-    BRA LOOP
-=======
     ADD.B       D2,D4
     ADDQ        #1,D3
     CMP.B       D1,D3    *D3 holds the length that we've gone through 
     BEQ         LOOPDONE    *if the input length and the length we've looped through then it's done 
     LSL.L       #4,D4
     BRA         LOOP
->>>>>>> cf28bd9642c1dc2d0b754a4edaddedacd2ffd429
  
 LOOPDONE:
     MOVEA.L     D4,A6
     MOVEM.L     (SP)+,A0-A5/D0-D7   *move registers back from stack
     RTS
 
-<<<<<<< HEAD
-ERR
-    MOVEA.L #00000000,A6       *Inaccurate code
-    MOVEM.L (SP)+,A0-A5/D0-D7 *Move registers back from stack
-=======
 ERR:
     MOVEA.L     #$00000000,A6       *Inaccurate code
     MOVEM.L     (SP)+, A0-A5/D0-D7 *Move registers back from stack
->>>>>>> cf28bd9642c1dc2d0b754a4edaddedacd2ffd429
     RTS
+
 
 *~Font name~Courier New~
 *~Font size~10~
