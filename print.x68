@@ -5,38 +5,49 @@
 * Description:print functions, keeps track of screen
 *-----------------------------------------------------------
 PRINTSTART
-	MOVEM.L A0-A5/D0-D7,-(SP)
-	BSR CLEARSCREEN     *Clears the screen first
+	MOVEM.L     A0-A5/D0-D7,-(SP)
+	BSR         CLEARSCREEN     *Clears the screen first
 
 PRINTLOOP	
-	LEA HEADER,A1    *Load nad print the header 
-	MOVE.B #14,D0
-	TRAP #15
-	BSR COUNTER      *branch to counter to increment by 1 and then back 
+	LEA         HEADER,A1    *Load nad print the header 
+	MOVE.B      #14,D0
+	TRAP        #15
+	BSR         COUNTER      *branch to counter to increment by 1 and then back 
 
-SETPRINT            *Set D1 with trap 11, high num is col 0-79 low num is 0-31
-	LEA MEM_BUFFER,A1    *Load memory location
-	MOVE.L #14,D0
-	TRAP #15              *Print
-	ADD.B #13,D1        *Memory location 13 spaces
-	MOVE.B #11,D0
-	TRAP #15
-	LEA OPCODE_BUFFER,A1  *loads opcode location
-	MOVE.L #14,D0
-	TRAP #15
-	BSR COUNTER
-	ADD.B #8,D1        *Move over 8 spaces in the row
-	MOVE.B #11,D0
-	TRAP #15
-	LEA EA_BUFFER,A1	*Loads EA location
-	MOVE.L #14,D0
-	TRAP #15
-	ADD.W #100,D1    *Moves down to next column
-	MOVE.B #11,D0
-	TRAP #15
-	MOVE.B #00,D1    *resets the row
-	MOVE.B #11,D0
-	TRAP #15
+SETPRINT            *Set D1 with trap 11, high byte is col 0-79 low num is 0-31
+	LEA         MEM_BUFFER,A1    *Load memory location
+	MOVE.L      #14,D0
+	TRAP        #15              *Print
+	
+    ADD.W       #$0D00,D1        *Memory location 13 spaces
+	MOVE.B      #11,D0
+	TRAP        #15
+	
+    LEA         OPCODE_BUFFER,A1  *loads opcode location
+	MOVE.L      #1,D0
+	TRAP        #15
+	
+	ADD.W       #$0800,D1        *Move over 8 spaces in the row
+	MOVE.B      #11,D0
+	TRAP        #15
+	
+	LEA         EA_BUFFER,A1	*Loads EA location
+	MOVE.L      #14,D0
+	TRAP        #15
+	
+	ADD.B       #1,D1    *Moves down to next row
+	MOVE.B      #11,D0
+	TRAP        #15
+	
+	* changing this to print out a newline
+*	MOVE.B      #$00,D1    *resets the column
+*	MOVE.B      #11,D0
+*	TRAP        #15
+
+    LEA         SPACE,A1
+    MOVE.B      #13,D0
+    TRAP        #15
+	BSR         COUNTER
 	RTS
 	
 	
@@ -66,7 +77,7 @@ CLEARSCREEN
     MOVE.B #11,D0
     TRAP #15
     MOVE.B #0,LINECOUNTER       *reset linecounter to 0
-    MOVE.W #0100,D1         *header takes 1 column, start below that
+    MOVE.W #$0001,D1         *header takes 1 row, start below that
     JMP PRINTLOOP               *go back to print loop
 
 COUNTER
@@ -79,6 +90,7 @@ GOODBYE
 	LEA GOODBYEM,A1
 	MOVE.B #14,D0
 	TRAP #15
+
 
 
 
