@@ -18,6 +18,7 @@ SIZE                DS.B    2
 
 CR          EQU     $0D         ; carriage return
 LF          EQU     $0A         ; line feed
+         
 NEWLINE     DC.B    CR,LF,0     ; new line
 
 ************
@@ -47,6 +48,7 @@ START_ADDR  DS.L    1
 END_ADDR    DS.L    1
 
 * punctuation
+
 SPACE       DC.B    ' ',0
 PERIOD      DC.B    '.',0
 COMMA       DC.B    ',',0
@@ -162,6 +164,8 @@ BGE_TXT      DC.B    'BGE',0
 BLT_TXT      DC.B    'BLT',0
 BGT_TXT      DC.B    'BGT',0
 BLE_TXT      DC.B    'BLE',0
+
+
 
 
 

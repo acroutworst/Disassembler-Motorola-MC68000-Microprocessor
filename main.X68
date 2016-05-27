@@ -39,10 +39,9 @@ MAIN_LOOP:
     MOVE.W  #0,ERROR
     JSR     CLEAR_VARS
     JSR     DECODER
-    * JSR     EADECODER
-    * ; JSR <main ea subroutine>
+    * JSR     EADECODER     ; commenting out to test print subroutine
     
-    * ; JSR <print subroutine>
+    JSR     PRINTSTART
     LEA     END_ADDR,A0
     MOVE.L  (A0),D0
     CMP.L   A6,D0
@@ -73,6 +72,7 @@ MAIN_LOOP:
 
 * fin
     END    START        ; last line of source
+
 
 
 

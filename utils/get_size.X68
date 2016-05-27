@@ -137,6 +137,11 @@ SHIFT_AND_MASK:
 PUSH_SIZE:      
     JSR         PUSHBUFFER
     JSR         UPDATE_SIZE
+    LEA         OP_BUFFER_POS,A1
+    MOVE.B      (A1),D6
+    CMP.B       #7,D6
+    BLE         PAD_SPACES
+
     RTS
     
 PUSH_PERIOD
@@ -167,11 +172,19 @@ SIZE_ERROR:
     ADDQ        #1,(A3)
     RTS
     
-
+PAD_SPACES:
+    LEA         SPACE,A0
+    JSR         PUSHBUFFER
+    LEA         OP_BUFFER_POS,A1
+    MOVE.W      (A1),D6
+    CMP.B       #7,D6
+    BLE         PAD_SPACES
+    RTS
 
 GET_SIZEDONE:
     MOVEM.L     (SP)+,A0-A5/D0-D6
     RTS
+
 
 
 
