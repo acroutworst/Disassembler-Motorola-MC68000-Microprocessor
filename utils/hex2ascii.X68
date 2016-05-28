@@ -4,26 +4,36 @@
 * Date       : 2016/05/18
 * Description: Subroutine that takes hex input in D1 and
 *              pushes it to the buffer specified in D0.
+*              Length of the input should be in D2.
 *
 * NOTE: does not push any associated symbols to the buffer
 *-----------------------------------------------------------
 HEX2ASCII:
     MOVEM.L         A0-A6/D0-D7,-(SP)   ; move registers to stack
     MOVE.B          #0,D7               ; loop counter
+    MOVE.B          #8,D3
+    
+PREP_H2A_LOOP:
+    CMP.B           D3,D2
+    BEQ             HEX2ASCII_LOOP
+    
+    LSL.L           #4,D1
+    SUBQ.B          #1,D3
+    BRA             PREP_H2A_LOOP
 
     
 HEX2ASCII_LOOP:
     ROL.L           #4,D1               ; rotate first char to bottom
-    MOVE.B          D1,D2               ; copy data to manip
-    AND.B           #$0F,D2             ; mask for last 4 bits
+    MOVE.B          D1,D4               ; copy data to manip
+    AND.B           #$0F,D4             ; mask for last 4 bits
     
     LEA             H2A_TABLE,A0        ; load jump table
-    MULU            #8,D2               ; get offset
-    JSR             0(A0,D2)            ; jump in
+    MULU            #8,D4               ; get offset
+    JSR             0(A0,D4)            ; jump in
     
     JSR             PUSHBUFFER          ; push the loaded character
     ADDQ.B          #1,D7               ; increment the loop counter
-    CMP.B           #8,D7               ; check if done
+    CMP.B           D2,D7               ; check if done
     BNE             HEX2ASCII_LOOP      ; next iteration
     
     MOVEM.L         (SP)+,A0-A6/D0-D7   ; move registers back from stack
@@ -126,6 +136,8 @@ H2A_E:
 H2A_F:
     LEA             TXT_F,A0        ; load F text
     RTS
+
+
 *~Font name~Courier New~
 *~Font size~10~
 *~Tab type~1~

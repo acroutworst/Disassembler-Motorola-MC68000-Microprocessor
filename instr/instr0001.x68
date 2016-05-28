@@ -9,6 +9,8 @@ INSTR0001:
     CLR.L       D7
     
     LEA         MOVE_TXT,A0         ; load move text
+    LEA         EA_NEEDED,A5
+    ADDQ.B      #1,(A5)
     BRA         BUFFER0001          
             
 BUFFER0001:
@@ -34,6 +36,7 @@ PREP_SIZE_0001:
 INSTR0001DONE:
     MOVEM.L     (SP)+,A0-A5/D0-D7
     RTS
+
 
 
 

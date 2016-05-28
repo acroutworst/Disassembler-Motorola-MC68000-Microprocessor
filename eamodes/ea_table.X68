@@ -8,9 +8,7 @@
 ***********************************
 *   Jump Table for the EA Modes   *
 ***********************************
-EA_TABLE:
-    MOVEM.L     A0-A5/D0-D7,-(SP)
-    
+EA_TABLE:    
     JSR         EAMODE000           ; direct data register
     RTS
     JSR         EAMODE001           ; direct address register
@@ -27,10 +25,6 @@ EA_TABLE:
     RTS
     JSR         EAMODE111           ; absolute / immediate 
     RTS
-        
-    MOVEM.L     (SP)+,A0-A5/D0-D7
-    RTS
-
 
     INCLUDE     'eamodes/eamode000.x68'       ; include all jump labels
     INCLUDE     'eamodes/eamode001.x68'
@@ -40,6 +34,7 @@ EA_TABLE:
     INCLUDE     'eamodes/eamode101.x68'
     INCLUDE     'eamodes/eamode110.x68'
     INCLUDE     'eamodes/eamode111.x68'
+
 
 
 

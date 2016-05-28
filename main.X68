@@ -10,10 +10,9 @@
 
     ORG    $7000
 START:                  ; first instruction of program
-
     MOVE.B      #1,D0
     MOVE.W      #1,D1
-    MOVE.L      #1,D2
+    MOVE.L      #1234,$700A
     JSR         DISASSEMBLER
     
     ORG    $1000
@@ -39,7 +38,7 @@ MAIN_LOOP:
     MOVE.W  #0,ERROR
     JSR     CLEAR_VARS
     JSR     DECODER
-    * JSR     EADECODER     ; commenting out to test print subroutine
+    JSR     EADECODER     ; commenting out to test print subroutine
     
     JSR     PRINTSTART
     LEA     END_ADDR,A0
@@ -72,6 +71,7 @@ MAIN_LOOP:
 
 * fin
     END    START        ; last line of source
+
 
 
 

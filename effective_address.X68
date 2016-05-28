@@ -9,16 +9,18 @@ EADECODER:
     MOVEM.L     A0-A5/D0-D7,-(SP)   ; move registers to stack to be moved
     LEA         ERROR,A1            ; load error status from Opcode
     CMP.B       #0,(A1)             ; compare error to 0 to check for ok status
-    BNE         FINISH
+    BNE         FINISH_EADECODER
     
-    LEA         OP_BUFFER_POS,A1    ; <GEOFF> not sure what you're doing here...
-    MOVE.W      #6,(A1)             ; load the ea bits passed from Opcode (find out opcode ending)
+    LEA         EA_NEEDED,A1        ; check ea_needed status (1 for needed, 0 for not)
+    CMP.B       #0,(A1)
+    BEQ         FINISH_EADECODER
+    
     MOVEA.L     A6,A0
-    MOVE.W      (A0),D5
+    MOVE.W      (A0),D5             ; move instruction in to D5
     
-    MOVE.B      #0,D3               ; first 3 bits
+    MOVE.B      #5,D4               ; get mode from second to last 3 bits
     JSR         BITMASKER
-    MULU        #6,D5               ; 6 ea bits for jump table
+    MULU        #8,D5               ; offset for jump table
     
     LEA         EA_TABLE,A0         ; load the effective address jump table
     JSR         0(A0,D5)            ; call jump table
@@ -33,6 +35,8 @@ FINISH_EADECODER:
     RTS                             ; exit subroutine
 
     INCLUDE 'eamodes/ea_table.x68'
+
+
 
 
 *~Font name~Courier New~

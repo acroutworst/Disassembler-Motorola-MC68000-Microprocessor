@@ -5,14 +5,18 @@
 * This subroutine is done!         *
 ************************************
 EAMODE001:
-    MOVEM.L     A0-A5/D0-D7,-(SP)
+    MOVEM.L     A0-A5/D0-D7,-(SP)   ; move registers to stack
     
-    MOVE        D5,D0
+    DIVU        #8,D5
+    
+
     ANDI        #7,D0
     BSR         EA_BUFFER         ; send data to buffer
     
     MOVEM.L     (SP)+,A0-A5/D0-D7
     RTS
+
+
 
 
 
