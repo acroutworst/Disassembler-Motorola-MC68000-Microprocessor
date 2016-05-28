@@ -25,10 +25,18 @@ CLEAR_VARS:
     MOVE.B      #0,(A2)+
     MOVE.B      #0,(A2)
     
+    * clear ea_needed var
+    LEA         EA_NEEDED,A0
+    MOVE.B      #0,(A0)
+    
+    * clear ea_type var
+    LEA         EA_TYPE,A0
+    MOVE.B      #0,(A0)
+    
     * clear size
     LEA         SIZE,A0
-    MOVE.B      #0,(A0)+
     MOVE.B      #0,(A0)
+
     
     * clear mem buffer
     LEA         MEM_BUFFER,A1
@@ -62,6 +70,8 @@ VARS_LOOP:
     
 
     
+
+
 
 
 

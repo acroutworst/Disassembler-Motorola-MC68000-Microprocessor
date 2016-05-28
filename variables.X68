@@ -14,7 +14,11 @@ OP_BUFFER_POS       DS.B    2
 EA_BUFFER_POS       DS.B    2
 ERROR               DS.W    1
 OPCODE              DS.B    6
-SIZE                DS.B    2
+SIZE                DS.B    1
+EA_NEEDED           DS.B    1       ; 1 for needed, 0 otherwise
+EA_TYPE             DS.B    1       ; need to list these out
+EA_SOURCE           DS.L    4
+EA_DEST             DS.L    4
 
 CR          EQU     $0D         ; carriage return
 LF          EQU     $0A         ; line feed
@@ -164,6 +168,10 @@ BGE_TXT      DC.B    'BGE',0
 BLT_TXT      DC.B    'BLT',0
 BGT_TXT      DC.B    'BGT',0
 BLE_TXT      DC.B    'BLE',0
+
+
+
+
 
 
 

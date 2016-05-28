@@ -20,6 +20,7 @@ DECODER:
     
     MOVE.B      #0,D0
     MOVE.L      A6,D1
+    MOVE.B      #8,D2
     JSR         HEX2ASCII
     
     * get first 4 bits at address in A6
@@ -115,6 +116,7 @@ FINISH:
     INCLUDE     'instr/instr1101.x68'
     INCLUDE     'instr/instr1110.x68'
     INCLUDE     'instr/instr1111.x68'
+
 
 
 

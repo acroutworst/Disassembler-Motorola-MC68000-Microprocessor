@@ -5,14 +5,21 @@
 * This subroutine is done!         *
 ************************************
 EAMODE000:
-    MOVEM.L     A0-A5/D0-D7,-(SP)
+    MOVEM.L     A0-A5/D0-D7,-(SP)   ; move registers to stack
     
-    MOVE        D5,D0
-    ANDI        #7,D0
-    BSR         EA_BUFFER         ; send data to buffer
     
-    MOVEM.L     (SP)+,A0-A5/D0-D7
+    
+    LEA         D,A0                ; load D text
+    MOVE.B      #2,D0               ; choose ea buffer
+    JSR         PUSHBUFFER          ; send data to buffer
+    
+    MOVE.W      D5,D1               ; move original value to D1
+    JSR         HEX2ASCII           ; convert to ascii and push to buffer
+         
+    MOVEM.L     (SP)+,A0-A5/D0-D7   ; move registers back from stack
     RTS
+
+
 
 
 *~Font name~Courier New~
