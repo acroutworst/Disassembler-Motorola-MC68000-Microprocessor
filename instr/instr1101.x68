@@ -35,6 +35,14 @@ HNDL_ADD:
     SWAP            D7                      ; swap size info to higher order word
     
     MOVE.W          (A6),D7                 ; move instruction in
+    
+    * update ea info
+    LEA         EA_NEEDED,A5
+    MOVE.B      #1,(A5)
+    
+    LEA         NUM_OPERANDS,A5
+    MOVE.B      #2,(A5)
+
       
     BRA             BUFFER_1101             ; branch to buffer handling
     
@@ -53,6 +61,13 @@ HNDL_ADDA:
     SWAP            D7                      ; swap size info to higher order word
     MOVE.W          (A6),D7                 ; move instruction in
     
+    * update ea info
+    LEA         EA_NEEDED,A5
+    MOVE.B      #1,(A5)
+    
+    LEA         NUM_OPERANDS,A5
+    MOVE.B      #2,(A5)
+
     BRA             BUFFER_1101
     
 BUFFER_1101:
@@ -67,6 +82,7 @@ BUFFER_1101:
 FINISH_1101:
     MOVEM.L         (SP)+,A0-A5/D0-D7       ; move registers back from stack
     RTS
+
 
 
 

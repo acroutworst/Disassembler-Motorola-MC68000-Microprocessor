@@ -22,11 +22,26 @@ INSTR1110:
     
 MEM_SHIFTS:
     MOVE.B          #8,D4
+
+    * update ea info
+    LEA         EA_NEEDED,A5
+    MOVE.B      #1,(A5)
+    
+    LEA         NUM_OPERANDS,A5
+    MOVE.B      #2,(A5)
+
     
     BRA             TABLE_1110_PREP
     
 REG_SHIFTS:
     MOVE.B          #9,D4
+
+    * update ea info
+    LEA         EA_NEEDED,A5
+    MOVE.B      #1,(A5)
+    
+    LEA         NUM_OPERANDS,A5
+    MOVE.B      #2,(A5)
     
     * prep size information
     MOVE.B          #0,D7           ; size type 0
@@ -160,6 +175,7 @@ BUFFER_1110:
 FINISH_1110:
     MOVEM.L         (SP)+,A0-A5/D0-D7
     RTS
+
 
 
 

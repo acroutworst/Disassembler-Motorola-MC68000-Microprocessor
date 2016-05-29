@@ -25,8 +25,16 @@ INSTR0100:
     MOVE.B  #1,D0           ; choose the buffer to push to
     JSR     PUSHBUFFER      ; push lea text to buffer
     JSR     UPDATE_OPCODE   ; update the opcode with lea
+    * update ea info
+    LEA         EA_NEEDED,A0
+    MOVE.B      #1,(A0)
+    
+    LEA         NUM_OPERANDS,A0
+    MOVE.B      #2,(A0)
+
     
 FINISH_0100:
+
     MOVEM.L (SP)+,A0-A5/D0-D7
     RTS
     
@@ -121,6 +129,13 @@ FOUR0010:
     MOVE.W      (A6),D7         ; move instruction in
     
     JSR         GET_OP_SIZE     ; get size
+    * update ea info
+    LEA         EA_NEEDED,A0
+    MOVE.B      #1,(A0)
+    
+    LEA         NUM_OPERANDS,A0
+    MOVE.B      #1,(A0)
+
     RTS
     
 **************************************************
@@ -194,6 +209,14 @@ FOUR1000:
     MOVE.W      (A6),D7             ; move instruction in
     
     JSR         GET_OP_SIZE         ; get size
+    
+    * update ea info
+    LEA         EA_NEEDED,A0
+    MOVE.B      #1,(A0)
+    
+    LEA         NUM_OPERANDS,A0
+    MOVE.B      #2,(A0)
+
     RTS
 
 **************************************************
@@ -226,6 +249,7 @@ FOUR1011:
 FOUR1100:
     BSR         FOUR1000        ; functionally identical
                                 ; for opcode decoding
+    RTS
 
 **************************************************
 * Instructions With 1101 as Second Set of 4 Bits *
@@ -275,7 +299,13 @@ FOUR1110:
 
 HNDL_NOP:
     LEA        NOP_TXT,A0
+    
+    * update ea info
+    LEA         EA_NEEDED,A0
+    MOVE.B      #0,(A0)
+
     BRA        FINISH_FOUR1110
+    
 
 HNDL_RTS:
     LEA        RTS_TXT,A0
@@ -283,6 +313,13 @@ HNDL_RTS:
     
 HNDL_JSR:
     LEA        JSR_TXT,A0
+    * update ea info
+    LEA         EA_NEEDED,A0
+    MOVE.B      #1,(A0)
+    
+    LEA         NUM_OPERANDS,A0
+    MOVE.B      #1,(A0)
+
     BRA        FINISH_FOUR1110
     
 FINISH_FOUR1110:
@@ -296,6 +333,7 @@ FINISH_FOUR1110:
 **************************************************
 FOUR1111:
     RTS
+
 
 
 

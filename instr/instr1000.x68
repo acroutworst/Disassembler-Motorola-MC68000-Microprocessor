@@ -36,10 +36,23 @@ INSTR1000:
     BRA         PUSH_1000
         
 HNDL_DIVU:
+    * update ea info
+    LEA         EA_NEEDED,A5
+    MOVE.B      #1,(A5)
+    
+    LEA         NUM_OPERANDS,A5
+    MOVE.B      #2,(A5)
+
     LEA         DIVU_TXT,A0
     BRA         PUSH_1000
     
 HNDL_DIVS:
+    * update ea info
+    LEA         EA_NEEDED,A5
+    MOVE.B      #1,(A5)
+    
+    LEA         NUM_OPERANDS,A5
+    MOVE.B      #2,(A5)
     LEA         DIVS_TXT,A0
     BRA         PUSH_1000
     
@@ -56,9 +69,12 @@ PUSH_1000:
     JSR         GET_OP_SIZE
     BRA         FINISH_1000
     
-FINISH_1000:    
+FINISH_1000:
+    
+    
     MOVEM.L     (SP)+,A0-A5/D0-D7
     RTS
+
 
 
 

@@ -30,9 +30,17 @@ INSTR1001:
     JSR         UPDATE_OPCODE       ; update opcode
     JSR         GET_OP_SIZE         ; get op size
     
+    * update ea info
+    LEA         EA_NEEDED,A5
+    MOVE.B      #1,(A5)
+    
+    LEA         NUM_OPERANDS,A5
+    MOVE.B      #2,(A5)
+
     
     MOVEM.L     (SP)+,A0-A5/D0-D7   ; move registers back from stack
     RTS
+
 
 
 *~Font name~Courier New~
