@@ -33,6 +33,10 @@ CLEAR_VARS:
     LEA         EA_TYPE,A0
     MOVE.B      #0,(A0)
     
+    * clear num_operands var
+    LEA         NUM_OPERANDS,A0
+    MOVE.B      #0,(A0)
+    
     * clear size
     LEA         SIZE,A0
     MOVE.B      #0,(A0)
@@ -70,6 +74,7 @@ VARS_LOOP:
     
 
     
+
 
 
 

@@ -40,6 +40,13 @@ HNDL_CMP:
     SWAP        D7              ; swap size info to high order word
     MOVE.W      (A6),D7         ; move instruction in
     LEA         CMP_TXT,A0      ; load cmp text
+    * update ea info
+    LEA         EA_NEEDED,A5
+    MOVE.B      #1,(A5)
+    
+    LEA         NUM_OPERANDS,A5
+    MOVE.B      #2,(A5)
+
     BRA         PUSH_1011       ; push to buffer
 
 HNDL_CMPA:
@@ -56,6 +63,13 @@ HNDL_CMPA:
     MOVE.W      (A6),D7         ; move instruction in to lower order word
     
     LEA         CMPA_TXT,A0     ; load cmpa text
+    * update ea info
+    LEA         EA_NEEDED,A5
+    MOVE.B      #1,(A5)
+    
+    LEA         NUM_OPERANDS,A5
+    MOVE.B      #2,(A5)
+
     BRA         PUSH_1011       ; push to buffer
 
 PUSH_1011:
@@ -70,6 +84,7 @@ PUSH_1011:
 FINISH_1011:
     MOVEM.L     (SP)+,A0-A5/D0-D7    
     RTS
+
 
 
 

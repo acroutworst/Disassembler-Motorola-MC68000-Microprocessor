@@ -63,10 +63,19 @@ FINISH_0101:
 
     BSR         PREP_SIZE_0101
     JSR         GET_OP_SIZE
+    
+    * update ea info
+    LEA         EA_NEEDED,A0
+    MOVE.B      #1,(A0)
+    
+    LEA         NUM_OPERANDS,A0
+    MOVE.B      #2,(A0)
+
  
     MOVEM.L     (SP)+,A0-A5/D0-D7
 
     RTS
+
 
 
 

@@ -26,14 +26,35 @@ INSTR1100:
     BRA             HNDL_AND
     
 HNDL_MULU:
+    * update ea info
+    LEA         EA_NEEDED,A5
+    MOVE.B      #1,(A5)
+    
+    LEA         NUM_OPERANDS,A5
+    MOVE.B      #2,(A5)
+
     LEA             MULU_TXT,A0             ; load the text
     BRA             BUFFER_1100             ; push to the buffer
 
 HNDL_MULS:
+    * update ea info
+    LEA         EA_NEEDED,A5
+    MOVE.B      #1,(A5)
+    
+    LEA         NUM_OPERANDS,A5
+    MOVE.B      #2,(A5)
+
     LEA             MULS_TXT,A0             ; load MULS text
     BRA             BUFFER_1100             ; push to the buffer
 
 HNDL_AND:
+    * update ea info
+    LEA         EA_NEEDED,A5
+    MOVE.B      #1,(A5)
+    
+    LEA         NUM_OPERANDS,A5
+    MOVE.B      #2,(A5)
+
     LEA             AND_TXT,A0              ; load AND text
     
     * setup size for AND
@@ -61,6 +82,7 @@ BUFFER_1100:
 FINISH_1100:
     MOVEM.L         (SP)+,A0-A5/D0-D7       ; move registers back from stack
     RTS
+
 
 
 
