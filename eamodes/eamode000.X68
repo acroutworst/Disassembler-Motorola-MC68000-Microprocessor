@@ -9,7 +9,7 @@ EAMODE000:
     
     
     
-    LEA         D,A0                ; load D text
+    LEA         D,A0                ; load D text / LEA #'D',A0 
     MOVE.B      #2,D0               ; choose ea buffer
     
     JSR         PUSHBUFFER          ; send data to buffer
@@ -20,6 +20,7 @@ EAMODE000:
          
     MOVEM.L     (SP)+,A0-A5/D0-D7   ; move registers back from stack
     RTS
+
 
 
 
