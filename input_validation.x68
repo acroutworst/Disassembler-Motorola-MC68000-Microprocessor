@@ -29,7 +29,7 @@ STARTA
     JSR CONVERT2HEX 
 
 *Error checks    
-    CMP #ERRADD,A6         *if address is incorrect then convert2hex will make A6,00000000 invalid address
+    CMP #ERRADD,A6    * if address is incorrect then convert2hex will make A6,00000000 invalid address
     BEQ PRINTERR
     MOVE.W A6,D3   *saves original addy to A6
     LSR.L #1,D3  *Left shift 1 bit, if carry bit's 1= odd, if it's 0=even
@@ -70,8 +70,7 @@ CHECKADDY
     MOVEM.L     (SP)+,A0-A5/D0-D7 *Move registers back from stack   
     RTS       *The checks are done and the ascii to hex convert done
    
-  *if all else good jump tp print*
-    JSR PRINTSTART     
+  *if all else good jump tp print*     
 
 ODD
     LEA ODDERR,A1       *prints out odd error message
@@ -113,6 +112,7 @@ AGAIN
     JMP STARTA
 
     JMP GOODBYE    *else jump to printing good bye
+
 
 
 
