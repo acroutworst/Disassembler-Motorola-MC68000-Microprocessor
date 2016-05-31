@@ -17,9 +17,12 @@ PRINTLOOP
 SETPRINT        
 *Set D1 with trap 11, high byte is col 0-79 low num is row 0-31
 	* changing this to print out a newline
+*This will actually change the row, how do I change the column and still keep track of the row so it doesnt make it print over each other, i have a counter, is there a way to put the counter in for the row position?
+**************************
 *	MOVE.B      #$00,D1    *resets the column
 *	MOVE.B      #11,D0
 *	TRAP        #15
+***********************
 
 	LEA         MEM_BUFFER,A1    *Load memory location
 	MOVE.L      #14,D0
@@ -58,7 +61,7 @@ SETPRINT
 DONE   *back to main	
 	MOVEM.L (SP)+,A0-A5/D0-D7
 	RTS
-	
+
 *************
 *Don't need this branch ot set print since it goes back each time to main right?**		
 	*BRA SETPRINT       *repeat until done
