@@ -23,7 +23,7 @@ GET_OPERANDS:
     MULU        #8,D0
     LEA         OPERANDS_TABLE,A1
     JSR         0(A1,D0)
-    RTS
+    BRA         FINISH_EADECODER
     
     
     
@@ -186,6 +186,7 @@ FINISH_EADECODER:
     RTS                             ; exit subroutine
 
     INCLUDE 'eamodes/ea_table.x68'
+
 
 
 
