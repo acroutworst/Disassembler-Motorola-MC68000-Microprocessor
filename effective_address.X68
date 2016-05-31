@@ -180,15 +180,13 @@ EADST06:
 EADST07:
     RTS
     
-
-* push ascii format ea to display
-    
     
 FINISH_EADECODER:
     MOVEM.L     (SP)+,A0-A5/D0-D7   ; move registers back from stack
     RTS                             ; exit subroutine
 
     INCLUDE 'eamodes/ea_table.x68'
+
 
 
 

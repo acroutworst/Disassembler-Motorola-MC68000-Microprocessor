@@ -25,7 +25,6 @@ EAMODE110:
     ANDI        #7,D0
     MOVE.W      D0,D1
     MOVE.B      #2,D0
-    *BSR         ADDRESS_BUFFER         ; send data to buffer
     JSR         PUSHBUFFER
     
     MOVE.W      COMMA,(A6)+
@@ -50,6 +49,7 @@ WORD:
 EXIT:
     MOVEM.L     (SP)+,A0-A5/D0-D7
     RTS
+
 
 
 *~Font name~Courier New~
