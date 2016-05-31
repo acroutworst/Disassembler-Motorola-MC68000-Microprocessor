@@ -140,7 +140,10 @@ PUSH_SIZE:
     LEA         OP_BUFFER_POS,A1
     MOVE.B      (A1),D6
     CMP.B       #7,D6
-    BLE         PAD_SPACES
+    * BLE         PAD_SPACES
+    LEA         OPCODE_BUFFER,A0
+    ADDA        (A1),A0
+    MOVE.B      #$00,(A0)
 
     RTS
     
@@ -184,6 +187,8 @@ PAD_SPACES:
 GET_SIZEDONE:
     MOVEM.L     (SP)+,A0-A5/D0-D6
     RTS
+
+
 
 
 
