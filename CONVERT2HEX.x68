@@ -25,7 +25,6 @@ CONVERT2HEX
 *    MOVE.L D1,(A2)       *moves the length input into the indirect address
     
     CLR.L       D3          *Clears D3 and set to 0
-    ADDI.B #1,D3
     
 ******CONVERT******
 
@@ -76,11 +75,11 @@ CONVERTUP:
 ADD2STRING:
 *loop through to add
     ADD.B       D2,D4    *Add the converted num/letter to running total
-    LSL.L       #4,D4    *Shift left to accept next digit
 
     ADDQ        #1,D3
     CMP.B       D1,D3    *D3 holds the length that we've gone through 
     BEQ         LOOPDONE    *if the input length and the length we've looped through then it's done 
+    LSL.L       #4,D4    *Shift left to accept next digit
     
     BRA         LOOP
  
