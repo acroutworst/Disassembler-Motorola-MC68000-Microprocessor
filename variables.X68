@@ -34,8 +34,8 @@ CKLENGTH    EQU     6   *24 bit address 00007000-00FFFFFF
 LINECOUNTER EQU     20
 
 HELLO       DC.B    'Welcome to Teamy McTeamFaces Disassembler!',CR,LF,0
-REQSTART    DC.B    'Please enter in the starting location, must be 24 bit:',CR,LF,0
-REQEND      DC.B    'Please enter in the ending location, must be 24 bit:',CR,LF,0
+REQSTART    DC.B    'Please enter in the starting location, must be no more than 24 bit:',CR,LF,0
+REQEND      DC.B    'Please enter in the ending location, must be no more than 24 bit:',CR,LF,0
 LENGTHERR   DC.B    'ERROR: This address is invalid',CR,LF,0
 ODDERR      DC.B    'ERROR: Starting address cant be odd, please reenter:',CR,LF,0
 BIGEND      DC.B    'ERROR: The ending address is greater than the starting address',CR,LF,0
@@ -46,7 +46,6 @@ ERRADD      EQU     $00000000
 PRINTDATA   DC.B    'Address DATA $'
 SETLENGTH   DS.B    16
 STRING2HEX  DS.B    32
-INPUT 		DS.B    1
 
 
 * storage for the start and end address
