@@ -9,9 +9,6 @@ PRINTSTART
 	BSR         CLEARSCREEN     *Clears the screen first
 
 PRINTLOOP	
-	BSR         COUNTER      *branch to counter to increment by 1 and then back 
-
-SETPRINT        
 *Set D1 with trap 11, high byte is col 0-79 low num is row 0-31
 
 	CLR.B D1       *clears out D1 to reset row and column
@@ -53,11 +50,6 @@ SETPRINT
 DONE   *back to main	
 	MOVEM.L (SP)+,A0-A5/D0-D7
 	RTS
-
-*************
-*Don't need this branch ot set print since it goes back each time to main right?**		
-	*BRA SETPRINT       *repeat until done
-************
 
 *Print out the err with address DATA $ADDR  
 PRINTERR
