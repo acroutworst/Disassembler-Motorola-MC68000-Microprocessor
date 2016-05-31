@@ -45,11 +45,6 @@ SETPRINT
 	MOVE.B      #11,D0
 	TRAP        #15
 	
-	* changing this to print out a newline
-*	MOVE.B      #$00,D1    *resets the column
-*	MOVE.B      #11,D0
-*	TRAP        #15
-
     LEA         SPACE,A1
     MOVE.B      #13,D0
     TRAP        #15
