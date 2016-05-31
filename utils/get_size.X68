@@ -134,47 +134,73 @@ SHIFT_AND_MASK:
     LSR.W       D2,D7           ; shift the size field to the right
     RTS
 
+***************************************
+* PUSH_SIZE                           *
+* ** pushes the size to opcode buffer *
+* ** and size variable                *
+***************************************
 PUSH_SIZE:      
-    JSR         PUSHBUFFER
-    JSR         UPDATE_SIZE
-    LEA         OP_BUFFER_POS,A1
-    MOVE.B      (A1),D6
-    CMP.B       #7,D6
-    * BLE         PAD_SPACES
-    LEA         OPCODE_BUFFER,A0
-    ADDA        (A1),A0
-    MOVE.B      #$00,(A0)
+    JSR         PUSHBUFFER      ; push the loaded size to opcode buffer
+    JSR         UPDATE_SIZE     ; update size variable
 
     RTS
-    
+***************************************
+* PUSH_PERIOD                         *
+* ** loads a period to be pushed to   *
+* ** opcode buffer                    *
+***************************************    
 PUSH_PERIOD
     LEA         PERIOD,A0
     JSR         PUSHBUFFER
     RTS
 
+***************************************
+* BYTE_SIZE                           *
+* ** pushes a period and loads a B    *
+* ** to be pushed                     *
+***************************************
 BYTE_SIZE:
     JSR         PUSH_PERIOD
     LEA         B,A0
     JSR         PUSH_SIZE
     RTS
     
+***************************************
+* WORD_SIZE                           *
+* ** pushes a period and loads W      *
+* ** to be pushed                     *
+***************************************
 WORD_SIZE:
     JSR         PUSH_PERIOD
     LEA         W,A0
     JSR         PUSH_SIZE
     RTS
     
+***************************************
+* LONG_SIZE                           *
+* ** pushes a period and loads L      *
+* ** to be pushed                     *
+***************************************
 LONG_SIZE:
     JSR         PUSH_PERIOD
     LEA         L,A0
     JSR         PUSH_SIZE
     RTS
-    
+
+***************************************
+* SIZE_ERROR                          *
+* ** no size found, set error bit     *
+***************************************
 SIZE_ERROR:
     LEA         ERROR,A3
     ADDQ        #1,(A3)
-    RTS
+    BRA         GET_SIZEDONE
     
+***************************************
+* PAD_SPACES                          *
+* ** pads opcode buffer with sapces   *
+* ** no longer used                   *
+***************************************
 PAD_SPACES:
     LEA         SPACE,A0
     JSR         PUSHBUFFER
@@ -185,7 +211,10 @@ PAD_SPACES:
     RTS
 
 GET_SIZEDONE:
-    MOVEM.L     (SP)+,A0-A5/D0-D6
+    LEA         OPCODE_BUFFER,A0        ; load opcode buffer
+    ADDA        (A1),A0                 ; update position
+    MOVE.B      #$00,(A0)               ; push null terminate
+    MOVEM.L     (SP)+,A0-A5/D0-D6       ; move registers back from stack
     RTS
 
 
