@@ -39,7 +39,7 @@ REQEND      DC.B    'Please enter in the ending location, must be no more than 2
 LENGTHERR   DC.B    'ERROR: This address is invalid',CR,LF,0
 ODDERR      DC.B    'ERROR: Starting address cant be odd, please reenter:',CR,LF,0
 BIGEND      DC.B    'ERROR: The ending address is greater than the starting address',CR,LF,0
-HEADER      DC.B    'MEM LOCATION    OP_CODE    OPERAND   ',CR,LF,0
+HEADER      DC.B    'MEM LOCATION   OP_CODE    OPERAND   ',CR,LF,0
 ASKREPEAT 	DC.B    'Would you like to repeat the program? Enter y for yes and press enter to exit',CR,LF,0
 GOODBYEM 	DC.B 	'Thank you for trying out Teamy McTeamFace Disassembler!',CR,LF,0       
 ERRADD      EQU     $00000000

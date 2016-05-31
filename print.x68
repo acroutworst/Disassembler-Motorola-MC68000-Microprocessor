@@ -25,7 +25,7 @@ SETPRINT
 	MOVE.L      #14,D0
 	TRAP        #15              *Print
 	
-    ADD.W       #$0D00,D1        *Memory location 13 spaces
+    ADD.W       #$0F00,D1        *Memory location 13 spaces
 	MOVE.B      #11,D0
 	TRAP        #15
 	
@@ -33,7 +33,7 @@ SETPRINT
 	MOVE.L      #1,D0    *Display string at (A1), w/o CR, LF.
 	TRAP        #15
 	
-	ADD.W       #$0800,D1      *Move over 8 columns in the row
+	ADD.W       #$0B00,D1      *Move over 8 columns in the row
 	MOVE.B      #11,D0
 	TRAP        #15
 	
