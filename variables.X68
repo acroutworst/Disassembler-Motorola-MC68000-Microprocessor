@@ -42,7 +42,7 @@ BIGEND      DC.B    'ERROR: The ending address is greater than the starting addr
 HEADER      DC.B    'MEM LOCATION    OP_CODE    OPERAND   ',CR,LF,0
 ASKREPEAT 	DC.B    'Would you like to repeat the program? Enter y for yes and press enter to exit',CR,LF,0
 GOODBYEM 	DC.B 	'Thank you for trying out Teamy McTeamFace Disassembler!',CR,LF,0       
-ERRADD      EQU     #$00000000
+ERRADD      EQU     $00000000
 PRINTDATA   DC.B    'Address DATA $'
 SETLENGTH   DS.B    16
 STRING2HEX  DS.B    32
@@ -170,6 +170,7 @@ BGE_TXT      DC.B    'BGE',0
 BLT_TXT      DC.B    'BLT',0
 BGT_TXT      DC.B    'BGT',0
 BLE_TXT      DC.B    'BLE',0
+
 
 
 
