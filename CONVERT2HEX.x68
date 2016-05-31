@@ -34,8 +34,7 @@ CONVERT2HEX
     
 LOOP:
 *Else go through loop
-    
-    
+        
     
 *READ EACH CHARACTER* 
     MOVE.B      (A1)+,D2    *GOES THRU A1 (address passed in) ONE AT A TIME
@@ -95,7 +94,7 @@ LOOPDONE:
 
 ERR:
     MOVEA.L     #$00000000,A6       *Inaccurate code
-    MOVEM.L     (SP)+, A0-A5/D0-D7 *Move registers back from stack
+    MOVEM.L     (SP)+,A0-A5/D0-D7 *Move registers back from stack
     RTS
 
 

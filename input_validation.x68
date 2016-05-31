@@ -17,6 +17,7 @@ STARTA
     TRAP #15
     MOVE.B #2,D0      *read string at (A1) and length is returned at D1
     TRAP #15          *Read input length into D1.L
+
 *check length
     CMP.W #6,D1       *Check the length is no more than 24 bits, valid address 00007000-00FFFFFF
     BGT BADLENGTH     *if bad length goes to print error message
@@ -30,7 +31,7 @@ STARTA
     BEQ PRINTERR
     MOVE.W A6,D3   *saves original addy to A6
     LSR.L #1,D3  *Left shift 1 bit, if carry bit's 1= odd, if it's 0=even
-    BCS ODD      If odd then error
+    BCS ODD      *If odd then error
     MOVE.L A6,START_ADDR
          
 *ask for ending address       

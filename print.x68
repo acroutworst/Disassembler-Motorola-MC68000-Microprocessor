@@ -14,7 +14,8 @@ PRINTLOOP
 	TRAP        #15
 	BSR         COUNTER      *branch to counter to increment by 1 and then back 
 
-SETPRINT            *Set D1 with trap 11, high byte is col 0-79 low num is 0-31
+SETPRINT        
+*Set D1 with trap 11, high byte is col 0-79 low num is row 0-31
 	LEA         MEM_BUFFER,A1    *Load memory location
 	MOVE.L      #14,D0
 	TRAP        #15              *Print
@@ -24,10 +25,10 @@ SETPRINT            *Set D1 with trap 11, high byte is col 0-79 low num is 0-31
 	TRAP        #15
 	
     LEA         OPCODE_BUFFER,A1  *loads opcode location
-	MOVE.L      #1,D0
+	MOVE.L      #1,D0    *Display string at (A1), w/o CR, LF.
 	TRAP        #15
 	
-	ADD.W       #$0800,D1        *Move over 8 spaces in the row
+	ADD.W       #$0800,D1      *Move over 8 spaces in the row
 	MOVE.B      #11,D0
 	TRAP        #15
 	
