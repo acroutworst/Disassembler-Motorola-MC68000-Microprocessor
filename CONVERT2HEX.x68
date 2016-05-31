@@ -29,14 +29,16 @@ CONVERT2HEX
 ******CONVERT******
 
 *CHECK IF THE STRING IS EMPTY
+******************
+*IS THIS REQUIRED***
+********************
     CMP.L       #0,D1    *compare 0 to input length
     BEQ         LOOPDONE    *if 0 then loop is done
-    
+*******************    
+    LEA INPUT,A1
 LOOP:
 *Else go through loop
-        
-    
-*READ EACH CHARACTER* 
+          
     MOVE.B      (A1)+,D2    *GOES THRU A1 (address passed in) ONE AT A TIME
 
 *CHK CHARACTER 0-9
@@ -64,11 +66,10 @@ LOWCAP:
     BRA         CONVERTLOW
 
 CONVERTNUM:
-*CONVERT BY SUBTRACTING '0'
+*CONVERT BY SUBTRACTING '0' 0x30
     SUB.B       #'0',D2
     BRA         ADD2STRING
     
-
 CONVERTLOW:
     SUB.B       #$57,D2
     BRA         ADD2STRING
@@ -80,11 +81,13 @@ CONVERTUP:
 
 ADD2STRING:
 *loop through to add
-    ADD.B       D2,D4
+    ADD.B       D2,D4    *Add the converted num/letter to running total
+    LSL.L       #4,D4    *Shift left to accept next digit
+
     ADDQ        #1,D3
     CMP.B       D1,D3    *D3 holds the length that we've gone through 
     BEQ         LOOPDONE    *if the input length and the length we've looped through then it's done 
-    LSL.L       #4,D4
+    
     BRA         LOOP
  
 LOOPDONE:

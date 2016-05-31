@@ -36,16 +36,17 @@ LINECOUNTER EQU     20
 HELLO       DC.B    'Welcome to Teamy McTeamFaces Disassembler!',CR,LF,0
 REQSTART    DC.B    'Please enter in the starting location:',CR,LF,0
 REQEND      DC.B    'Please enter in the ending location:',CR,LF,0
-LENGTHERR   DC.B    'ERROR: The address is too long',CR,LF,0
+LENGTHERR   DC.B    'ERROR: This address is invalid',CR,LF,0
 ODDERR      DC.B    'ERROR: Starting address cant be odd, please reenter:',CR,LF,0
 BIGEND      DC.B    'ERROR: The ending address is greater than the starting address',CR,LF,0
 HEADER      DC.B    'MEM LOCATION    OP_CODE    OPERAND   ',CR,LF,0
 ASKREPEAT 	DC.B    'Would you like to repeat the program? Enter y for yes and press enter to exit',CR,LF,0
 GOODBYEM 	DC.B 	'Thank you for trying out Teamy McTeamFace Disassembler!',CR,LF,0       
-ERRADD      EQU     00000000
+ERRADD      EQU     #$00000000
 PRINTDATA   DC.B    'Address DATA $'
 SETLENGTH   DS.B    16
 STRING2HEX  DS.B    32
+INPUT 		DS.B    1
 
 
 * storage for the start and end address

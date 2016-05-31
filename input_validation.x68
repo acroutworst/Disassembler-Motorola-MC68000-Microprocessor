@@ -15,14 +15,16 @@ STARTA
     LEA REQSTART,A1   *load start message *A1 has the current starting
     MOVE.B #14,D0
     TRAP #15
+
+*read Input
+    LEA INPUT,A1
     MOVE.B #2,D0      *read string at (A1) and length is returned at D1
     TRAP #15          *Read input length into D1.L
 
 *check length
-    CMP.W #6,D1       *Check the length is no more than 24 bits, valid address 00007000-00FFFFFF
+    CMP.W #6,D1       *Check the length is no more than 24 bits, valid address 007000-FFFFFF
     BGT BADLENGTH     *if bad length goes to print error message
-    
-       
+           
 *Must sent to subroutine to be converted to HEX* 
     JSR CONVERT2HEX 
 

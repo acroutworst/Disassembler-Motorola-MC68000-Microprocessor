@@ -52,9 +52,6 @@ SETPRINT
 	RTS
 	
 	
-****
-*How to check if all the opcodes has been printed and is done?*
-****	
 	BRA SETPRINT       *repeat until done
 
 DONE	
@@ -67,11 +64,13 @@ PRINTERR
     LEA PRINTDATA,A1    *Prints address DATA $ 
     MOVE.B #14,D0
     TRAP #15
+
     MOVE.L A6,A1
-    MOVE.B #13,D0               *Prints the null terminated string at A1
+    MOVE.B #13,D0          *Prints the null terminated string at A1
     TRAP #15
+
     MOVEM.L (SP)+,A0-A5/D0-D7   *move registers back from stack
-    RTS                         *return 
+    JMP AGAIN                   *Jumps to ask if they want to try program again
 
 CLEARSCREEN
     MOVE.W #$FF00,D1          *this is the clearscreen code with trap 11
