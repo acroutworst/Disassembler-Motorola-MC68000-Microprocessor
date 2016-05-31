@@ -6,6 +6,7 @@
 *-----------------------------------------------------------
     
 DISPLAY 
+    MOVEM.L     A0-A5/D0-D7,-(SP) * Move registers to stack to be moved 
     LEA HELLO,A1      *LOAD Welcome message
     MOVE.B #14,D0     * Moves 14 into data register
     TRAP #15          *Prints out wecome message
