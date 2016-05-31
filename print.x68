@@ -9,9 +9,6 @@ PRINTSTART
 	BSR         CLEARSCREEN     *Clears the screen first
 
 PRINTLOOP	
-	LEA         HEADER,A1    *Load nad print the header 
-	MOVE.B      #14,D0
-	TRAP        #15
 	BSR         COUNTER      *branch to counter to increment by 1 and then back 
 
 SETPRINT        
