@@ -16,6 +16,11 @@ PRINTLOOP
 
 SETPRINT        
 *Set D1 with trap 11, high byte is col 0-79 low num is row 0-31
+	* changing this to print out a newline
+*	MOVE.B      #$00,D1    *resets the column
+*	MOVE.B      #11,D0
+*	TRAP        #15
+
 	LEA         MEM_BUFFER,A1    *Load memory location
 	MOVE.L      #14,D0
 	TRAP        #15              *Print
@@ -28,7 +33,7 @@ SETPRINT
 	MOVE.L      #1,D0    *Display string at (A1), w/o CR, LF.
 	TRAP        #15
 	
-	ADD.W       #$0800,D1      *Move over 8 spaces in the row
+	ADD.W       #$0800,D1      *Move over 8 columns in the row
 	MOVE.B      #11,D0
 	TRAP        #15
 	
@@ -49,14 +54,15 @@ SETPRINT
     MOVE.B      #13,D0
     TRAP        #15
 	BSR         COUNTER
-	RTS
-	
-	
-	BRA SETPRINT       *repeat until done
 
-DONE	
+DONE   *back to main	
 	MOVEM.L (SP)+,A0-A5/D0-D7
 	RTS
+	
+*************
+*Don't need this branch ot set print since it goes back each time to main right?**		
+	*BRA SETPRINT       *repeat until done
+************
 
 *Print out the err with address DATA $ADDR  
 PRINTERR
@@ -76,10 +82,17 @@ CLEARSCREEN
     MOVE.W #$FF00,D1          *this is the clearscreen code with trap 11
     MOVE.B #11,D0
     TRAP #15
-    MOVE.B #0,LINECOUNTER       *reset linecounter to 0
-    MOVE.W #$0001,D1         *header takes 1 row, start below that
-    JMP PRINTLOOP               *go back to print loop
+    MOVE.B #1,LINECOUNTER       *reset linecounter to 1 due to printing header below
 
+    LEA         HEADER,A1    *Load nad print the header 
+	MOVE.B      #14,D0
+	TRAP        #15
+
+	MOVE.W #$0001,D1         *header takes 1 row, start below that
+	MOVE.B #11,D0
+	TRAP #15
+	RTS          *will return to counter where it'll return to where it was in print
+    
 COUNTER
 	ADDI.B #1,LINECOUNTER      *add 1 to counter to keep track of print screen
 	CMP.B #20,LINECOUNTER       *if it's greater or equal than 20 then clear 

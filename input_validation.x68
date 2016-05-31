@@ -66,7 +66,8 @@ CHECKADDY
     CMPA.L   END_ADDR,A5   *Compares starting addy to the ending addy
     BGE END_GT_START    *If D1 (start) > D2 (end) go back for new addresses
     MOVEA.L     START_ADDR,A6
-       
+
+    MOVEM.L     (SP)+,A0-A5/D0-D7 *Move registers back from stack   
     RTS       *The checks are done and the ascii to hex convert done
    
   *if all else good jump tp print*
@@ -82,7 +83,7 @@ ODDEND
     LEA ODDERR,A1       *prints out odd error message
     MOVE.B #14,D0       
     TRAP #15
-    BRA ENDA            *send back to ask for new starting address
+    BRA ENDA            *send back to ask for new ending address
                 
 BADLENGTH
     LEA LENGTHERR,A1    *Prints out length error
@@ -94,20 +95,24 @@ END_GT_START            *End length occurs before start must restart
     LEA LENGTHERR,A1
     MOVE.B #14,D0
     TRAP #15
-    BRA STARTA
+    BRA STARTA        *end is greater than start so back to start for new addresses
 
-
+*Does user want to use the converter again?*
 AGAIN
     LEA ASKREPEAT,A1
     MOVE.B #14,D0
     TRAP #15
-    MOVE.B #5,D0
+
+    LEA INPUT,A1
+    MOVE.B #5,D0    *Read single char into D1
     TRAP #15
-    CMP.B $59,D1   //compare 59 to 79
-    JMP STARTA
+
+    CMP.B $59,D1   *compare 59 to 'Y' to 79 to 'y'
+    JMP STARTA     *back to start address 
     CMP.B $79,D1
     JMP STARTA
-    JMP GOODBYE
+
+    JMP GOODBYE    *else jump to printing good bye
 
 
 
