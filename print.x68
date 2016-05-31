@@ -16,13 +16,13 @@ PRINTLOOP
 
 SETPRINT        
 *Set D1 with trap 11, high byte is col 0-79 low num is row 0-31
-	* changing this to print out a newline
-*This will actually change the row, how do I change the column and still keep track of the row so it doesnt make it print over each other, i have a counter, is there a way to put the counter in for the row position?
-**************************
-*	MOVE.B      #$00,D1    *resets the column
-*	MOVE.B      #11,D0
-*	TRAP        #15
-***********************
+
+	CLR.B D1       *clears out D1 to reset row and column
+	MOVE.W #0000,D1 *reset all column
+
+	ADD.B LINECOUNTER,D1   *linecounter keeps the row update
+	MOVE.B #11,D0           
+	TRAP #15
 
 	LEA         MEM_BUFFER,A1    *Load memory location
 	MOVE.L      #14,D0
@@ -87,7 +87,7 @@ CLEARSCREEN
     TRAP #15
     MOVE.B #1,LINECOUNTER       *reset linecounter to 1 due to printing header below
 
-    LEA         HEADER,A1    *Load nad print the header 
+    LEA         HEADER,A1    *Load and print the header 
 	MOVE.B      #14,D0
 	TRAP        #15
 

@@ -102,7 +102,6 @@ AGAIN
     MOVE.B #14,D0
     TRAP #15
 
-    LEA INPUT,A1
     MOVE.B #5,D0    *Read single char into D1
     TRAP #15
 
