@@ -25,10 +25,11 @@ CONVERT2HEX
 *    MOVE.L D1,(A2)       *moves the length input into the indirect address
     
     CLR.L       D3          *Clears D3 and set to 0
+    ADDI.B #1,D3
     
 ******CONVERT******
 
-    LEA INPUT,A1
+    *LEA INPUT,A1
 LOOP:
 *Else go through loop
           
