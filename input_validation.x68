@@ -17,7 +17,6 @@ STARTA
     TRAP #15
 
 *read Input
-    LEA INPUT,A1
     MOVE.B #2,D0      *read string at (A1) and length is returned at D1
     TRAP #15          *Read input length into D1.L
 

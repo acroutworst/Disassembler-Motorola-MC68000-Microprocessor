@@ -28,13 +28,6 @@ CONVERT2HEX
     
 ******CONVERT******
 
-*CHECK IF THE STRING IS EMPTY
-******************
-*IS THIS REQUIRED***
-********************
-    CMP.L       #0,D1    *compare 0 to input length
-    BEQ         LOOPDONE    *if 0 then loop is done
-*******************    
     LEA INPUT,A1
 LOOP:
 *Else go through loop
