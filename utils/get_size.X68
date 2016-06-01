@@ -142,6 +142,9 @@ SHIFT_AND_MASK:
 PUSH_SIZE:      
     JSR         PUSHBUFFER      ; push the loaded size to opcode buffer
     JSR         UPDATE_SIZE     ; update size variable
+    
+
+    
 
     RTS
 ***************************************
@@ -212,10 +215,12 @@ PAD_SPACES:
 
 GET_SIZEDONE:
     LEA         OPCODE_BUFFER,A0        ; load opcode buffer
+    LEA         OP_BUFFER_POS,A1
     ADDA        (A1),A0                 ; update position
     MOVE.B      #$00,(A0)               ; push null terminate
     MOVEM.L     (SP)+,A0-A5/D0-D6       ; move registers back from stack
     RTS
+
 
 
 

@@ -18,6 +18,7 @@ EADECODER:
     MOVEA.L     A6,A3               ; capture working address
     
 GET_OPERANDS:
+    CLR.L       D0
     LEA         NUM_OPERANDS,A0
     MOVE.B      (A0),D0
     MULU        #8,D0
@@ -186,6 +187,7 @@ FINISH_EADECODER:
     RTS                             ; exit subroutine
 
     INCLUDE 'eamodes/ea_table.x68'
+
 
 
 
