@@ -45,21 +45,25 @@ CLEAR_VARS:
     * clear mem buffer
     LEA         MEM_BUFFER,A1
     MOVE.B      #10,D1
+    CLR.L       D0
     BSR         VARS_LOOP
     
     * clear opcode
     LEA         OPCODE,A1
     MOVE.B      #6,D1
+    CLR.L       D0
     BSR         VARS_LOOP
     
     * clear opcode buffer
     LEA         OPCODE_BUFFER,A1
     MOVE.B      #8,D1
+    CLR.L       D0
     BSR         VARS_LOOP
     
     * clear ea buffer
     LEA         EA_BUFFER,A1
     MOVE.B      #26,D1
+    CLR.L       D0
     BSR         VARS_LOOP
     
     MOVEM.L     (SP)+,A0-A6/D0-D7
@@ -74,6 +78,7 @@ VARS_LOOP:
     
 
     
+
 
 
 

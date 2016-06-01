@@ -15,7 +15,9 @@ EADECODER:
     CMP.B       #0,(A1)
     BEQ         FINISH_EADECODER
     
-    MOVEA.L     A6,A3               ; capture working address
+    
+    LEA         CURRENT_INSTR,A5
+    MOVE.W      (A6)+,(A5)  ; capture current instruction
     
 GET_OPERANDS:
     CLR.L       D0
@@ -99,14 +101,22 @@ SOURCE_TABLE:
     RTS
     
 EASRC00:
-    MOVE.B      #5,D4
-    MOVE.W      (A3),D5
+    MOVE.B      #5,D4               ; choose bitmask routine
+    MOVE.W      CURRENT_INSTR,D5             ; move instruction in
     JSR         BITMASKER
     
-    MULU        #8,D5               ; offset for jump table
+    MOVE.L      D5,D3               ; store the mode
+    
+    MOVE.W      CURRENT_INSTR,D5
+    MOVE.L      #4,D4
+    JSR         BITMASKER
+    
+    MOVE.L      D5,D4
+    
+    MULU        #8,D3               ; offset for jump table
     
     LEA         EA_TABLE,A0         ; load the effective address jump table
-    JSR         0(A0,D5)            ; call jump table
+    JSR         0(A0,D3)            ; call jump table
     RTS
     
 EASRC01:
@@ -150,17 +160,44 @@ DEST_TABLE:
     RTS
     
 EADST00:
-    MOVE.B      #6,D4
-    MOVE.W      (A3),D5
+    MOVE.B      #6,D4                   ; choose bitmask routine (8-6)
+    MOVE.W      CURRENT_INSTR,D5        ; move instruction in
+    JSR         BITMASKER               ; jump to bitmasker
+    
+    MOVE.B      D5,D3                   ; store the mode
+    
+    MOVE.W      CURRENT_INSTR,D5
+    MOVE.B      #$A,D4
     JSR         BITMASKER
     
-    MULU        #8,D5
+    MOVE.B      D5,D4                   ; store the register
+    
+    
+    * jump to the mode in D3
+    MULU        #8,D3
     
     LEA         EA_TABLE,A0
-    JSR         0(A0,D5)
+    JSR         0(A0,D3)
     RTS
     
 EADST01:
+    MOVE.W      CURRENT_INSTR,D5        ; get current instruction
+    MOVE.B      #5,D4                   ; mask for 3-5
+    JSR         BITMASKER
+    
+    MOVE.B      D5,D3                   ; store the mode
+    
+    MOVE.W      CURRENT_INSTR,D5        ; get instruction again
+    MOVE.B      #4,D4                   ; mask for 0-2
+    JSR         BITMASKER
+    
+    MOVE.B      D5,D4                   ; store reg info
+    
+    MULU        #8,D3                   ; get offset
+    
+    LEA         EA_TABLE,A0             ; load ea table
+    JSR         0(A0,D3)
+    
     RTS
     
 EADST02:
@@ -187,6 +224,7 @@ FINISH_EADECODER:
     RTS                             ; exit subroutine
 
     INCLUDE 'eamodes/ea_table.x68'
+
 
 
 

@@ -135,6 +135,9 @@ FOUR0010:
     
     LEA         NUM_OPERANDS,A0
     MOVE.B      #1,(A0)
+    
+    LEA         EA_TYPE,A0
+    MOVE.B      #1,(A0)
 
     RTS
     
@@ -216,6 +219,8 @@ FOUR1000:
     
     LEA         NUM_OPERANDS,A0
     MOVE.B      #2,(A0)
+    
+    *TODO - need to determine ea type
 
     RTS
 
@@ -298,27 +303,38 @@ FOUR1110:
    BRA         FINISH_FOUR1110
 
 HNDL_NOP:
-    LEA        NOP_TXT,A0
+    
     
     * update ea info
-    LEA         EA_NEEDED,A0
-    MOVE.B      #0,(A0)
+    LEA        EA_NEEDED,A0
+    MOVE.B     #0,(A0)
+    
+    LEA        NOP_TXT,A0
 
     BRA        FINISH_FOUR1110
     
 
 HNDL_RTS:
+    
+    LEA        EA_NEEDED,A0
+    MOVE.B     #0,(A0)
+
     LEA        RTS_TXT,A0
+
     BRA        FINISH_FOUR1110
     
 HNDL_JSR:
-    LEA        JSR_TXT,A0
     * update ea info
     LEA         EA_NEEDED,A0
     MOVE.B      #1,(A0)
     
     LEA         NUM_OPERANDS,A0
     MOVE.B      #1,(A0)
+    
+    LEA        EA_TYPE,A0
+    MOVE.B     #1,(A0)
+
+    LEA        JSR_TXT,A0
 
     BRA        FINISH_FOUR1110
     
@@ -333,6 +349,8 @@ FINISH_FOUR1110:
 **************************************************
 FOUR1111:
     RTS
+
+
 
 
 
