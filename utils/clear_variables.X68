@@ -66,6 +66,8 @@ CLEAR_VARS:
     CLR.L       D0
     BSR         VARS_LOOP
     
+
+    
     MOVEM.L     (SP)+,A0-A6/D0-D7
     RTS
     
@@ -77,7 +79,18 @@ VARS_LOOP:
     RTS
     
 
+CLEAR_REG:
+    CLR.L       D0
+    CLR.L       D1
+    CLR.L       D2
+    CLR.L       D3
+    CLR.L       D4
+    CLR.L       D5
+    CLR.L       D6
+    CLR.L       D7
     
+
+    RTS    
 
 
 

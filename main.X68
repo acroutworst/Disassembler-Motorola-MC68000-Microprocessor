@@ -7,19 +7,17 @@
 ***************************
 * TEST DATA
 ***************************
-
-    ORG    $7000
+    ORG    $1000
 START:                  ; first instruction of program
-    MOVE.B      #1,D0
-    MOVE.W      #1,D1
-    MOVE.L      #1234,$700A
+    
     JSR         DISASSEMBLER
     
-    ORG    $1000
     
     
     
-DISASSEMBLER:                 
+    
+DISASSEMBLER:
+    JSR     CLEAR_REG                 
     JSR     DISPLAY
     
     
@@ -45,7 +43,25 @@ MAIN_LOOP:
     MOVE.L  (A0),D0
     CMP.L   A6,D0
     BGT     MAIN_LOOP
+    BRA     END_DIS
     
+END_DIS:
+    SIMHALT
+
+    ORG         $7000
+TEST_DATA:
+
+    MOVE.B      #1,D0
+    MOVE.B      #1,D1
+    MOVE.B      #1,D2       ; WEIRD BUG HERE
+    MOVE.B      #1,D3
+    MOVE.B      #1,D4
+    MOVE.B      #1,D5
+    MOVE.B      #1,D6
+    MOVE.B      #1,D7
+    MOVE.W      #1,D1
+    
+    MOVE.L      #1234,$700A    
     SIMHALT             ; halt simulator
 
 
@@ -71,6 +87,7 @@ MAIN_LOOP:
 
 * fin
     END    START        ; last line of source
+
 
 
 
