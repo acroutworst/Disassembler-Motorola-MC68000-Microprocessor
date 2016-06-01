@@ -7,14 +7,11 @@
 EAMODE111:
     MOVEM.L     A0-A5/D0-D7,-(SP)
     
-    MOVE.B      #4,D4               ; choose bitmask routine
-    MOVE.W      (A6),D5             ; get instruction
-    JSR         BITMASKER
     
     LEA         SUBTABLE,A1         ; load jump table
 
-    MULU        #8,D5               ; get offset
-    JSR         0(A1,D5)            ; send to subtable
+    MULU        #8,D4               ; get offset
+    JSR         0(A1,D4)            ; send to subtable
     
     BRA         FINISH_EAMODE111
     
@@ -46,10 +43,29 @@ FINISH_EAMODE111:
 
 * absolute addressing (short)
 SUB000:
+    LEA         DOLLAR,A0
+    MOVE.B      #2,D0
+    JSR         PUSHBUFFER
+    
+    * get a word
+    MOVE.W      (A6)+,D1
+    MOVE.B      #2,D0
+    MOVE.B      #4,D2
+    
+    JSR         HEX2ASCII
     RTS
     
 * absolute addressing (long)
 SUB001:
+    LEA         DOLLAR,A0
+    MOVE.B      #2,D0
+    JSR         PUSHBUFFER
+
+    MOVE.L      (A6)+,D1
+    MOVE.B      #2,D0
+    MOVE.B      #8,D2
+    
+    JSR         HEX2ASCII
     RTS
     
 SUB010:
@@ -73,13 +89,11 @@ GET_BYTE111:
     BRA         GET_WORD111
     
 GET_WORD111:
-    ADD.L       #2,A6           ; move past the instruction
     MOVE.W      (A6)+,D1        ; get the next word and increment address
     MOVE.B      #4,D2           ; store the length of the hex input
     BRA         FINISH_SUB100
     
 GET_LONG111:
-    ADD.L       #2,A6           ; move past the instruction
     MOVE.L      (A6)+,D1        ; get the next long word and increment
     MOVE.B      #8,D2           ; store the length of the hex input
     BRA         FINISH_SUB100   
@@ -104,6 +118,7 @@ SUB110:
     
 SUB111:
     RTS
+
 
 
 

@@ -20,6 +20,7 @@ NUM_OPERANDS        DS.B    1
 EA_TYPE             DS.B    1       ; need to list these out
 EA_SOURCE           DS.L    4
 EA_DEST             DS.L    4
+CURRENT_INSTR       DS.W    1
 
 CR          EQU     $0D         ; carriage return
 LF          EQU     $0A         ; line feed
@@ -105,6 +106,7 @@ LAST_4MASK  EQU     $000F
 B0TO2MASK   EQU     $0007
 B3TO5MASK   EQU     $0038
 B6TO8MASK   EQU     $01C0
+B9TO11MASK  EQU     $0E00
 
 * size mask
 B6TO7MASK   EQU     $00C0
@@ -169,6 +171,8 @@ BGE_TXT      DC.B    'BGE',0
 BLT_TXT      DC.B    'BLT',0
 BGT_TXT      DC.B    'BGT',0
 BLE_TXT      DC.B    'BLE',0
+
+
 
 
 

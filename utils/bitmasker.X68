@@ -43,6 +43,7 @@ BITMASKER:
 * ** 7 - MASK7TO6 - masks for bits 7 and 6
 * ** 8 - MASK10TO9 - masks for bits 10 and 9
 * ** 9 - MASK4TO3 - masks for bits 4 and 3
+* ** A - MASK11TO9 - masks for bits 11-9
 MASK_TABLE:
     JSR     MASK15TO12
     RTS
@@ -63,6 +64,8 @@ MASK_TABLE:
     JSR     MASK10TO9
     RTS
     JSR     MASK4TO3
+    RTS
+    JSR     MASK11TO9
     RTS
 
 
@@ -135,13 +138,28 @@ MASK7TO6:
 * MASK10TO9 *
 *************
 MASK10TO9:
+    AND.W       #B9TO10MASK,D5
+    MOVE.L      #9,D4
+    LSR.W       D4,D5
     RTS
 
 ************
 * MASK4TO3 *
 ************
 MASK4TO3:
+    AND.W       #B3TO4MASK,D5
+    LSR.W       #3,D5
     RTS
+
+*************
+* MASK11TO9 *
+*************
+MASK11TO9:
+    AND.W       #B9TO11MASK,D5
+    MOVE.L      #9,D4
+    LSR.W       D4,D5
+    RTS    
+
 
 
 
