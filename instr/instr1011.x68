@@ -46,6 +46,9 @@ HNDL_CMP:
     
     LEA         NUM_OPERANDS,A5
     MOVE.B      #2,(A5)
+    
+    LEA         EA_TYPE,A5
+    MOVE.B      #2,(A5)
 
     BRA         PUSH_1011       ; push to buffer
 
@@ -73,7 +76,7 @@ HNDL_CMPA:
     BRA         PUSH_1011       ; push to buffer
 
 PUSH_1011:
-    MOVE.B      #0,D1
+    MOVE.B      #1,D0
     JSR         PUSHBUFFER
     JSR         UPDATE_OPCODE
     CMP.B       #0,D7           ; check if need to get size
@@ -84,6 +87,8 @@ PUSH_1011:
 FINISH_1011:
     MOVEM.L     (SP)+,A0-A5/D0-D7    
     RTS
+
+
 
 
 

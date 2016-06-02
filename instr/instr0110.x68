@@ -25,7 +25,7 @@ INSTR0110:
     MOVE.B      #1,(A0)
 
     
-    MOVEM.L     (SP)+,A0-A5,D0-D7
+    MOVEM.L     (SP)+,A0-A5/D0-D7
     RTS
     
 BCC_TABLE:
@@ -190,6 +190,7 @@ BCC1110:
 BCC1111:
     LEA     BLE_TXT,A0
     RTS
+
 
 
 

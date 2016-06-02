@@ -11,14 +11,14 @@
 *-----------------------------------------------------------
 
 BITMASKER:
-    MOVEM.L     A0-A6/D0-D3/D6-D7,-(SP)         ; move all registers to
+    MOVEM.L     A0-A6/D0-D3/D6-D7,-(SP)               ; move all registers to
                                                 ; stack except D4 & D5
                                                 
     LEA         MASK_TABLE,A0                   ; load the jump table
     MULU        #8,D4                           ; get the offset of the table
     JSR         0(A0,D4)                        ; call the jump table
     
-    MOVEM.L     (SP)+,A0-A6/D0-D3/D6-D7         ; move the registers back from stack
+    MOVEM.L     (SP)+,A0-A6/D0-D7               ; move the registers back from stack
     RTS                                         ; all done here
     
 
@@ -159,6 +159,8 @@ MASK11TO9:
     MOVE.L      #9,D4
     LSR.W       D4,D5
     RTS    
+
+
 
 
 

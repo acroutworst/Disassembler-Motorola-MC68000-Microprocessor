@@ -123,6 +123,8 @@ EASRC01:
     RTS
     
 EASRC02:
+    JSR         EASRC00
+    
     RTS
     
 EASRC03:
@@ -201,9 +203,52 @@ EADST01:
     RTS
     
 EADST02:
-    RTS
+    MOVE.W      CURRENT_INSTR,D5
+    MOVE.B      #$A,D4
+    JSR         BITMASKER
     
+    MOVE.B      D5,D1
+    
+    LEA         D,A0
+    MOVE.B      #2,D0
+    JSR         PUSHBUFFER
+    
+    MOVE.B      #1,D2
+    JSR         HEX2ASCII
+    RTS
+    RTS
+
+****************************
+* Used for all Bcc opcodes *
+****************************
 EADST03:
+    MOVE.W      CURRENT_INSTR,D5
+    AND.W       #$00FF,D5
+    CMP.B       #$00,D5
+    BEQ         DISPLACE_16
+    CMP.B       #$FF,D5
+    BEQ         DISPLACE_32
+    
+    MOVE.B      D5,D1
+
+    MOVE.B      #4,D2
+
+    BRA         FINISH_DST03
+    
+DISPLACE_16:
+    * get a word
+    MOVE.W      (A6)+,D1
+    MOVE.B      #4,D2
+    BRA         FINISH_DST03
+    
+DISPLACE_32:
+    MOVE.L      (A6)+,D1
+    MOVE.B      #8,D2
+    BRA         FINISH_DST03
+
+FINISH_DST03:
+    MOVE.B      #2,D0    
+    JSR         HEX2ASCII
     RTS
     
 EADST04:
@@ -224,6 +269,7 @@ FINISH_EADECODER:
     RTS                             ; exit subroutine
 
     INCLUDE 'eamodes/ea_table.x68'
+
 
 
 
