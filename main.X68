@@ -132,15 +132,9 @@ TEST_DATA:
     
 *Memory to Register - <ea>,<list>
     MOVEM.W     (A1),D1-D3/A1       ;(An),<list>
-    MOVEM.W     #$DADA, D1/A0-A1     ;(xxx).W,<list>
     MOVEM.L     (A2)+, D0-D4/A0-A4  ;(An)+,<list>
     
-    
-*ILLEGAL INSTRUCTIONS
-
-    MOVEM.W     D1-D2/A0-A1, (#$FA,A0) ;<list>,(d16,An)
-    MOVEM.L     D1-D2/A0-A1, (#$FA,A1) ;<list>,(d16,An)
-
+ 
 *-----------------------ADD----------------------------------
 * Syntax: <ea>,Dn   -   Dn,<ea>
 * Size:   B, W, L
@@ -169,8 +163,6 @@ TEST_DATA:
     ADD.L       -(A2),D5
     
     ADD.B       #$FA,D0    ;(xxx).W,Dn
-    ADD.W       VHEX3,D1    ;(xxx).L,Dn
-    ADD.L       #VHEX1,D3   ;#<data>,Dn
     
 *Dn,<ea>
 
@@ -301,13 +293,12 @@ TEST_DATA:
     SUBA.W      -(A0),A2    ;-(An),An
     SUBA.L      -(A1),A3 
 
------------------------SUBI----------------------------------
+*----------------------SUBI----------------------------------
 * Syntax: #<data>,<ea>
 * Size:   B, W, L
 *------------------------------------------------------------
 
 *LEGAL INSTRUCTIONS
-    SUBI.B      #FA,D0       ;#<data>,Dn
     SUBI.W      #$DADA,D2
     
     SUBI.B      #10,(A1)
@@ -546,6 +537,7 @@ JUMP    *For JSR & RTS test
 
 * fin
     END    START        ; last line of source
+
 
 
 
