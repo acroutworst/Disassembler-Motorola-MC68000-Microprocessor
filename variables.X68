@@ -34,7 +34,7 @@ ADDYLENGTH  EQU     8   *need 32 bit address length
 CKLENGTH    EQU     6   *24 bit address 00007000-00FFFFFF
 LINECOUNTER EQU     20
 
-HELLO       DC.B    'Welcome to Teamy McTeamFaces Disassembler!',CR,LF,0
+HELLO       DC.B    'Welcome to Teamy McTeamFaces 68k Disassembler!',CR,LF,0
 REQSTART    DC.B    'Please enter in the starting location, must be no more than 24 bit:',CR,LF,0
 REQEND      DC.B    'Please enter in the ending location, must be no more than 24 bit:',CR,LF,0
 LENGTHERR   DC.B    'ERROR: This address is invalid',CR,LF,0
