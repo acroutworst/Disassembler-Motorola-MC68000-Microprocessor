@@ -29,7 +29,7 @@ STARTA
     JSR CONVERT2HEX 
 
 *Error checks    
-    CMP #ERRADD,A6    * if address is incorrect then convert2hex will make A6,00000000 invalid address
+    CMP.L #ERRADD,A6    * if address is incorrect then convert2hex will make A6,00000000 invalid address
     BEQ PRINTERR
     MOVE.W A6,D3   *saves original addy to A6
     LSR.L #1,D3  *Left shift 1 bit, if carry bit's 1= odd, if it's 0=even
@@ -53,7 +53,7 @@ ENDA
     JSR CONVERT2HEX
 
 *Error checks    
-    CMP #ERRADD,A6
+    CMP.L #ERRADD,(A6)
     BEQ PRINTERR
     MOVE.W A6,D3     *move over to keep D1 unchanged
     LSR.L #1,D3      *Left shift 1 bit, if carry bit's 1= odd, if it's 0=even
