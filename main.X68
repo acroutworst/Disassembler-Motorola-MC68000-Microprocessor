@@ -48,8 +48,7 @@ MAIN_LOOP:
 END_DIS:
     SIMHALT
 
-    ORG         $7000
-*TEST_DATA:
+    *TEST_DATA:
 **-----------------------MOVE--------------------------------
 ** Syntax: <ea>, <ea>
 ** Size: B, W, L
@@ -538,6 +537,7 @@ END_DIS:
 
 * fin
     END    START        ; last line of source
+
 
 
 

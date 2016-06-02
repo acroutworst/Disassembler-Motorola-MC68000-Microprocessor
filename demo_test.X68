@@ -8,11 +8,11 @@
 *
 *****************************
 
-start		EQU	$00007000	* ORG and END address
+start2		EQU	$00007000	* ORG and END address
 
 * ORG the program so that it straddles the address boundary $00007FFF to $00008000
 
-		ORG	start
+		ORG	start2
 
 * NOP and similar instructions. Should clearly differentiate NOP and RTS from others.
 
@@ -85,7 +85,9 @@ multiply	MULS	D0,D3		*Optional instruction
 		SUB.L	(A3),D7
 	
 
-		END	start
+		
+
+
 
 
 

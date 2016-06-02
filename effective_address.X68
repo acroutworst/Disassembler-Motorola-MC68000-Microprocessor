@@ -13,11 +13,17 @@ EADECODER:
     
     LEA         EA_NEEDED,A1        ; check ea_needed status (1 for needed, 0 for not)
     CMP.B       #0,(A1)
-    BEQ         FINISH_EADECODER
-    
+    BEQ         EADECODER_NO
     
     LEA         CURRENT_INSTR,A5
     MOVE.W      (A6)+,(A5)  ; capture current instruction
+    
+EADECODER_NO:
+    LEA         CURRENT_INSTR,A5
+    MOVE.W      (A6)+,(A5)  ; capture current instruction
+    BRA         FINISH_EADECODER
+    
+    
     
 GET_OPERANDS:
     CLR.L       D0
@@ -224,6 +230,7 @@ FINISH_EADECODER:
     RTS                             ; exit subroutine
 
     INCLUDE 'eamodes/ea_table.x68'
+
 
 
 
