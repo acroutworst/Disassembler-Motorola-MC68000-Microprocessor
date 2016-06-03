@@ -23,6 +23,7 @@ INSTR0100:
     * handling LEA
     LEA     LEA_TXT,A0      ; load LEA text
     MOVE.B  #1,D0           ; choose the buffer to push to
+    
     JSR     PUSHBUFFER      ; push lea text to buffer
     JSR     UPDATE_OPCODE   ; update the opcode with lea
     * update ea info
@@ -32,7 +33,8 @@ INSTR0100:
     LEA         NUM_OPERANDS,A0
     MOVE.B      #2,(A0)
 
-    
+    LEA         EA_SRC_TYPE,A0
+    MOVE.B      #0,(A0)
 FINISH_0100:
 
     MOVEM.L (SP)+,A0-A5/D0-D7
@@ -136,8 +138,8 @@ FOUR0010:
     LEA         NUM_OPERANDS,A0
     MOVE.B      #1,(A0)
     
-    LEA         EA_TYPE,A0
-    MOVE.B      #1,(A0)
+    LEA         EA_DST_TYPE,A0
+    MOVE.B      #4,(A0)
 
     RTS
     
@@ -325,14 +327,14 @@ HNDL_RTS:
     
 HNDL_JSR:
     * update ea info
-    LEA         EA_NEEDED,A0
-    MOVE.B      #1,(A0)
-    
-    LEA         NUM_OPERANDS,A0
-    MOVE.B      #1,(A0)
-    
-    LEA        EA_TYPE,A0
+    LEA        EA_NEEDED,A0
     MOVE.B     #1,(A0)
+    
+    LEA        NUM_OPERANDS,A0
+    MOVE.B     #1,(A0)
+    
+    LEA        EA_DST_TYPE,A0
+    MOVE.B     #4,(A0)
 
     LEA        JSR_TXT,A0
 
@@ -349,6 +351,7 @@ FINISH_FOUR1110:
 **************************************************
 FOUR1111:
     RTS
+
 
 
 
