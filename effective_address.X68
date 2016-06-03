@@ -191,7 +191,8 @@ EADST00:
     
     LEA         EA_TABLE,A0
     JSR         0(A0,D3)
-    RTS
+    
+RTS
     
 ************
 *  MOVE/?  *
@@ -270,6 +271,7 @@ EADST04:
     
     LEA         EA_TABLE,A0         ; load the effective address jump table
     JSR         0(A0,D3)            ; call jump table
+    
     RTS
     
 EADST05:
@@ -287,6 +289,7 @@ FINISH_EADECODER:
     RTS                             ; exit subroutine
 
     INCLUDE 'eamodes/ea_table.x68'
+
 
 
 
