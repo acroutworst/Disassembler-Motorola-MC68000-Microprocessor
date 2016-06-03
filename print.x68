@@ -55,6 +55,7 @@ PRINTERR
     MOVE.B      #14,D0
     TRAP        #15
 
+
 	LEA		 	ERRADD,A1
     MOVE.B      #14,D0              *Prints the null terminated string at A1
     TRAP        #15
@@ -63,6 +64,13 @@ PRINTERR
     JMP         AGAIN               *Jumps to ask if they want to try program again
 
 CLEARSCREEN
+	LEA CLEARQ,A1    *ask user to clear
+	MOVE.B #14,D0
+	TRAP #15
+
+	MOVE #5,D0       *Press enter to continue and clear
+	TRAP #15
+
     MOVE.W      #$FF00,D1           *this is the clearscreen code with trap 11
     MOVE.B      #11,D0
     TRAP        #15
@@ -90,6 +98,7 @@ GOODBYE
 	LEA GOODBYEM,A1                 ; load goodbye message text
 	MOVE.B #14,D0                   ; choose trap task
 	TRAP #15                        ; print it
+
 
 
 

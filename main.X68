@@ -43,8 +43,6 @@ MAIN_LOOP:
 END_DIS:
     SIMHALT
 
-
-
 ************************************
 * Includes                         *
 * ** List of all subroutine files  *
