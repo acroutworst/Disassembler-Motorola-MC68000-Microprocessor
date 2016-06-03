@@ -21,6 +21,7 @@ EA_SRC_TYPE         DS.B    1       ; need to list these out
 EA_DST_TYPE         DS.B    1       ; need these listed as well
 
 CURRENT_INSTR       DS.W    1
+INSTR_ADDR          DS.L    1
 
 CR          EQU     $0D         ; carriage return
 LF          EQU     $0A         ; line feed
