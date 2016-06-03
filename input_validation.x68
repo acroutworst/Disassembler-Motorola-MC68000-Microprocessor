@@ -102,16 +102,15 @@ AGAIN
     MOVE.B #14,D0
     TRAP #15
 
-    MOVE.B #5,D0    *Read single char into D1
+    MOVE.B #5,D0    *Read single character into D1
     TRAP #15
 
-    CMP.B $59,D1   *compare 59 to 'Y' to 79 to 'y'
-    JMP STARTA     *back to start address 
-    CMP.B $79,D1
-    JMP STARTA
-
+    CMP.B #$59,D1   *compare 59 to 'Y' to 79 to 'y'
+    BEQ DISASSEMBLER     *back to start address 
+     CMP.B #$79,D1   *compare 59 to 'Y' to 79 to 'y'
+    BEQ DISASSEMBLER     *back to start address 
+    
     JMP GOODBYE    *else jump to printing good bye
-
 
 
 

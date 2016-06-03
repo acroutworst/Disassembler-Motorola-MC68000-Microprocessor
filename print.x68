@@ -55,8 +55,8 @@ PRINTERR
     MOVE.B      #14,D0
     TRAP        #15
 
-    MOVE.L      A6,A1
-    MOVE.B      #13,D0              *Prints the null terminated string at A1
+	LEA		 	#ERRADD,A1
+    MOVE.B      #14,D0              *Prints the null terminated string at A1
     TRAP        #15
 
     MOVEM.L     (SP)+,A0-A5/D0-D7   *move registers back from stack
@@ -90,6 +90,7 @@ GOODBYE
 	LEA GOODBYEM,A1                 ; load goodbye message text
 	MOVE.B #14,D0                   ; choose trap task
 	TRAP #15                        ; print it
+
 
 
 
