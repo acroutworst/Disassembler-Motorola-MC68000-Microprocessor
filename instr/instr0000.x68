@@ -8,7 +8,16 @@ INSTR0000:
     MOVEM.L     A0-A5/D0-D7,-(SP)
     CLR.L       D7
     
+    * verify 2nd set of 4 bits
+    LEA         CURRENT_INSTR,A0
+    MOVE.W      (A0),D5
     
+    MOVE.B      #1,D4
+    JSR         BITMASKER
+    
+    CMP.B       #6,D5
+    BNE         NOOP_0000
+     
     LEA         ADDI_TXT,A0             ; load the addi text
     MOVE.B      #1,D0                   ; choose buffer
     JSR         PUSHBUFFER              ; push the text to the buffer
@@ -34,10 +43,16 @@ INSTR0000:
     
     LEA         NUM_OPERANDS,A0
     MOVE.B      #2,(A0)
+    BRA         FINISH_0000
+
+NOOP_0000:
+    JSR         NO_OPCODE    
+    BRA         FINISH_0000
     
-    
+FINISH_0000:    
     MOVEM.L     (SP)+,A0-A5/D0-D7
     RTS
+
 
 
 

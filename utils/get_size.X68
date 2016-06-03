@@ -197,6 +197,7 @@ LONG_SIZE:
 SIZE_ERROR:
     LEA         ERROR,A3
     ADDQ        #1,(A3)
+    JSR         NO_OPCODE
     BRA         GET_SIZEDONE
     
 ***************************************
@@ -220,6 +221,7 @@ GET_SIZEDONE:
     MOVE.B      #$00,(A0)               ; push null terminate
     MOVEM.L     (SP)+,A0-A5/D0-D6       ; move registers back from stack
     RTS
+
 
 
 

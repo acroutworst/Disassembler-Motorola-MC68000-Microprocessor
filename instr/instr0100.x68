@@ -14,7 +14,7 @@ INSTR0100:
     
     * check for LEA
     MOVE.W  (A6),D5         ; move the instruction in
-    MOVE.B  #6,D4           ; choose bitmask routine
+    MOVE.B  #6,D4           ; choose bitmask routine (8-6)
     JSR     BITMASKER
     
     CMP.B   #7,D5           ; compare to LEA
@@ -58,38 +58,42 @@ FOUR_SETUP:
 * Jump table for the second set of 4 bits *
 *******************************************
 FOUR_TABLE:
-   JSR      FOUR0000
+   JSR      NOOP_0100
    RTS
-   JSR      FOUR0001
+   JSR      NOOP_0100
    RTS
    JSR      FOUR0010
    RTS
-   JSR      FOUR0011
+   JSR      NOOP_0100
    RTS
-   JSR      FOUR0100
+   JSR      NOOP_0100
    RTS
-   JSR      FOUR0101
+   JSR      NOOP_0100
    RTS
-   JSR      FOUR0110
+   JSR      NOOP_0100
    RTS
-   JSR      FOUR0111
+   JSR      NOOP_0100
    RTS
    JSR      FOUR1000
    RTS
-   JSR      FOUR1001
+   JSR      NOOP_0100
    RTS
-   JSR      FOUR1010
+   JSR      NOOP_0100
    RTS
-   JSR      FOUR1011
+   JSR      NOOP_0100
    RTS
    JSR      FOUR1100
    RTS
-   JSR      FOUR1101
+   JSR      NOOP_0100
    RTS
    JSR      FOUR1110
    RTS
-   JSR      FOUR1111
+   JSR      NOOP_0100
    RTS
+   
+NOOP_0100:
+    JSR     NO_OPCODE 
+    RTS
 
 **************************************************
 * Instructions With 0000 as Second Set of 4 Bits *
@@ -351,6 +355,7 @@ FINISH_FOUR1110:
 **************************************************
 FOUR1111:
     RTS
+
 
 
 

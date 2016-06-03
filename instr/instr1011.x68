@@ -25,7 +25,7 @@ INSTR1011:
     BEQ         HNDL_CMPA
     
     JSR         NO_OPCODE
-    BRA         PUSH_1011
+    BRA         FINISH_1011
 
 HNDL_CMP:
     * setup size for CMP
@@ -84,6 +84,7 @@ PUSH_1011:
 FINISH_1011:
     MOVEM.L     (SP)+,A0-A5/D0-D7    
     RTS
+
 
 
 
