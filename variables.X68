@@ -140,6 +140,7 @@ DIVU_TXT    DC.B    'DIVU',0
 DIVS_TXT    DC.B    'DIVS',0
 OR_TXT      DC.B    'OR',0
 SUB_TXT     DC.B    'SUB',0
+SUBA_TXT    DC.B    'SUBA',0
 SUBQ_TXT    DC.B    'SUBQ',0
 CMP_TXT     DC.B    'CMP',0
 CMPA_TXT    DC.B    'CMPA',0
@@ -174,6 +175,7 @@ BGE_TXT      DC.B    'BGE',0
 BLT_TXT      DC.B    'BLT',0
 BGT_TXT      DC.B    'BGT',0
 BLE_TXT      DC.B    'BLE',0
+
 
 
 

@@ -21,6 +21,14 @@ INSTR1110:
     BNE             REG_SHIFTS
     
 MEM_SHIFTS:
+
+    MOVE.W          CURRENT_INSTR,D5
+    MOVE.B          #$A,D4
+    JSR             BITMASKER
+    
+    CMP.B           #3,D5
+    BGT             ERROR_1110
+    
     MOVE.B          #8,D4
 
     * update ea info
@@ -28,13 +36,13 @@ MEM_SHIFTS:
     MOVE.B      #1,(A5)
     
     LEA         NUM_OPERANDS,A5
-    MOVE.B      #2,(A5)
+    MOVE.B      #1,(A5)
 
     
-    BRA             TABLE_1110_PREP
+    BRA         TABLE_1110_PREP
     
 REG_SHIFTS:
-    MOVE.B          #9,D4
+    MOVE.B      #9,D4
 
     * update ea info
     LEA         EA_NEEDED,A5
@@ -42,6 +50,12 @@ REG_SHIFTS:
     
     LEA         NUM_OPERANDS,A5
     MOVE.B      #2,(A5)
+    
+    LEA         EA_SRC_TYPE,A5
+    MOVE.B      #1,(A5)
+    
+    LEA         EA_DST_TYPE,A5
+    MOVE.B      #4,(A5)
     
     * prep size information
     MOVE.B          #0,D7           ; size type 0
@@ -59,7 +73,7 @@ REG_SHIFTS:
     BRA             TABLE_1110_PREP
     
 TABLE_1110_PREP:
-    MOVE.W          (A6),D5
+    MOVE.W          CURRENT_INSTR,D5
     JSR             BITMASKER
     
     JSR             GET_DIR_1110
@@ -172,9 +186,15 @@ BUFFER_1110:
     
     BRA             FINISH_1110
     
+ERROR_1110:
+    JSR             NO_OPCODE
+    BRA             FINISH_1110
+    
 FINISH_1110:
     MOVEM.L         (SP)+,A0-A5/D0-D7
     RTS
+
+
 
 
 

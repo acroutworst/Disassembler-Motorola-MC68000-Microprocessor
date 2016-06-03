@@ -28,11 +28,11 @@ INSTR0101:
     
 HNDL_ADDQ:
     LEA         ADDQ_TXT,A0
-    BRA         FINISH_0101
+    BRA         DONE_0101
     
 HNDL_SUBQ:
     LEA         SUBQ_TXT,A0
-    BRA         FINISH_0101
+    BRA         DONE_0101
     
 PREP_SIZE_0101:
     CLR.L       D7                  ; clear d7 for manip
@@ -52,11 +52,11 @@ PREP_SIZE_0101:
 NO_OP0101:
     LEA         ERROR,A0            ; load error flag
     MOVE.B      #1,(A0)             ; switch error flag
-    LEA         ERR_TXT,A0          ; load error text
+    JSR         NO_OPCODE
           
     BRA         FINISH_0101
-    
-FINISH_0101:
+
+DONE_0101:    
     MOVE.B      #1,D0
     JSR         PUSHBUFFER
     JSR         UPDATE_OPCODE
@@ -70,11 +70,13 @@ FINISH_0101:
     
     LEA         NUM_OPERANDS,A0
     MOVE.B      #2,(A0)
+    BRA         FINISH_0101
 
- 
+FINISH_0101: 
     MOVEM.L     (SP)+,A0-A5/D0-D7
 
     RTS
+
 
 
 
