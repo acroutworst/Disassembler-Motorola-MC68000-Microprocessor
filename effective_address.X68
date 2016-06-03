@@ -106,6 +106,9 @@ SOURCE_TABLE:
     JSR         EASRC07
     RTS
     
+****************
+*  MOVE,MOVEA  *
+****************
 EASRC00:
     MOVE.B      #5,D4               ; choose bitmask routine
     MOVE.W      CURRENT_INSTR,D5             ; move instruction in
@@ -124,7 +127,10 @@ EASRC00:
     LEA         EA_TABLE,A0         ; load the effective address jump table
     JSR         0(A0,D3)            ; call jump table
     RTS
-    
+   
+***********
+*  MOVEA  *
+***********
 EASRC01:
     RTS
     
@@ -165,6 +171,9 @@ DEST_TABLE:
     JSR         EADST07
     RTS
     
+************
+*  MOVE/?  *
+************
 EADST00:
     MOVE.B      #6,D4                   ; choose bitmask routine (8-6)
     MOVE.W      CURRENT_INSTR,D5        ; move instruction in
@@ -185,7 +194,10 @@ EADST00:
     LEA         EA_TABLE,A0
     JSR         0(A0,D3)
     RTS
-    
+   
+************
+*  MOVE/?  *
+************ 
 EADST01:
     MOVE.W      CURRENT_INSTR,D5        ; get current instruction
     MOVE.B      #5,D4                   ; mask for 3-5
@@ -206,6 +218,9 @@ EADST01:
     
     RTS
     
+***********
+*  MOVEA  *
+***********
 EADST02:
     RTS
     
@@ -230,6 +245,7 @@ FINISH_EADECODER:
     RTS                             ; exit subroutine
 
     INCLUDE 'eamodes/ea_table.x68'
+
 
 
 
