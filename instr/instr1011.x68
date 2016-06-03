@@ -24,6 +24,7 @@ INSTR1011:
     CMP.B       #7,D5
     BEQ         HNDL_CMPA
     
+    MOVE.B      #0,D0
     JSR         NO_OPCODE
     BRA         FINISH_1011
 
@@ -84,6 +85,7 @@ PUSH_1011:
 FINISH_1011:
     MOVEM.L     (SP)+,A0-A5/D0-D7    
     RTS
+
 
 
 

@@ -57,6 +57,7 @@ HNDL_DIVS:
     BRA         PUSH_1000
     
 NO_OP_1000:
+    MOVE.B      #1,D0
     JSR         NO_OPCODE
     BRA         PUSH_1000
         
@@ -74,6 +75,7 @@ FINISH_1000:
     
     MOVEM.L     (SP)+,A0-A5/D0-D7
     RTS
+
 
 
 

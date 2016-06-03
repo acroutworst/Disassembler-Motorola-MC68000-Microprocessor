@@ -52,6 +52,7 @@ PREP_SIZE_0101:
 NO_OP0101:
     LEA         ERROR,A0            ; load error flag
     MOVE.B      #1,(A0)             ; switch error flag
+    MOVE.B      #1,D0
     JSR         NO_OPCODE
           
     BRA         FINISH_0101
@@ -76,6 +77,7 @@ FINISH_0101:
     MOVEM.L     (SP)+,A0-A5/D0-D7
 
     RTS
+
 
 
 

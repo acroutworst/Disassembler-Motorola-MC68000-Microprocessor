@@ -305,6 +305,7 @@ FOUR1110:
    CMP.B       #$2,D5               ; compare bits to bits from JSR
    BEQ         HNDL_JSR             ; handle JSR
    
+   MOVE.B      #1,D0
    JSR         NO_OPCODE            ; no opcode found
    BRA         FINISH_FOUR1110
 
@@ -355,6 +356,7 @@ FINISH_FOUR1110:
 **************************************************
 FOUR1111:
     RTS
+
 
 
 
