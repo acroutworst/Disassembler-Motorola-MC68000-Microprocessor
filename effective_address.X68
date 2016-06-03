@@ -106,9 +106,9 @@ SOURCE_TABLE:
     JSR         EASRC07
     RTS
     
-****************
-*  MOVE,MOVEA  *
-****************
+***********************************************************
+*  MOVE,MOVEA,ADD,ADDA,ADDQ,SUB,MULU,DIVU,LEA,AND,OR,CMP  *
+***********************************************************
 EASRC00:
     MOVE.B      #5,D4               ; choose bitmask routine
     MOVE.W      CURRENT_INSTR,D5             ; move instruction in
@@ -117,7 +117,7 @@ EASRC00:
     MOVE.L      D5,D3               ; store the mode
     
     MOVE.W      CURRENT_INSTR,D5
-    MOVE.L      #4,D4
+    MOVE.L      #4,D4               ; store reg info
     JSR         BITMASKER
     
     MOVE.L      D5,D4
@@ -127,11 +127,9 @@ EASRC00:
     LEA         EA_TABLE,A0         ; load the effective address jump table
     JSR         0(A0,D3)            ; call jump table
     RTS
-   
-***********
-*  MOVEA  *
-***********
+
 EASRC01:
+    
     RTS
     
 EASRC02:
@@ -171,9 +169,9 @@ DEST_TABLE:
     JSR         EADST07
     RTS
     
-************
-*  MOVE/?  *
-************
+************************************
+*  MOVE/ADD/ADDA/SUB/AND/OR/CMP  *
+************************************
 EADST00:
     MOVE.B      #6,D4                   ; choose bitmask routine (8-6)
     MOVE.W      CURRENT_INSTR,D5        ; move instruction in
@@ -181,8 +179,8 @@ EADST00:
     
     MOVE.B      D5,D3                   ; store the mode
     
-    MOVE.W      CURRENT_INSTR,D5
-    MOVE.B      #$A,D4
+    MOVE.W      CURRENT_INSTR,D5        ; get instruction
+    MOVE.B      #$A,D4                  ; mask 11-9
     JSR         BITMASKER
     
     MOVE.B      D5,D4                   ; store the register
@@ -194,7 +192,7 @@ EADST00:
     LEA         EA_TABLE,A0
     JSR         0(A0,D3)
     RTS
-   
+    
 ************
 *  MOVE/?  *
 ************ 
@@ -222,12 +220,56 @@ EADST01:
 *  MOVEA  *
 ***********
 EADST02:
+    MOVE.W      CURRENT_INSTR,D5        ; get current instruction
+    MOVE.B      #9,D4                   ; mask for 3 & 4
+    JSR         BITMASKER
+    
+    MOVE.B      D5,D4                   ; store the reg
+    
+    MULU        #8,D4                   ; get offset
+    
+    LEA         EA_TABLE,A0             ; load ea table
+    JSR         0(A0,D4)
+
     RTS
     
+**************************
+*   ADDQ,MULU,DIVU,LEA   *
+**************************
 EADST03:
+    MOVE.W      CURRENT_INSTR,D5        ; get instruction
+    MOVE.B      #$A,D4                  ; mask for 11-9
+    JSR         BITMASKER               ; jump to bitmasker
+    
+    MOVE.B      D5,D4                   ; store the register
+    
+    MULU        #8,D4
+    
+    LEA         EA_TABLE,A0
+    JSR         0(A0,D3)
+
     RTS
     
-EADST04:
+**************************
+*  JSR/CLR/ROR/ROL/ADDI  *
+**************************
+EADST04:    
+    MOVE.B      #5,D4               ; choose bitmask routine
+    MOVE.W      CURRENT_INSTR,D5             ; move instruction in
+    JSR         BITMASKER
+    
+    MOVE.L      D5,D3               ; store the mode
+    
+    MOVE.W      CURRENT_INSTR,D5
+    MOVE.L      #4,D4               ; store reg info
+    JSR         BITMASKER
+    
+    MOVE.L      D5,D4
+    
+    MULU        #8,D3               ; offset for jump table
+    
+    LEA         EA_TABLE,A0         ; load the effective address jump table
+    JSR         0(A0,D3)            ; call jump table
     RTS
     
 EADST05:
