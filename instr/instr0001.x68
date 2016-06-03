@@ -40,9 +40,16 @@ INSTR0001DONE:
     
     LEA         NUM_OPERANDS,A0
     MOVE.B      #2,(A0)
+    
+    LEA         EA_SRC_TYPE,A0
+    MOVE.B      #0,(A0)
+    
+    LEA         EA_DST_TYPE,A0
+    MOVE.B      #0,(A0)
 
     MOVEM.L     (SP)+,A0-A5/D0-D7
     RTS
+
 
 
 

@@ -17,9 +17,9 @@ OPCODE              DS.B    6
 SIZE                DS.B    1
 EA_NEEDED           DS.B    1       ; 1 for needed, 0 otherwise
 NUM_OPERANDS        DS.B    1
-EA_TYPE             DS.B    1       ; need to list these out
-EA_SOURCE           DS.L    4
-EA_DEST             DS.L    4
+EA_SRC_TYPE         DS.B    1       ; need to list these out
+EA_DST_TYPE         DS.B    1       ; need these listed as well
+
 CURRENT_INSTR       DS.W    1
 
 CR          EQU     $0D         ; carriage return
@@ -174,6 +174,7 @@ BGE_TXT      DC.B    'BGE',0
 BLT_TXT      DC.B    'BLT',0
 BGT_TXT      DC.B    'BGT',0
 BLE_TXT      DC.B    'BLE',0
+
 
 
 
