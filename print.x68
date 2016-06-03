@@ -55,7 +55,7 @@ PRINTERR
     MOVE.B      #14,D0
     TRAP        #15
 
-	LEA		 	#ERRADD,A1
+	LEA		 	ERRADD,A1
     MOVE.B      #14,D0              *Prints the null terminated string at A1
     TRAP        #15
 
