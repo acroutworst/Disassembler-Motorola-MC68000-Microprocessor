@@ -46,12 +46,14 @@ INSTR0000:
     BRA         FINISH_0000
 
 NOOP_0000:
+    MOVE.B      #1,D0
     JSR         NO_OPCODE    
     BRA         FINISH_0000
     
 FINISH_0000:    
     MOVEM.L     (SP)+,A0-A5/D0-D7
     RTS
+
 
 
 

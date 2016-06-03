@@ -30,9 +30,12 @@ CLEAR_VARS:
     MOVE.B      #0,(A0)
     
     * clear ea_type var
-    LEA         EA_TYPE,A0
+    LEA         EA_SRC_TYPE,A0
     MOVE.B      #0,(A0)
     
+    LEA         EA_DST_TYPE,A0
+    MOVE.B      #0,(A0)
+
     * clear num_operands var
     LEA         NUM_OPERANDS,A0
     MOVE.B      #0,(A0)
@@ -91,6 +94,7 @@ CLEAR_REG:
     
 
     RTS    
+
 
 
 
