@@ -159,6 +159,12 @@ ROXR_TXT    DC.B    'ROXR',0
 DATA_TXT    DC.B    'DATA',0
 ERR_TXT     DC.B    'ERROR',0
 
+
+**************
+*  EA Error  *
+**************
+ADDR_TXT    DC.B    'FFFF',0 
+
 * Bcc SPECIFIC TEXT
 BRA_TXT      DC.B    'BRA',0
 BSR_TXT      DC.B    'BSR',0
@@ -176,6 +182,7 @@ BGE_TXT      DC.B    'BGE',0
 BLT_TXT      DC.B    'BLT',0
 BGT_TXT      DC.B    'BGT',0
 BLE_TXT      DC.B    'BLE',0
+
 
 
 
