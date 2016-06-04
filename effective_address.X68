@@ -285,6 +285,10 @@ DEST_TABLE:
     RTS
     JSR         EADST09
     RTS
+    JSR         EADST10
+    RTS
+    JSR         EADST11
+    RTS
     
 **********************************
 *  MOVE,ADD,ADDA,SUB,SUBA,OR,AND *
@@ -502,11 +506,53 @@ EADST09:
  
     RTS
     
+***********
+*   JSR   *
+***********
+EADST10:
+    MOVE.W      CURRENT_INSTR,D5        ; get current instruction
+    MOVE.B      #5,D4                   ; mask for 3-5
+    JSR         BITMASKER
+    
+    MOVE.B      D5,D3                   ; store the mode
+    
+    MOVE.W      CURRENT_INSTR,D5        ; get instruction again
+    MOVE.B      #4,D4                   ; mask for 0-2
+    JSR         BITMASKER
+    
+    MOVE.B      D5,D4                   ; store reg info
+    
+    MULU        #8,D3                   ; get offset
+    
+    LEA         EA_TABLE,A0             ; load ea table
+    JSR         0(A0,D3)
+    
+    RTS   
+ 
+***********
+*   BRA   *
+***********
+EADTS11:
+    MOVE.W      CURRENT_INSTR,D5
+    MOVE.B      #3,D4
+    JSR         BITMASKER
+
+    MOVE.B      #2,D4
+    JSR         BITMASKER
+
+    MULU        #8,D3
+       
+    LEA         EA_TABLE,A0             ; load ea table
+    JSR         0(A0,D3) 
+
+    RTS
+
 FINISH_EADECODER:
     MOVEM.L     (SP)+,A0-A5/D0-D7   ; move registers back from stack
     RTS                             ; exit subroutine
 
     INCLUDE 'eamodes/ea_table.x68'
+
 
 
 
