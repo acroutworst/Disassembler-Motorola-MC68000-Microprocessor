@@ -13,8 +13,15 @@ EAMODE011:
     MOVE        D5,D1
     ANDI        #7,D1
     
-    LEA         C_PAREN,(A0)+     ; load ) text
-    LEA         PLUS,(A0)+        ; load + text 
+    MOVE.B      #2,D0
+    JSR         PUSHBUFFER        ; send data to buffer
+    
+    LEA         C_PAREN,A0     ; load ) text
+    
+    MOVE.B      #2,D0
+    JSR         PUSHBUFFER        ; send data to buffer
+    
+    LEA         PLUS,A0        ; load + text 
     
     MOVE.B      #2,D0
     JSR         PUSHBUFFER        ; send data to buffer
@@ -24,6 +31,7 @@ EAMODE011:
     
     MOVEM.L     (SP)+,A0-A5/D0-D7
     RTS
+
 
 
 
