@@ -14,7 +14,7 @@ INSTR0100:
     
     * check for LEA
     MOVE.W  (A6),D5         ; move the instruction in
-    MOVE.B  #6,D4           ; choose bitmask routine
+    MOVE.B  #6,D4           ; choose bitmask routine (8-6)
     JSR     BITMASKER
     
     CMP.B   #7,D5           ; compare to LEA
@@ -23,6 +23,7 @@ INSTR0100:
     * handling LEA
     LEA     LEA_TXT,A0      ; load LEA text
     MOVE.B  #1,D0           ; choose the buffer to push to
+    
     JSR     PUSHBUFFER      ; push lea text to buffer
     JSR     UPDATE_OPCODE   ; update the opcode with lea
     * update ea info
@@ -32,7 +33,8 @@ INSTR0100:
     LEA         NUM_OPERANDS,A0
     MOVE.B      #2,(A0)
 
-    
+    LEA         EA_SRC_TYPE,A0
+    MOVE.B      #0,(A0)
 FINISH_0100:
 
     MOVEM.L (SP)+,A0-A5/D0-D7
@@ -56,38 +58,42 @@ FOUR_SETUP:
 * Jump table for the second set of 4 bits *
 *******************************************
 FOUR_TABLE:
-   JSR      FOUR0000
+   JSR      NOOP_0100
    RTS
-   JSR      FOUR0001
+   JSR      NOOP_0100
    RTS
    JSR      FOUR0010
    RTS
-   JSR      FOUR0011
+   JSR      NOOP_0100
    RTS
-   JSR      FOUR0100
+   JSR      NOOP_0100
    RTS
-   JSR      FOUR0101
+   JSR      NOOP_0100
    RTS
-   JSR      FOUR0110
+   JSR      NOOP_0100
    RTS
-   JSR      FOUR0111
+   JSR      NOOP_0100
    RTS
    JSR      FOUR1000
    RTS
-   JSR      FOUR1001
+   JSR      NOOP_0100
    RTS
-   JSR      FOUR1010
+   JSR      NOOP_0100
    RTS
-   JSR      FOUR1011
+   JSR      NOOP_0100
    RTS
    JSR      FOUR1100
    RTS
-   JSR      FOUR1101
+   JSR      NOOP_0100
    RTS
    JSR      FOUR1110
    RTS
-   JSR      FOUR1111
+   JSR      NOOP_0100
    RTS
+   
+NOOP_0100:
+    JSR     NO_OPCODE 
+    RTS
 
 **************************************************
 * Instructions With 0000 as Second Set of 4 Bits *
@@ -136,8 +142,8 @@ FOUR0010:
     LEA         NUM_OPERANDS,A0
     MOVE.B      #1,(A0)
     
-    LEA         EA_TYPE,A0
-    MOVE.B      #1,(A0)
+    LEA         EA_DST_TYPE,A0
+    MOVE.B      #4,(A0)
 
     RTS
     
@@ -299,6 +305,7 @@ FOUR1110:
    CMP.B       #$2,D5               ; compare bits to bits from JSR
    BEQ         HNDL_JSR             ; handle JSR
    
+   MOVE.B      #1,D0
    JSR         NO_OPCODE            ; no opcode found
    BRA         FINISH_FOUR1110
 
@@ -325,14 +332,14 @@ HNDL_RTS:
     
 HNDL_JSR:
     * update ea info
-    LEA         EA_NEEDED,A0
-    MOVE.B      #1,(A0)
-    
-    LEA         NUM_OPERANDS,A0
-    MOVE.B      #1,(A0)
-    
-    LEA        EA_TYPE,A0
+    LEA        EA_NEEDED,A0
     MOVE.B     #1,(A0)
+    
+    LEA        NUM_OPERANDS,A0
+    MOVE.B     #1,(A0)
+    
+    LEA        EA_DST_TYPE,A0
+    MOVE.B     #4,(A0)
 
     LEA        JSR_TXT,A0
 
@@ -349,6 +356,9 @@ FINISH_FOUR1110:
 **************************************************
 FOUR1111:
     RTS
+
+
+
 
 
 

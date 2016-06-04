@@ -26,6 +26,8 @@ DECODER:
     * get first 4 bits at address in A6
     MOVEA.L     A6,A0                   ; move starting address to A0 to manip
     MOVE.W      (A0),D5                 ; move data at A0 to D5 to manip
+    MOVE.W      (A0),CURRENT_INSTR      ; capture current instruction
+    MOVE.L      A0,INSTR_ADDR           ; capture address of current instruction
 
     MOVE.B      #0,D4                   ; choose the subroutine to mask (first 4)
     JSR         BITMASKER
@@ -116,6 +118,8 @@ FINISH:
     INCLUDE     'instr/instr1101.x68'
     INCLUDE     'instr/instr1110.x68'
     INCLUDE     'instr/instr1111.x68'
+
+
 
 
 

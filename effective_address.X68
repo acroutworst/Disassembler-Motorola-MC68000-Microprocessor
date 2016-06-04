@@ -71,7 +71,7 @@ TWO_OPERAND:
     
     
 GET_SOURCE:
-    LEA         EA_TYPE,A5
+    LEA         EA_SRC_TYPE,A5
     MOVE.B      (A5),D0
     MULU        #8,D0
 
@@ -80,7 +80,7 @@ GET_SOURCE:
     RTS
 
 GET_DEST:
-    LEA         EA_TYPE,A5
+    LEA         EA_DST_TYPE,A5
     MOVE.B      (A5),D0
     MULU        #8,D0
     
@@ -289,6 +289,7 @@ FINISH_EADECODER:
     RTS                             ; exit subroutine
 
     INCLUDE 'eamodes/ea_table.x68'
+
 
 
 

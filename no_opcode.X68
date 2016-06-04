@@ -9,9 +9,15 @@
 NO_OPCODE:
     
     MOVEM.L     A1-A5/D0-D7,-(SP)
-    LEA         DATA_TXT,A0    
+    LEA         ERROR,A0
+    ADDQ        #1,(A0)
+    LEA         DATA_TXT,A0
+    JSR         PUSHBUFFER
+        
     MOVEM.L     (SP)+,A1-A5/D0-D7
     RTS
+
+
 
 
 *~Font name~Courier New~

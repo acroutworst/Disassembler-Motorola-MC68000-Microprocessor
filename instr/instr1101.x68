@@ -80,8 +80,12 @@ BUFFER_1101:
 
     
 FINISH_1101:
+
+    LEA             EA_SRC_TYPE,A0
+    MOVE.B          #0,(A0)
     MOVEM.L         (SP)+,A0-A5/D0-D7       ; move registers back from stack
     RTS
+
 
 
 

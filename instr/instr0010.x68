@@ -17,10 +17,16 @@ INSTR0010:
     CMP.B       #1,D5                   ; compare masked bits to 1 (MOVEA)
     BNE         MOVE0010                ; not MOVEA
     LEA         MOVEA_TXT,A0            ; is MOVEA
+    LEA         EA_DST_TYPE,A0
+    MOVE.B      #2,(A0)
     BRA         DONE0010
     
 MOVE0010:
     LEA         MOVE_TXT,A0             ; load MOVE text
+    
+    LEA         EA_DST_TYPE,A0
+    MOVE.B      #0,(A0)
+    
     BRA         DONE0010
     
 DONE0010:
@@ -48,10 +54,18 @@ DONE0010:
     
     LEA         NUM_OPERANDS,A0
     MOVE.B      #2,(A0)
+    
+    LEA         EA_SRC_TYPE,A0
+    MOVE.B      #0,(A0)
+    
+    
 
     
     MOVEM.L     (SP)+,A0-A5/D0-D7
     RTS
+
+
+
 
 
 

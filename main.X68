@@ -14,14 +14,7 @@ START:                  ; first instruction of program
 DISASSEMBLER:
     JSR     CLEAR_REG                 
     JSR     DISPLAY
-    
-    
-    * test junk data
-    *MOVEA.L #$6000,A6
-    * MOVE.W  #$1639,(A6)
-    *MOVE.W  #$4E71,(A6)         ; throwing machine for NOP into mem address
-    * MOVE.W  #$1601,(A6)           ; MOVE.B D0,D3
-    
+        
 ****************************************************************
 * Main Program Loop                                            *
 * ** This loops through the address space collected by DISPLAY *
@@ -31,7 +24,12 @@ MAIN_LOOP:
     MOVE.W  #0,ERROR
     JSR     CLEAR_VARS
     JSR     DECODER
-    JSR     EADECODER     ; commenting out to test print subroutine
+    JSR     EADECODER     
+    
+    LEA     ERROR,A0        ; check error status
+    CMP.B   #0,(A0)
+    BNE     PUSH_DATA      
+    
     
     JSR     PRINTSTART
     LEA     END_ADDR,A0
@@ -39,6 +37,10 @@ MAIN_LOOP:
     CMP.L   A6,D0
     BGT     MAIN_LOOP
     BRA     END_DIS
+
+PUSH_DATA:
+    JSR     ERROR_HANDLER
+    BRA     MAIN_LOOP
     
 END_DIS:
     BRA AGAIN
@@ -60,12 +62,15 @@ END_DIS:
     INCLUDE 'utils/hex2ascii.x68'
     INCLUDE 'no_opcode.x68'
     INCLUDE 'print.x68'
+    INCLUDE 'error_handler.x68'
     INCLUDE 'variables.x68'
     
     
 
 * fin
     END    START        ; last line of source
+
+
 *~Font name~Courier New~
 *~Font size~10~
 *~Tab type~1~
