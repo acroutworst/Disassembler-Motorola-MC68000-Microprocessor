@@ -33,6 +33,12 @@ INSTR1000:
     SWAP        D7                  ; swap size info to higher order word
     MOVE.W      (A6),D7             ; move instruction in
     
+    LEA         EA_SRC_TYPE,A5
+    MOVE.B      #0,(A5)
+    
+    LEA         EA_DST_TYPE,A5
+    MOVE.B      #0,(A5)
+    
     BRA         PUSH_1000
         
 HNDL_DIVU:
@@ -42,6 +48,12 @@ HNDL_DIVU:
     
     LEA         NUM_OPERANDS,A5
     MOVE.B      #2,(A5)
+    
+    LEA         EA_SRC_TYPE,A5
+    MOVE.B      #3,(A5)
+    
+    LEA         EA_DST_TYPE,A5
+    MOVE.B      #5,(A5)
 
     LEA         DIVU_TXT,A0
     BRA         PUSH_1000
@@ -53,6 +65,13 @@ HNDL_DIVS:
     
     LEA         NUM_OPERANDS,A5
     MOVE.B      #2,(A5)
+    
+    LEA         EA_SRC_TYPE,A5
+    MOVE.B      #3,(A5)
+    
+    LEA         EA_DST_TYPE,A5
+    MOVE.B      #5,(A5)
+    
     LEA         DIVS_TXT,A0
     BRA         PUSH_1000
     
@@ -65,6 +84,8 @@ PUSH_1000:
     MOVE.B      #1,D0
     JSR         PUSHBUFFER
     JSR         UPDATE_OPCODE
+    
+    
     CMP.L       #0,D7
     BEQ         FINISH_1000
     JSR         GET_OP_SIZE
@@ -75,6 +96,9 @@ FINISH_1000:
     
     MOVEM.L     (SP)+,A0-A5/D0-D7
     RTS
+
+
+
 
 
 

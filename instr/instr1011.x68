@@ -77,6 +77,13 @@ PUSH_1011:
     MOVE.B      #0,D1
     JSR         PUSHBUFFER
     JSR         UPDATE_OPCODE
+    
+    LEA         EA_SRC_TYPE,A0
+    MOVE.B      #4,(A0)
+    
+    LEA         EA_DST_TYPE,A5
+    MOVE.B      #6,(A5)    
+    
     CMP.B       #0,D7           ; check if need to get size
     BEQ         FINISH_1011
     JSR         GET_OP_SIZE
@@ -85,6 +92,8 @@ PUSH_1011:
 FINISH_1011:
     MOVEM.L     (SP)+,A0-A5/D0-D7    
     RTS
+
+
 
 
 

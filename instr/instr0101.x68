@@ -71,12 +71,22 @@ DONE_0101:
     
     LEA         NUM_OPERANDS,A0
     MOVE.B      #2,(A0)
+    
+    LEA         EA_SRC_TYPE,A0
+    MOVE.B      #1,(A0)
+    
+    LEA         EA_DST_TYPE,A5
+    MOVE.B      #3,(A5)
+
+    
     BRA         FINISH_0101
 
 FINISH_0101: 
     MOVEM.L     (SP)+,A0-A5/D0-D7
 
     RTS
+
+
 
 
 
