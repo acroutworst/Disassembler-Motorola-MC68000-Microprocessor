@@ -237,7 +237,27 @@ EASRC05:
 
     RTS
     
+**********
+*  MOVEM *
+**********
 EASRC06:
+    MOVE.B      #5,D4               ; choose bitmask routine
+    MOVE.W      CURRENT_INSTR,D5             ; move instruction in
+    JSR         BITMASKER
+    
+    MOVE.L      D5,D3               ; store the mode
+    
+    MOVE.W      CURRENT_INSTR,D5
+    MOVE.L      #4,D4               ; store reg info
+    JSR         BITMASKER
+    
+    MOVE.L      D5,D4
+    
+    MULU        #8,D3               ; offset for jump table
+    
+    LEA         EA_TABLE,A0         ; load the effective address jump table
+    JSR         0(A0,D3)            ; call jump table
+    
     RTS
     
 EASRC07:
@@ -262,6 +282,8 @@ DEST_TABLE:
     JSR         EADST07
     RTS
     JSR         EADST08 
+    RTS
+    JSR         EADST09
     RTS
     
 **********************************
@@ -457,6 +479,28 @@ EADST08:
     
     RTS
     
+***********
+*  MOVEM  *
+***********
+EADST09:
+    MOVE.B      #5,D4               ; choose bitmask routine
+    MOVE.W      CURRENT_INSTR,D5             ; move instruction in
+    JSR         BITMASKER
+    
+    MOVE.L      D5,D3               ; store the mode
+    
+    MOVE.W      CURRENT_INSTR,D5
+    MOVE.L      #4,D4               ; store reg info
+    JSR         BITMASKER
+    
+    MOVE.L      D5,D4
+    
+    MULU        #8,D3               ; offset for jump table
+    
+    LEA         EA_TABLE,A0         ; load the effective address jump table
+    JSR         0(A0,D3)            ; call jump table
+ 
+    RTS
     
 FINISH_EADECODER:
     MOVEM.L     (SP)+,A0-A5/D0-D7   ; move registers back from stack
