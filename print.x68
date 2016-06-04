@@ -55,13 +55,12 @@ PRINTERR
     MOVE.B      #14,D0
     TRAP        #15
 
-
-	LEA		 	ERRADD,A1
-    MOVE.B      #14,D0              *Prints the null terminated string at A1
+	MOVE.L 		#ERRADD,(A1)
+    MOVE.B      #0,D0              *Prints the null terminated string at A1
     TRAP        #15
 
     MOVEM.L     (SP)+,A0-A5/D0-D7   *move registers back from stack
-    JMP         AGAIN               *Jumps to ask if they want to try program again
+ *   JMP         AGAIN               *Jumps to ask if they want to try program again
 
 CLEARSCREEN
 	LEA CLEARQ,A1    *ask user to clear
@@ -88,7 +87,7 @@ CLEARSCREEN
     
 COUNTER
 	ADDI.B      #1,LINECOUNTER      *add 1 to counter to keep track of print screen
-	CMP.B       #20,LINECOUNTER     *if it's greater or equal than 20 then clear 
+	CMP.B       #25,LINECOUNTER     *if it's greater or equal than 25 then clear 
 	BGE         CLEARSCREEN      
 	CMP.B       #0,LINECOUNTER      ; check if haven't printed any lines yet
 	BEQ         CLEARSCREEN         ; and clear screen to start over
@@ -98,6 +97,7 @@ GOODBYE
 	LEA GOODBYEM,A1                 ; load goodbye message text
 	MOVE.B #14,D0                   ; choose trap task
 	TRAP #15                        ; print it
+
 
 
 

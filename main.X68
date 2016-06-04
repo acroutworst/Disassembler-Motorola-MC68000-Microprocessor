@@ -41,6 +41,7 @@ MAIN_LOOP:
     BRA     END_DIS
     
 END_DIS:
+    BRA AGAIN
     SIMHALT
 
 ************************************

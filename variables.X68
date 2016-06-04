@@ -45,7 +45,7 @@ CLEARQ		DC.B    'Please press enter to clear the screen and continue...', CR,LF,
 ASKREPEAT 	DC.B    'Would you like to repeat the program? Enter y for yes and press enter to exit',CR,LF,0
 GOODBYEM 	DC.B 	'Thank you for trying out Teamy McTeamFace Disassembler!',CR,LF,0       
 ERRADD      EQU     $00000000
-ERRADDP	    DS.B    1
+ERRADDP	    DC.B    '00000000',0
 PRINTDATA   DC.B    'Address DATA $',0
 SETLENGTH   DS.B    16
 STRING2HEX  DS.B    32

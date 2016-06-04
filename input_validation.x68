@@ -4,7 +4,11 @@
 * Date       :
 * Description:Get user input, check the address length and jsr to convert2hex
 *-----------------------------------------------------------
-    
+RESTART
+    MOVE.W      #$FF00,D1           *this is the clearscreen code with trap 11
+    MOVE.B      #11,D0
+    TRAP        #15
+
 DISPLAY 
     MOVEM.L     A0-A5/D0-D7,-(SP) * Move registers to stack to be moved 
     LEA HELLO,A1      *LOAD Welcome message
@@ -30,7 +34,12 @@ STARTA
 
 *Error checks    
     CMP.L #ERRADD,A6    * if address is incorrect then convert2hex will make A6,00000000 invalid address
+    BNE ODDCHECK
     BEQ PRINTERR
+    MOVEM.L     (SP)+,A0-A5/D0-D7 *Move registers back from stack   
+    RTS
+
+ODDCHECK
     MOVE.W A6,D3   *saves original addy to A6
     LSR.L #1,D3  *Left shift 1 bit, if carry bit's 1= odd, if it's 0=even
     BCS ODD      *If odd then error
@@ -65,6 +74,7 @@ CHECKADDY
     MOVEA.L START_ADDR,A5  *Move start address to A5 
     CMPA.L   END_ADDR,A5   *Compares starting addy to the ending addy
     BGE END_GT_START    *If D1 (start) > D2 (end) go back for new addresses
+    BEQ END_GT_START    *If D1 (start) == D2(end)
     MOVEA.L     START_ADDR,A6
 
     MOVEM.L     (SP)+,A0-A5/D0-D7 *Move registers back from stack   
@@ -90,7 +100,7 @@ BADLENGTH
     TRAP #15
     BRA STARTA        *back to ask for new starting address
 
-END_GT_START            *End length occurs before start must restart
+END_GT_START            *End length occurs before start must restart or end is equal to start
     LEA LENGTHERR,A1
     MOVE.B #14,D0
     TRAP #15
@@ -106,9 +116,9 @@ AGAIN
     TRAP #15
 
     CMP.B #$59,D1   *compare 59 to 'Y' to 79 to 'y'
-    BEQ DISASSEMBLER     *back to start address 
-     CMP.B #$79,D1   *compare 59 to 'Y' to 79 to 'y'
-    BEQ DISASSEMBLER     *back to start address 
+    BEQ RESTART     *back to start address 
+    CMP.B #$79,D1   *compare 59 to 'Y' to 79 to 'y'
+    BEQ RESTART     *back to start address 
     
     JMP GOODBYE    *else jump to printing good bye
 
