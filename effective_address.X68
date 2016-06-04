@@ -285,6 +285,10 @@ DEST_TABLE:
     RTS
     JSR         EADST09
     RTS
+    JSR         EADST10
+    RTS
+    JSR         EADST11
+    RTS
     
 **********************************
 *  MOVE,ADD,ADDA,SUB,SUBA,OR,AND *
@@ -502,11 +506,24 @@ EADST09:
  
     RTS
     
+***********
+*   JSR   *
+***********
+EADST10:
+    RTS   
+ 
+***********
+*   BRA   *
+***********
+EADTS11:
+    RTS
+
 FINISH_EADECODER:
     MOVEM.L     (SP)+,A0-A5/D0-D7   ; move registers back from stack
     RTS                             ; exit subroutine
 
     INCLUDE 'eamodes/ea_table.x68'
+
 
 
 
