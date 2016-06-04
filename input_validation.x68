@@ -35,7 +35,7 @@ STARTA
 *Error checks    
     CMP.L #ERRADD,A6    * if address is incorrect then convert2hex will make A6,00000000 invalid address
     BNE ODDCHECK
-    BEQ PRINTERR
+    BEQ INVALID
     MOVEM.L     (SP)+,A0-A5/D0-D7 *Move registers back from stack   
     RTS
 
@@ -63,7 +63,7 @@ ENDA
 
 *Error checks    
     CMP.L #ERRADD,(A6)
-    BEQ PRINTERR
+    BEQ INVALID
     MOVE.W A6,D3     *move over to keep D1 unchanged
     LSR.L #1,D3      *Left shift 1 bit, if carry bit's 1= odd, if it's 0=even
     BCS ODDEND
@@ -73,8 +73,8 @@ ENDA
 CHECKADDY
     MOVEA.L START_ADDR,A5  *Move start address to A5 
     CMPA.L   END_ADDR,A5   *Compares starting addy to the ending addy
-    BGE END_GT_START    *If D1 (start) > D2 (end) go back for new addresses
-    BEQ END_GT_START    *If D1 (start) == D2(end)
+    BGE INVALID    *If D1 (start) > D2 (end) go back for new addresses
+    BEQ INVALID    *If D1 (start) == D2(end)
     MOVEA.L     START_ADDR,A6
 
     MOVEM.L     (SP)+,A0-A5/D0-D7 *Move registers back from stack   
@@ -100,7 +100,7 @@ BADLENGTH
     TRAP #15
     BRA STARTA        *back to ask for new starting address
 
-END_GT_START            *End length occurs before start must restart or end is equal to start
+INVALID            *End length occurs before start must restart or end is equal to start
     LEA LENGTHERR,A1
     MOVE.B #14,D0
     TRAP #15

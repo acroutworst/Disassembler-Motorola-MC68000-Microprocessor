@@ -48,20 +48,6 @@ DONE   *back to main
 	MOVEM.L (SP)+,A0-A5/D0-D7
 	RTS
 
-*Print out the err with address DATA $ADDR  
-PRINTERR
-	MOVEM.L     A0-A5/D0-D7,-(SP)   * Move registers to stack to be moved
-    LEA         PRINTDATA,A1        *Prints address DATA $ 
-    MOVE.B      #14,D0
-    TRAP        #15
-
-	MOVE.L 		#ERRADD,(A1)
-    MOVE.B      #0,D0              *Prints the null terminated string at A1
-    TRAP        #15
-
-    MOVEM.L     (SP)+,A0-A5/D0-D7   *move registers back from stack
- *   JMP         AGAIN               *Jumps to ask if they want to try program again
-
 CLEARSCREEN
 	LEA CLEARQ,A1    *ask user to clear
 	MOVE.B #14,D0
