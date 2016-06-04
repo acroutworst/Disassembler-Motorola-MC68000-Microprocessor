@@ -34,8 +34,6 @@ SUBTABLE:
     JSR         SUB111
     RTS
     
-EA111_BUFFER:
-    
     
 FINISH_EAMODE111:
     MOVEM.L     (SP)+,A0-A5/D0-D7
@@ -118,6 +116,7 @@ SUB110:
     
 SUB111:
     RTS
+
 
 
 
