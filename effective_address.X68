@@ -532,7 +532,7 @@ EADST10:
 ***********
 *   BRA   *
 ***********
-EADTS11:
+EADST11:
     MOVE.W      CURRENT_INSTR,D5
     MOVE.B      #3,D4
     JSR         BITMASKER
@@ -552,6 +552,7 @@ FINISH_EADECODER:
     RTS                             ; exit subroutine
 
     INCLUDE 'eamodes/ea_table.x68'
+
 
 
 
