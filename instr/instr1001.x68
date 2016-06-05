@@ -66,10 +66,19 @@ DONE_1001:
     
     LEA         NUM_OPERANDS,A5
     MOVE.B      #2,(A5)
+    
+    LEA         EA_SRC_TYPE,A5
+    MOVE.B      #0,(A5)
+    
+    LEA         EA_DST_TYPE,A5
+    MOVE.B      #0,(A5)
+
 
 FINISH_1001:
     MOVEM.L     (SP)+,A0-A5/D0-D7   ; move registers back from stack
     RTS
+
+
 
 
 

@@ -34,7 +34,11 @@ INSTR0100:
     MOVE.B      #2,(A0)
 
     LEA         EA_SRC_TYPE,A0
-    MOVE.B      #0,(A0)
+    MOVE.B      #5,(A0)
+    
+    LEA         EA_DST_TYPE,A5
+    MOVE.B      #7,(A5)
+
 FINISH_0100:
 
     MOVEM.L (SP)+,A0-A5/D0-D7
@@ -144,6 +148,9 @@ FOUR0010:
     
     LEA         EA_DST_TYPE,A0
     MOVE.B      #4,(A0)
+    
+    LEA         EA_DST_TYPE,A5
+    MOVE.B      #8,(A5)
 
     RTS
     
@@ -226,8 +233,12 @@ FOUR1000:
     LEA         NUM_OPERANDS,A0
     MOVE.B      #2,(A0)
     
-    *TODO - need to determine ea type
-
+    LEA         EA_SRC_TYPE,A0
+    MOVE.B      #6,(A0)
+    
+    LEA         EA_DST_TYPE,A5
+    MOVE.B      #9,(A5)
+    
     RTS
 
 **************************************************
@@ -339,7 +350,7 @@ HNDL_JSR:
     MOVE.B     #1,(A0)
     
     LEA        EA_DST_TYPE,A0
-    MOVE.B     #4,(A0)
+    MOVE.B     #$A,(A0)
 
     LEA        JSR_TXT,A0
 
@@ -356,6 +367,11 @@ FINISH_FOUR1110:
 **************************************************
 FOUR1111:
     RTS
+
+
+
+
+
 
 
 

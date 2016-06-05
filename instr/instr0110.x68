@@ -23,6 +23,9 @@ INSTR0110:
     
     LEA         NUM_OPERANDS,A0
     MOVE.B      #1,(A0)
+    
+    LEA         EA_DST_TYPE,A0
+    MOVE.B      #$B,(A0)
 
     
     MOVEM.L     (SP)+,A0-A5,D0-D7
@@ -190,6 +193,7 @@ BCC1110:
 BCC1111:
     LEA     BLE_TXT,A0
     RTS
+
 
 
 

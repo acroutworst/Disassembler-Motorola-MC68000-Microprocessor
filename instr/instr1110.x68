@@ -184,6 +184,12 @@ BUFFER_1110:
     JSR             UPDATE_OPCODE
     JSR             GET_OP_SIZE
     
+    LEA             EA_SRC_TYPE,A0
+    MOVE.B          #2,(A0)
+    
+    LEA             EA_DST_TYPE,A0
+    MOVE.B          #4,(A0)
+    
     BRA             FINISH_1110
     
 ERROR_1110:
@@ -194,6 +200,8 @@ ERROR_1110:
 FINISH_1110:
     MOVEM.L         (SP)+,A0-A5/D0-D7
     RTS
+
+
 
 
 

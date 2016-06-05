@@ -32,6 +32,12 @@ HNDL_MULU:
     
     LEA         NUM_OPERANDS,A5
     MOVE.B      #2,(A5)
+    
+    LEA         EA_SRC_TYPE,A0
+    MOVE.B      #3,(A0)
+    
+    LEA         EA_DST_TYPE,A5
+    MOVE.B      #5,(A5)
 
     LEA             MULU_TXT,A0             ; load the text
     BRA             BUFFER_1100             ; push to the buffer
@@ -43,6 +49,12 @@ HNDL_MULS:
     
     LEA         NUM_OPERANDS,A5
     MOVE.B      #2,(A5)
+    
+    LEA         EA_SRC_TYPE,A0
+    MOVE.B      #3,(A0)
+
+    LEA         EA_DST_TYPE,A5
+    MOVE.B      #5,(A5)
 
     LEA             MULS_TXT,A0             ; load MULS text
     BRA             BUFFER_1100             ; push to the buffer
@@ -54,6 +66,12 @@ HNDL_AND:
     
     LEA         NUM_OPERANDS,A5
     MOVE.B      #2,(A5)
+    
+    LEA         EA_SRC_TYPE,A5
+    MOVE.B      #0,(A5)
+    
+    LEA         EA_DST_TYPE,A5
+    MOVE.B      #0,(A5)
 
     LEA             AND_TXT,A0              ; load AND text
     
@@ -82,6 +100,10 @@ BUFFER_1100:
 FINISH_1100:
     MOVEM.L         (SP)+,A0-A5/D0-D7       ; move registers back from stack
     RTS
+
+
+
+
 
 
 
