@@ -137,8 +137,12 @@ LOAD
 *Does user want to use the converter again?*
 AGAIN
     MOVE.B      #11,D0
-    ADD.B       #1,D1               *Moves down to next row
+    ADD.B       #0127,D1               *Moves down to next row
     TRAP        #15
+    
+    MOVE.B  #12,D0              Keyboard echo
+    MOVE.B  #0,D1               Visible
+    TRAP    #15
     
     LEA ASKREPEAT,A1
     MOVE.B #14,D0

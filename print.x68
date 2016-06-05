@@ -83,6 +83,8 @@ GOODBYE
 	LEA GOODBYEM,A1                 ; load goodbye message text
 	MOVE.B #14,D0                   ; choose trap task
 	TRAP #15                        ; print it
+	MOVE.B #9,D0
+	TRAP #15
 
 
 
