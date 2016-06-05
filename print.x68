@@ -42,8 +42,6 @@ PRINTLOOP
 	MOVE.B      #11,D0
 	TRAP        #15
 	
-    
-
 DONE   *back to main	
 	MOVEM.L (SP)+,A0-A5/D0-D7
 	RTS
@@ -69,8 +67,7 @@ CLEARSCREEN
 	MOVE.B      #11,D0
 	TRAP        #15
 	RTS                             * will return to counter where it'll 
-                                    * return to where it was in print
-    
+                                    * return to where it was in print   
 COUNTER
 	ADDI.B      #1,LINECOUNTER      *add 1 to counter to keep track of print screen
 	CMP.B       #25,LINECOUNTER     *if it's greater or equal than 25 then clear 

@@ -15,7 +15,7 @@ DISASSEMBLER:
     JSR     CLEAR_REG                 
     JSR     DISPLAY
         
-****************************************************************
+***************************************************************
 * Main Program Loop                                            *
 * ** This loops through the address space collected by DISPLAY *
 * ** in order to decode each instruction, line by line.        *

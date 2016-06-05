@@ -8,7 +8,17 @@ RESTART
     MOVE.W      #$FF00,D1           *this is the clearscreen code with trap 11
     MOVE.B      #11,D0
     TRAP        #15
-    JSR CLEAREVERYTHING
+
+    MOVE.L #0,A1       *clears out A1 to go back to Start A
+    MOVE.L #0,A6
+
+    CLR.B D1           *Clears out D1
+    MOVE.L #0,START_ADDR
+    MOVE.L #0,END_ADDR
+
+    MOVE.B  #12,D0              Keyboard echo
+    MOVE.B  #0,D1               Invisible
+    TRAP    #15
     JMP DISASSEMBLER
 
 DISPLAY 
@@ -19,6 +29,10 @@ DISPLAY
           
 *ask for starting address
 STARTA
+    MOVE.B  #12,D0              Keyboard echo
+    MOVE.B  #1,D1               invisible
+    TRAP    #15
+
     LEA REQSTART,A1   *load start message *A1 has the current starting
     MOVE.B #14,D0
     TRAP #15
@@ -130,6 +144,10 @@ LOAD
     MOVE.B #14,D0     *Print out the above errors
     TRAP #15
 
+    MOVE.B  #12,D0              Keyboard echo
+    MOVE.B  #0,D1               invisible
+    TRAP    #15
+
     MOVE.L #0,A1       *clears out A1 to go back to Start A
     CLR.B D1           *Clears out D1
     BRA STARTA *end is greater than start so back to start for new addresses
@@ -137,11 +155,11 @@ LOAD
 *Does user want to use the converter again?*
 AGAIN
     MOVE.B      #11,D0
-    ADD.B       #0127,D1               *Moves down to next row
+    ADD.B       #0126,D1               *Moves down to next row
     TRAP        #15
     
     MOVE.B  #12,D0              Keyboard echo
-    MOVE.B  #0,D1               Visible
+    MOVE.B  #0,D1               invisible
     TRAP    #15
     
     LEA ASKREPEAT,A1
@@ -158,23 +176,6 @@ AGAIN
     
     JMP GOODBYE    *else jump to printing good bye
 
-CLEAREVERYTHING
-    MOVEM.L A0-A5/D0-D7,-(SP)
-    MOVEA.L #0,A0
-    MOVEA.L #0,A1
-    MOVEA.L #0,A2
-    MOVEA.L #0,A3
-    MOVEA.L #0,A4
-    MOVEA.L #0,A5
-    MOVEA.L #0,A6
-    MOVEA.L #0,A7
-    MOVE.L #0,START_ADDR
-    MOVE.L #0,END_ADDR
-    MOVE.B  #12,D0              Keyboard echo
-    MOVE.B  #1,D1               Visible
-    TRAP    #15
-    MOVEM.L (SP)+,A0-A5/D0-D7 *Move registers back from stack   
-    RTS
 
 
 *~Font name~Courier New~
