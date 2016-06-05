@@ -17,6 +17,7 @@ EADECODER:
     
     LEA         CURRENT_INSTR,A5
     MOVE.W      (A6)+,(A5)  ; capture current instruction
+    BRA         GET_OPERANDS
     
 EADECODER_NO:
     LEA         CURRENT_INSTR,A5
@@ -552,6 +553,7 @@ FINISH_EADECODER:
     RTS                             ; exit subroutine
 
     INCLUDE 'eamodes/ea_table.x68'
+
 
 
 
