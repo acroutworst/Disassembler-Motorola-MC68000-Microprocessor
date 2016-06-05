@@ -42,11 +42,12 @@ LENGTHERR   DC.B    'ERROR: The address contains more than 24 bits. Try again.',
 BADADDY     DC.B    'ERROR: This is a bad address. Try again.',CR,LF,0
 SAME	    DC.B 'ERROR:Starting and ending are the same',CR,LF,0
 ODDERR      DC.B    'ERROR: Starting address can not be odd, please reenter:',CR,LF,0
-BIGEND      DC.B    'ERROR: The ending address is greater than the starting address',CR,LF,0
+BIGEND      DC.B    'ERROR: The ending address is less than the starting address',CR,LF,0
 HEADER      DC.B    'MEM LOCATION   OP_CODE    OPERAND   ',CR,LF,0
 CLEARQ		DC.B    'Please press enter to clear the screen and continue...', CR,LF,0
 RANGE		DC.B 	'This is not within the acceptable address range',CR,LF,0
-ASKREPEAT 	DC.B    'Would you like to repeat the program? Enter y for yes and press enter to exit',CR,LF,0
+ASKREPEAT 	DC.B    'Would you like to repeat the program?',CR,LF
+			DC.B    'Enter y for yes and press enter to exit',CR,LF,CR,LF,0
 GOODBYEM 	DC.B 	'Thank you for trying out Teamy McTeamFace Disassembler!',CR,LF,0       
 ERRADD      EQU     $00000000
 MINADDY 	EQU     $007000
