@@ -4,10 +4,6 @@
 * Date       :
 * Description:Get user input, check the address length and jsr to convert2hex
 *-----------------------------------------------------------
-RESTART
-    MOVE.W      #$FF00,D1           *this is the clearscreen code with trap 11
-    MOVE.B      #11,D0
-    TRAP        #15
 
 DISPLAY 
     MOVEM.L     A0-A5/D0-D7,-(SP) * Move registers to stack to be moved 
@@ -16,7 +12,7 @@ DISPLAY
     TRAP #15          *Prints out wecome message
           
 *ask for starting address
-STARTA 
+STARTA
     LEA REQSTART,A1   *load start message *A1 has the current starting
     MOVE.B #14,D0
     TRAP #15
@@ -28,16 +24,17 @@ STARTA
 *check length
     CMP.W #6,D1       *Check the length is no more than 24 bits, valid address 007000-FFFFFF
     BGT BADLENGTH     *if bad length goes to print error message
-           
+    
+
 *Must sent to subroutine to be converted to HEX* 
     JSR CONVERT2HEX 
 
 *Error checks    
-    CMP.L #ERRADD,A6    * if address is incorrect then convert2hex will make A6,00000000 invalid address
+    CMPA.L #MINADDY,A6
+    BLT OUTOFRANGE
+    CMPA.L #ERRADD,A6    * if address is incorrect then convert2hex will make A6,00000000 invalid address
     BNE ODDCHECK
     BEQ INVALID
-    MOVEM.L     (SP)+,A0-A5/D0-D7 *Move registers back from stack   
-    RTS
 
 ODDCHECK
     MOVE.W A6,D3   *saves original addy to A6
@@ -50,20 +47,22 @@ ENDA
     LEA         REQEND,A1  *Load end message
     MOVE.B      #14,D0
     TRAP        #15
+
     MOVE.B      #2,D0   *read string at (A1) and length is returned at D1
     TRAP        #15       *Read input into D1.L
 
 *check length
     CMP.W       #6,D1    *Check the length is no more than 24 bits, valid address 00007000-00FFFFFF
     BGT         BADLENGTH     *if bad length goes to print error message
-    * BRA         ENDA          *back to ask for new ending address
 
 *send ending address to convert to HEX*
     JSR CONVERT2HEX
 
-*Error checks    
-    CMP.L #ERRADD,(A6)
-    BEQ INVALID
+*Error checks
+    CMPA.L #MAXADDY,A6
+    BGT OUTOFRANGE    
+    CMPA.L #ERRADD,A6
+    BEQ INVALID 
     MOVE.W A6,D3     *move over to keep D1 unchanged
     LSR.L #1,D3      *Left shift 1 bit, if carry bit's 1= odd, if it's 0=even
     BCS ODDEND
@@ -73,9 +72,9 @@ ENDA
 CHECKADDY
     MOVEA.L START_ADDR,A5  *Move start address to A5 
     CMPA.L   END_ADDR,A5   *Compares starting addy to the ending addy
-    BGE INVALID    *If D1 (start) > D2 (end) go back for new addresses
-    BEQ INVALID    *If D1 (start) == D2(end)
-    MOVEA.L     START_ADDR,A6
+    BGE GREAT    *If D1 (start) > D2 (end) go back for new addresses
+    BEQ EQUAL    *If D1 (start) == D2(end)
+    MOVEA.L     START_ADDR,A6   *store starting address to A6
 
     MOVEM.L     (SP)+,A0-A5/D0-D7 *Move registers back from stack   
     RTS       *The checks are done and the ascii to hex convert done
@@ -96,15 +95,32 @@ ODDEND
                 
 BADLENGTH
     LEA LENGTHERR,A1    *Prints out length error
-    MOVE.B #14,D0
-    TRAP #15
-    BRA STARTA        *back to ask for new starting address
+    BRA LOAD
 
 INVALID            *End length occurs before start must restart or end is equal to start
-    LEA LENGTHERR,A1
+    LEA BADADDY,A1
+    BRA LOAD
+
+OUTOFRANGE
+    LEA RANGE,A1
+    BRA LOAD
+
+EQUAL     *start ==end
+    LEA SAME,A1
+    BRA LOAD
+
+GREAT   *end >start
+    LEA BIGEND,A1
+    BRA LOAD
+
+LOAD
     MOVE.B #14,D0
     TRAP #15
-    BRA STARTA        *end is greater than start so back to start for new addresses
+    LEA SPACE,A1
+    MOVE.B #14,D0
+    TRAP #15
+    MOVE.L #0,A1
+    BRA STARTA *end is greater than start so back to start for new addresses
 
 *Does user want to use the converter again?*
 AGAIN
@@ -122,6 +138,27 @@ AGAIN
     
     JMP GOODBYE    *else jump to printing good bye
 
+RESTART
+    MOVE.W      #$FF00,D1           *this is the clearscreen code with trap 11
+    MOVE.B      #11,D0
+    TRAP        #15
+    BSR CLEAREVERYTHING
+    JMP START
+
+CLEAREVERYTHING
+    MOVEM.L     A0-A5/D0-D7,-(SP)
+    JSR CLEAR_REG
+    MOVEA.L #0,A1
+    MOVEA.L #0,A2
+    MOVEA.L #0,A3
+    MOVEA.L #0,A4
+    MOVEA.L #0,A5
+    MOVEA.L #0,A6
+    MOVEA.L #0,A7
+    MOVE.L #0,START_ADDR
+    MOVE.L #0,END_ADDR
+    MOVEM.L     (SP)+,A0-A5/D0-D7 *Move registers back from stack   
+    RTS
 
 
 *~Font name~Courier New~

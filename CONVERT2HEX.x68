@@ -89,7 +89,7 @@ LOOPDONE:
     RTS
 
 ERR:
-    MOVEA.L     #$00000000,A6       *bad address that's out of scope
+    MOVE.L     #$00000000,(A6)       *bad address that's out of scope
     MOVEM.L     (SP)+,A0-A5/D0-D7 *Move registers back from stack
     RTS
 

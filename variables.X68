@@ -38,19 +38,22 @@ LINECOUNTER EQU     20
 HELLO       DC.B    'Welcome to Teamy McTeamFaces 68k Disassembler!',CR,LF,0
 REQSTART    DC.B    'Please enter in the starting location, must be no more than 24 bit:',CR,LF,0
 REQEND      DC.B    'Please enter in the ending location, must be no more than 24 bit:',CR,LF,0
-LENGTHERR   DC.B    'ERROR: This address is invalid',CR,LF,0
-ODDERR      DC.B    'ERROR: Starting address cant be odd, please reenter:',CR,LF,0
+LENGTHERR   DC.B    'ERROR: The address contains more than 24 bits. Try again.',CR,LF,0
+BADADDY     DC.B    'ERROR: This is a bad address. Try again.',CR,LF,0
+SAME	    DC.B 'ERROR:Starting and ending are the same',CR,LF,0
+ODDERR      DC.B    'ERROR: Starting address can not be odd, please reenter:',CR,LF,0
 BIGEND      DC.B    'ERROR: The ending address is greater than the starting address',CR,LF,0
 HEADER      DC.B    'MEM LOCATION   OP_CODE    OPERAND   ',CR,LF,0
 CLEARQ		DC.B    'Please press enter to clear the screen and continue...', CR,LF,0
+RANGE		DC.B 	'This is not within the acceptable address range',CR,LF,0
 ASKREPEAT 	DC.B    'Would you like to repeat the program? Enter y for yes and press enter to exit',CR,LF,0
 GOODBYEM 	DC.B 	'Thank you for trying out Teamy McTeamFace Disassembler!',CR,LF,0       
 ERRADD      EQU     $00000000
-ERRADDP	    DC.B    '00000000',0
-PRINTDATA   DC.B    'Address DATA $',0
+MINADDY 	EQU     $007000
+MAXADDY		EQU		$00FFFFFF
 SETLENGTH   DS.B    16
 STRING2HEX  DS.B    32
-
+DECIDINGERR DS.B    1
 
 
 * storage for the start and end address
